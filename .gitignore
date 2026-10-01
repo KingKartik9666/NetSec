@@ -1,0 +1,36 @@
+__pycache__/
+*.py[cod]
+.env
+.env.*
+!.env.example
+.venv/
+venv/
+.pytest_cache/
+.coverage
+htmlcov/
+# Third-party repositories remain independent clones, not vendored source.
+external/HEM/
+external/IoT-Agent/
+external/efficient-kan/
+# Keep only the tiny synthetic CSV and documentation in version control.
+dataset/*
+!dataset/README.md
+!dataset/demo/
+dataset/demo/*
+!dataset/demo/sample_traffic.csv
+framework/models/*
+!framework/models/.gitkeep
+*.pcap
+*.pcapng
+*.pt
+*.pth
+*.joblib
+*.pkl
+*.ubj
+*.npy
+*.npz
+artifacts/training/
+node_modules/
+artifacts/desktop/
+artifacts/llm/
+*.gguf

@@ -1,0 +1,13 @@
+{% include 'window_chrome.html' %}
+<script src="/static/chrome.js" defer></script>
+<header class="studio-header" aria-label="Workspace navigation">
+  <a class="brand" href="/" aria-label="NetSec home">NetSec<span class="brand-period" aria-hidden="true">.</span></a>
+  <nav class="studio-nav" aria-label="Main navigation">
+    <a class="nav-link{% if not workspace_mode %} active{% endif %}" href="/"{% if not workspace_mode %} aria-current="page"{% endif %}>Home</a>
+    <a class="nav-link{% if workspace_mode == 'live' %} active{% endif %}" href="/live"{% if workspace_mode == 'live' %} aria-current="page"{% endif %}>Live screening</a>
+    <a class="nav-link{% if workspace_mode == 'upload' %} active{% endif %}" href="/csv"{% if workspace_mode == 'upload' %} aria-current="page"{% endif %}>CSV analysis</a>
+    <a class="nav-link{% if workspace_mode == 'sample' %} active{% endif %}" href="/samples"{% if workspace_mode == 'sample' %} aria-current="page"{% endif %}>Samples</a>
+  </nav>
+  <span class="header-note"><span class="local-dot" aria-hidden="true"></span>LOCAL / CPU</span>
+</header>
+{% include 'state_screen.html' %}

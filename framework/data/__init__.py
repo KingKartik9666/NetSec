@@ -1,0 +1,1 @@
+"""Validated feature-table ingestion."""

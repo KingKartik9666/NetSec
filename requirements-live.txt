@@ -1,0 +1,4 @@
+# Optional PC monitoring. Windows full packet capture additionally needs Npcap.
+-r requirements-app.txt
+psutil>=7,<8
+scapy>=2.6,<3

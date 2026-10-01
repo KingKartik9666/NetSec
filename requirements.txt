@@ -1,0 +1,6 @@
+# Lightweight CPU-only MVP. External research repositories have separate dependencies.
+numpy>=1.26,<3
+pandas>=2.2,<4
+scikit-learn>=1.6,<2
+python-dotenv>=1.0,<2
+pytest>=8,<10

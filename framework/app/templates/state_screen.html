@@ -1,0 +1,17 @@
+<section id="lifecycle-screen" class="lifecycle-screen" data-state="loading" role="dialog" aria-modal="true" aria-labelledby="lifecycle-title" aria-describedby="lifecycle-description"{% if not workspace_mode and not lifecycle_state %} hidden{% endif %}>
+  <div class="state-card">
+    <div class="state-topline"><span>NETSEC / LOCAL WORKSPACE</span><span id="lifecycle-code">01 / INITIALIZING</span></div>
+    <div class="state-visual" aria-hidden="true"><span class="state-orbit"></span><span class="state-orbit orbit-two"></span><span class="state-symbol"><svg viewBox="0 0 32 32"><path class="state-shield" d="m16 4 10 5v8c0 6-10 11-10 11S6 23 6 17V9Z"/><path class="state-tick" d="m11 16 4 4 6-8"/><path class="state-power" d="M16 4v11M9 8a11 11 0 1 0 14 0"/><path class="state-alert" d="M16 9v9m0 5v1"/></svg></span></div>
+    <div class="state-copy" aria-live="polite" aria-atomic="true">
+      <h1 id="lifecycle-title" tabindex="-1">Bringing things<br>into focus.</h1>
+      <p id="lifecycle-description">Connecting to your local analysis service. Monitoring and language generation start only when you request them.</p>
+    </div>
+    <details id="lifecycle-details" hidden><summary>Technical details</summary><pre id="lifecycle-detail"></pre></details>
+    <div class="state-actions">
+      <button id="lifecycle-primary" class="button primary" type="button" hidden>Try again <span aria-hidden="true">↗</span></button>
+      <button id="lifecycle-cancel" class="button secondary" type="button" hidden>Keep working</button>
+      <a id="lifecycle-home" class="state-home" href="/">Back to home <span aria-hidden="true">↗</span></a>
+    </div>
+    <p class="state-footnote" id="lifecycle-footnote">Private by default. Local by design.</p>
+  </div>
+</section>

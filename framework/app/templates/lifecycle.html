@@ -1,0 +1,16 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>{{ page_title }} — NetSec</title>
+  <link rel="icon" href="/static/netsec.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/static/style.css">
+  <link rel="stylesheet" href="/static/studio.css">
+</head>
+<body class="state-page" data-lifecycle-state="{{ lifecycle_state }}" data-return-url="{{ return_url | default('/') }}" data-error-code="{{ error_code | default('') }}">
+  {% include 'navigation.html' %}
+  <main id="workspace" class="main"><span class="sr-only">NetSec workspace status</span></main>
+</body>
+</html>

@@ -1,0 +1,23 @@
+{
+  "name": "imdai-security",
+  "version": "0.3.0",
+  "private": true,
+  "description": "NetSec: local IoT traffic analysis, explainable intrusion models and evidence-grounded language assistance",
+  "author": "IMDAI Research Project",
+  "license": "UNLICENSED",
+  "main": "main.cjs",
+  "scripts": {"start": "electron .", "pack": "electron-builder --dir --publish never", "dist:win": "electron-builder --win nsis --x64 --publish never", "dist:portable": "electron-builder --win portable --x64 --publish never", "dist:linux": "electron-builder --linux AppImage --x64 --publish never"},
+  "devDependencies": {"electron": "44.5.0", "electron-builder": "26.15.3"},
+  "build": {
+    "appId": "edu.imdai.security",
+    "productName": "NetSec",
+    "directories": {"output": "../../../artifacts/desktop/releases"},
+    "files": ["main.cjs", "preload.cjs", "loading.html", "shell.js", "package.json", "assets/icon.png", "assets/icon.ico"],
+    "extraResources": [{"from": "../../../artifacts/desktop/backend/imdai-backend", "to": "backend"}, {"from": "../../../artifacts/llm/qwen", "to": "models/qwen", "filter": ["qwen2.5-0.5b-instruct-q4_k_m.gguf", "model.json", "LICENSE"]}, {"from": "installer", "to": "setup", "filter": ["setup-npcap.ps1", "README.txt"]}],
+    "beforePack": "./verify-build.cjs",
+    "win": {"target": ["nsis"], "icon": "assets/icon.ico", "signAndEditExecutable": true},
+    "nsis": {"oneClick": false, "perMachine": false, "allowToChangeInstallationDirectory": true, "allowElevation": false, "createDesktopShortcut": true, "createStartMenuShortcut": true, "runAfterFinish": true, "artifactName": "NetSec-Setup-${version}-${arch}.${ext}", "include": "installer/installer.nsh", "installerIcon": "assets/icon.ico", "uninstallerIcon": "assets/icon.ico", "deleteAppDataOnUninstall": false},
+    "portable": {"artifactName": "NetSec-Portable-${version}-${arch}.${ext}"},
+    "linux": {"target": ["AppImage"], "icon": "assets/icon.png", "category": "Network", "desktop": {"entry": {"Name": "NetSec", "Comment": "NetSec local explainable network security research"}}}
+  }
+}

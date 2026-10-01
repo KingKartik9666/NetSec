@@ -1,0 +1,4 @@
+# Optional real HEM feature extraction, separate from the lightweight default demo.
+-r requirements.txt
+Cython==3.1.0
+scapy==2.6.1
