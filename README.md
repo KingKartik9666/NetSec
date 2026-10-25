@@ -4,7 +4,7 @@ Current desktop: **Electron + React/TypeScript + Rust native inference**, with t
 
 A local desktop research app for **PC traffic observation → model prediction → explainable evidence → optional language explanation**.
 
-The app separates OS connection rules, the promoted 84-class XGBoost model, an experimental binary packet comparison and the synthetic architecture demo. The promoted model accepts full/partial DataSense CSVs and seven measured Npcap counts in completed ten-second windows; unavailable features remain missing. Saved-model inference, TreeSHAP, LIME and optional Qwen generation run locally on CPU. Monitoring and language generation start only when requested.
+The desktop offers ten full-schema models, separately identified live-compatible models, OS connection rules and a synthetic architecture demo. Native model inference, explanations and optional Qwen generation run locally on CPU. Model choices and feature compatibility remain explicit; monitoring and language generation start only when requested.
 
 ## Open the desktop app
 
@@ -16,9 +16,9 @@ From the existing project environment in Windows PowerShell:
 
 The Electron window hosts the React/TypeScript interface and starts its own authenticated native Rust service on a random local port. The service and its native workers close with the window. No browser address, API key or GPU is needed.
 
-For a source checkout, install the Python dependencies from `requirements-desktop.txt` and desktop dependencies with `npm install --prefix framework/app/desktop`. The real Qwen weights are prepared separately with `python -m experiment.setup_local_llm`; this initial download needs internet access. See [app setup](docs/APP.md) for dependency and packaging details.
+For a source checkout, follow [the native application guide](docs/NATIVE_APP.md) to install the frontend and Electron dependencies, build Rust and stage the approved native model assets. Python remains available for research, build helpers and the synthetic demo. The packaged desktop app includes its runtime and local model assets.
 
-A Windows setup build is being prepared to include the Python runtime, trained models, explanation dependencies and the small Qwen GGUF model. Until its recorded build checks are complete, use the source launcher above. Linux packaging is configured, but Linux runtime execution has not been verified here.
+Download the verified Windows installer or full app-folder ZIP from [NetSec 0.4.0](https://github.com/KingKartik9666/NetSec/releases/tag/v0.4.0-windows). The installer updates an existing installation; the package runs without a Python installation. See [downloads and checksums](downloads/README.md) and [the update notes](docs/UPDATES_0.4.0.md). This Windows x64 build is unsigned; Linux runtime execution has not been verified here.
 
 ## Use the app
 
@@ -66,3 +66,4 @@ It runs **DemoDetector**, prototype distance-based novelty, simplified feature r
 Research and provenance: [persistent project context](docs/PROJECT_CONTEXT.md), [HEM integration](docs/HEM_INTEGRATION.md), [partial-input contract](docs/PARTIAL_INPUTS.md), [partial GPU study](docs/PARTIAL_TRAINING.md), [enhancement experiments](docs/PARTIAL_ENHANCEMENTS.md), [full-data study](docs/FULL_DATA_TRAINING.md), [GPU workflow](docs/GPU_TRAINING.md), [training verification](docs/TRAINING_VERIFICATION.md), [cleanup and recovery](docs/CLEANUP.md).
 
 Large data, model weights, environments and experiment records remain local and separate from upstream repositories under `external/`. The app observes passively and recommends human checks; it does not transmit attacks or apply network mitigations.
+
