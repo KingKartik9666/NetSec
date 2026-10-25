@@ -1,0 +1,515 @@
+{
+  "cases": [
+    {
+      "id": "observed",
+      "input": {
+        "ack": 18,
+        "fin": 12,
+        "packets": 27,
+        "psh": 15,
+        "rst": 20,
+        "seconds": 10.0,
+        "syn_all": 17,
+        "urg": 14
+      },
+      "output": {
+        "attack_score": 0.5414223074913025,
+        "capability_errors": {},
+        "dataset_validation_accuracy": 0.95,
+        "explanation": {
+          "all_features": [
+            {
+              "attribution_basis": "observed input",
+              "feature": "network_packets_all_count",
+              "is_missing": false,
+              "observed": true,
+              "shap_value": 0.4176212549209595,
+              "value": 27.0
+            },
+            {
+              "attribution_basis": "observed input",
+              "feature": "network_tcp-flags-ack_count",
+              "is_missing": false,
+              "observed": true,
+              "shap_value": 0.0,
+              "value": 18.0
+            },
+            {
+              "attribution_basis": "observed input",
+              "feature": "network_tcp-flags-fin_count",
+              "is_missing": false,
+              "observed": true,
+              "shap_value": 0.0,
+              "value": 12.0
+            },
+            {
+              "attribution_basis": "observed input",
+              "feature": "network_tcp-flags-psh_count",
+              "is_missing": false,
+              "observed": true,
+              "shap_value": 0.0,
+              "value": 15.0
+            },
+            {
+              "attribution_basis": "observed input",
+              "feature": "network_tcp-flags-rst_count",
+              "is_missing": false,
+              "observed": true,
+              "shap_value": 0.004726102575659752,
+              "value": 20.0
+            },
+            {
+              "attribution_basis": "observed input",
+              "feature": "network_tcp-flags-syn_count",
+              "is_missing": false,
+              "observed": true,
+              "shap_value": -0.3218071460723877,
+              "value": 17.0
+            },
+            {
+              "attribution_basis": "observed input",
+              "feature": "network_tcp-flags-urg_count",
+              "is_missing": false,
+              "observed": true,
+              "shap_value": 0.0,
+              "value": 14.0
+            }
+          ],
+          "bias": 0.48249462246894836,
+          "class_label": "suspicious",
+          "contribution_sum": 0.10054021142423153,
+          "important_features": [
+            {
+              "attribution_basis": "observed input",
+              "feature": "network_packets_all_count",
+              "is_missing": false,
+              "observed": true,
+              "shap_value": 0.4176212549209595,
+              "value": 27.0
+            },
+            {
+              "attribution_basis": "observed input",
+              "feature": "network_tcp-flags-syn_count",
+              "is_missing": false,
+              "observed": true,
+              "shap_value": -0.3218071460723877,
+              "value": 17.0
+            },
+            {
+              "attribution_basis": "observed input",
+              "feature": "network_tcp-flags-rst_count",
+              "is_missing": false,
+              "observed": true,
+              "shap_value": 0.004726102575659752,
+              "value": 20.0
+            },
+            {
+              "attribution_basis": "observed input",
+              "feature": "network_tcp-flags-ack_count",
+              "is_missing": false,
+              "observed": true,
+              "shap_value": 0.0,
+              "value": 18.0
+            },
+            {
+              "attribution_basis": "observed input",
+              "feature": "network_tcp-flags-fin_count",
+              "is_missing": false,
+              "observed": true,
+              "shap_value": 0.0,
+              "value": 12.0
+            },
+            {
+              "attribution_basis": "observed input",
+              "feature": "network_tcp-flags-psh_count",
+              "is_missing": false,
+              "observed": true,
+              "shap_value": 0.0,
+              "value": 15.0
+            },
+            {
+              "attribution_basis": "observed input",
+              "feature": "network_tcp-flags-urg_count",
+              "is_missing": false,
+              "observed": true,
+              "shap_value": 0.0,
+              "value": 14.0
+            }
+          ],
+          "limitations": "Signed local attributions use the model's training tree-cover reference (tree path dependent). Positive contributions increase this class margin; negative ones decrease it. They are not probability percentage points, comparisons against the benign class, or causal evidence. Missing-input contributions explain the model's default routing, not observed traffic; missing does not mean zero. All features and the bias reconstruct the raw margin; the chart displays the top ten.",
+          "margin": 0.583034873008728,
+          "method": "Exact TreeSHAP (native XGBoost)",
+          "output_space": "raw class margin",
+          "reconstruction_error": 3.91155481338501e-08
+        },
+        "is_attack": true,
+        "label": "Model predicts suspicious traffic",
+        "limitations": "Experimental binary packet-only model; separate from the 84-class, 170-feature research model. Validation uses DataSense ten-second windows from the existing within-capture split; test remains locked. Windows PC traffic and the new live extractor have not been evaluated with labelled live observations. Counts follow the published feature descriptions; the publisher's exact extraction implementation was unavailable. Normal and suspicious are model predictions, not incident confirmation or a guarantee of safety. Scores are uncalibrated. Unknown attacks, encrypted application contents and attack attribution are not evaluated. TreeSHAP explains the raw class margin, not causation or probability percentage points.",
+        "live_validation": false,
+        "method": "Experimental packet XGBoost",
+        "observed_window_seconds": 10.0,
+        "score": 0.5414223074913025,
+        "window_seconds": 10,
+        "window_timing_note": "Training windows are exactly ten seconds; capture scheduling jitter is not covered by the dataset validation."
+      }
+    },
+    {
+      "id": "lower_duration",
+      "input": {
+        "ack": 18,
+        "fin": 12,
+        "packets": 27,
+        "psh": 15,
+        "rst": 20,
+        "seconds": 9.0,
+        "syn_all": 17,
+        "urg": 14
+      },
+      "output": {
+        "attack_score": 0.5414223074913025,
+        "capability_errors": {},
+        "dataset_validation_accuracy": 0.95,
+        "explanation": {
+          "all_features": [
+            {
+              "attribution_basis": "observed input",
+              "feature": "network_packets_all_count",
+              "is_missing": false,
+              "observed": true,
+              "shap_value": 0.4176212549209595,
+              "value": 27.0
+            },
+            {
+              "attribution_basis": "observed input",
+              "feature": "network_tcp-flags-ack_count",
+              "is_missing": false,
+              "observed": true,
+              "shap_value": 0.0,
+              "value": 18.0
+            },
+            {
+              "attribution_basis": "observed input",
+              "feature": "network_tcp-flags-fin_count",
+              "is_missing": false,
+              "observed": true,
+              "shap_value": 0.0,
+              "value": 12.0
+            },
+            {
+              "attribution_basis": "observed input",
+              "feature": "network_tcp-flags-psh_count",
+              "is_missing": false,
+              "observed": true,
+              "shap_value": 0.0,
+              "value": 15.0
+            },
+            {
+              "attribution_basis": "observed input",
+              "feature": "network_tcp-flags-rst_count",
+              "is_missing": false,
+              "observed": true,
+              "shap_value": 0.004726102575659752,
+              "value": 20.0
+            },
+            {
+              "attribution_basis": "observed input",
+              "feature": "network_tcp-flags-syn_count",
+              "is_missing": false,
+              "observed": true,
+              "shap_value": -0.3218071460723877,
+              "value": 17.0
+            },
+            {
+              "attribution_basis": "observed input",
+              "feature": "network_tcp-flags-urg_count",
+              "is_missing": false,
+              "observed": true,
+              "shap_value": 0.0,
+              "value": 14.0
+            }
+          ],
+          "bias": 0.48249462246894836,
+          "class_label": "suspicious",
+          "contribution_sum": 0.10054021142423153,
+          "important_features": [
+            {
+              "attribution_basis": "observed input",
+              "feature": "network_packets_all_count",
+              "is_missing": false,
+              "observed": true,
+              "shap_value": 0.4176212549209595,
+              "value": 27.0
+            },
+            {
+              "attribution_basis": "observed input",
+              "feature": "network_tcp-flags-syn_count",
+              "is_missing": false,
+              "observed": true,
+              "shap_value": -0.3218071460723877,
+              "value": 17.0
+            },
+            {
+              "attribution_basis": "observed input",
+              "feature": "network_tcp-flags-rst_count",
+              "is_missing": false,
+              "observed": true,
+              "shap_value": 0.004726102575659752,
+              "value": 20.0
+            },
+            {
+              "attribution_basis": "observed input",
+              "feature": "network_tcp-flags-ack_count",
+              "is_missing": false,
+              "observed": true,
+              "shap_value": 0.0,
+              "value": 18.0
+            },
+            {
+              "attribution_basis": "observed input",
+              "feature": "network_tcp-flags-fin_count",
+              "is_missing": false,
+              "observed": true,
+              "shap_value": 0.0,
+              "value": 12.0
+            },
+            {
+              "attribution_basis": "observed input",
+              "feature": "network_tcp-flags-psh_count",
+              "is_missing": false,
+              "observed": true,
+              "shap_value": 0.0,
+              "value": 15.0
+            },
+            {
+              "attribution_basis": "observed input",
+              "feature": "network_tcp-flags-urg_count",
+              "is_missing": false,
+              "observed": true,
+              "shap_value": 0.0,
+              "value": 14.0
+            }
+          ],
+          "limitations": "Signed local attributions use the model's training tree-cover reference (tree path dependent). Positive contributions increase this class margin; negative ones decrease it. They are not probability percentage points, comparisons against the benign class, or causal evidence. Missing-input contributions explain the model's default routing, not observed traffic; missing does not mean zero. All features and the bias reconstruct the raw margin; the chart displays the top ten.",
+          "margin": 0.583034873008728,
+          "method": "Exact TreeSHAP (native XGBoost)",
+          "output_space": "raw class margin",
+          "reconstruction_error": 3.91155481338501e-08
+        },
+        "is_attack": true,
+        "label": "Model predicts suspicious traffic",
+        "limitations": "Experimental binary packet-only model; separate from the 84-class, 170-feature research model. Validation uses DataSense ten-second windows from the existing within-capture split; test remains locked. Windows PC traffic and the new live extractor have not been evaluated with labelled live observations. Counts follow the published feature descriptions; the publisher's exact extraction implementation was unavailable. Normal and suspicious are model predictions, not incident confirmation or a guarantee of safety. Scores are uncalibrated. Unknown attacks, encrypted application contents and attack attribution are not evaluated. TreeSHAP explains the raw class margin, not causation or probability percentage points.",
+        "live_validation": false,
+        "method": "Experimental packet XGBoost",
+        "observed_window_seconds": 9.0,
+        "score": 0.5414223074913025,
+        "window_seconds": 10,
+        "window_timing_note": "Training windows are exactly ten seconds; capture scheduling jitter is not covered by the dataset validation."
+      }
+    },
+    {
+      "id": "upper_duration",
+      "input": {
+        "ack": 18,
+        "fin": 12,
+        "packets": 27,
+        "psh": 15,
+        "rst": 20,
+        "seconds": 11.0,
+        "syn_all": 17,
+        "urg": 14
+      },
+      "output": {
+        "attack_score": 0.5414223074913025,
+        "capability_errors": {},
+        "dataset_validation_accuracy": 0.95,
+        "explanation": {
+          "all_features": [
+            {
+              "attribution_basis": "observed input",
+              "feature": "network_packets_all_count",
+              "is_missing": false,
+              "observed": true,
+              "shap_value": 0.4176212549209595,
+              "value": 27.0
+            },
+            {
+              "attribution_basis": "observed input",
+              "feature": "network_tcp-flags-ack_count",
+              "is_missing": false,
+              "observed": true,
+              "shap_value": 0.0,
+              "value": 18.0
+            },
+            {
+              "attribution_basis": "observed input",
+              "feature": "network_tcp-flags-fin_count",
+              "is_missing": false,
+              "observed": true,
+              "shap_value": 0.0,
+              "value": 12.0
+            },
+            {
+              "attribution_basis": "observed input",
+              "feature": "network_tcp-flags-psh_count",
+              "is_missing": false,
+              "observed": true,
+              "shap_value": 0.0,
+              "value": 15.0
+            },
+            {
+              "attribution_basis": "observed input",
+              "feature": "network_tcp-flags-rst_count",
+              "is_missing": false,
+              "observed": true,
+              "shap_value": 0.004726102575659752,
+              "value": 20.0
+            },
+            {
+              "attribution_basis": "observed input",
+              "feature": "network_tcp-flags-syn_count",
+              "is_missing": false,
+              "observed": true,
+              "shap_value": -0.3218071460723877,
+              "value": 17.0
+            },
+            {
+              "attribution_basis": "observed input",
+              "feature": "network_tcp-flags-urg_count",
+              "is_missing": false,
+              "observed": true,
+              "shap_value": 0.0,
+              "value": 14.0
+            }
+          ],
+          "bias": 0.48249462246894836,
+          "class_label": "suspicious",
+          "contribution_sum": 0.10054021142423153,
+          "important_features": [
+            {
+              "attribution_basis": "observed input",
+              "feature": "network_packets_all_count",
+              "is_missing": false,
+              "observed": true,
+              "shap_value": 0.4176212549209595,
+              "value": 27.0
+            },
+            {
+              "attribution_basis": "observed input",
+              "feature": "network_tcp-flags-syn_count",
+              "is_missing": false,
+              "observed": true,
+              "shap_value": -0.3218071460723877,
+              "value": 17.0
+            },
+            {
+              "attribution_basis": "observed input",
+              "feature": "network_tcp-flags-rst_count",
+              "is_missing": false,
+              "observed": true,
+              "shap_value": 0.004726102575659752,
+              "value": 20.0
+            },
+            {
+              "attribution_basis": "observed input",
+              "feature": "network_tcp-flags-ack_count",
+              "is_missing": false,
+              "observed": true,
+              "shap_value": 0.0,
+              "value": 18.0
+            },
+            {
+              "attribution_basis": "observed input",
+              "feature": "network_tcp-flags-fin_count",
+              "is_missing": false,
+              "observed": true,
+              "shap_value": 0.0,
+              "value": 12.0
+            },
+            {
+              "attribution_basis": "observed input",
+              "feature": "network_tcp-flags-psh_count",
+              "is_missing": false,
+              "observed": true,
+              "shap_value": 0.0,
+              "value": 15.0
+            },
+            {
+              "attribution_basis": "observed input",
+              "feature": "network_tcp-flags-urg_count",
+              "is_missing": false,
+              "observed": true,
+              "shap_value": 0.0,
+              "value": 14.0
+            }
+          ],
+          "limitations": "Signed local attributions use the model's training tree-cover reference (tree path dependent). Positive contributions increase this class margin; negative ones decrease it. They are not probability percentage points, comparisons against the benign class, or causal evidence. Missing-input contributions explain the model's default routing, not observed traffic; missing does not mean zero. All features and the bias reconstruct the raw margin; the chart displays the top ten.",
+          "margin": 0.583034873008728,
+          "method": "Exact TreeSHAP (native XGBoost)",
+          "output_space": "raw class margin",
+          "reconstruction_error": 3.91155481338501e-08
+        },
+        "is_attack": true,
+        "label": "Model predicts suspicious traffic",
+        "limitations": "Experimental binary packet-only model; separate from the 84-class, 170-feature research model. Validation uses DataSense ten-second windows from the existing within-capture split; test remains locked. Windows PC traffic and the new live extractor have not been evaluated with labelled live observations. Counts follow the published feature descriptions; the publisher's exact extraction implementation was unavailable. Normal and suspicious are model predictions, not incident confirmation or a guarantee of safety. Scores are uncalibrated. Unknown attacks, encrypted application contents and attack attribution are not evaluated. TreeSHAP explains the raw class margin, not causation or probability percentage points.",
+        "live_validation": false,
+        "method": "Experimental packet XGBoost",
+        "observed_window_seconds": 11.0,
+        "score": 0.5414223074913025,
+        "window_seconds": 10,
+        "window_timing_note": "Training windows are exactly ten seconds; capture scheduling jitter is not covered by the dataset validation."
+      }
+    },
+    {
+      "id": "late",
+      "input": {
+        "ack": 18,
+        "fin": 12,
+        "packets": 27,
+        "psh": 15,
+        "rst": 20,
+        "seconds": 11.01,
+        "syn_all": 17,
+        "urg": 14
+      },
+      "output": {
+        "error": "Captured window must be within one second of the ten-second model window",
+        "error_type": "ValueError"
+      }
+    },
+    {
+      "id": "flag_exceeds_total",
+      "input": {
+        "ack": 28,
+        "fin": 12,
+        "packets": 27,
+        "psh": 15,
+        "rst": 20,
+        "syn_all": 17,
+        "urg": 14
+      },
+      "output": {
+        "error": "A TCP flag count cannot exceed total captured packets",
+        "error_type": "ValueError"
+      }
+    },
+    {
+      "id": "empty",
+      "input": {
+        "ack": 0,
+        "fin": 0,
+        "packets": 0,
+        "psh": 0,
+        "rst": 0,
+        "seconds": 10.0,
+        "syn_all": 0,
+        "urg": 0
+      },
+      "output": {
+        "error": "No captured packets: there is no traffic window to classify",
+        "error_type": "ValueError"
+      }
+    }
+  ],
+  "limitations": "Actual Python inference on a tiny synthetic CPU checkpoint; not capture or research validation.",
+  "synthetic": true
+}

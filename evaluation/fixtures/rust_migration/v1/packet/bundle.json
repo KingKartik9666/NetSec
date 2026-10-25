@@ -1,0 +1,35 @@
+{
+  "checkpoint": "model.ubj",
+  "checkpoint_sha256": "288be1c00e0e8b4ebafb78840eee6fb778e89a441a86bebfb6f56e8cb3e2f173",
+  "classes": [
+    "normal",
+    "suspicious"
+  ],
+  "feature_names": [
+    "network_packets_all_count",
+    "network_tcp-flags-ack_count",
+    "network_tcp-flags-fin_count",
+    "network_tcp-flags-psh_count",
+    "network_tcp-flags-rst_count",
+    "network_tcp-flags-syn_count",
+    "network_tcp-flags-urg_count"
+  ],
+  "live_validation": false,
+  "metric_scope": "Synthetic training-set fit only; field required by runtime, not validation accuracy",
+  "schema_version": 1,
+  "stats_keys": [
+    "packets",
+    "ack",
+    "fin",
+    "psh",
+    "rst",
+    "syn_all",
+    "urg"
+  ],
+  "synthetic": true,
+  "test_evaluated": false,
+  "validation_metrics": {
+    "accuracy": 0.95
+  },
+  "window_seconds": 10
+}

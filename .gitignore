@@ -34,3 +34,20 @@ node_modules/
 artifacts/desktop/
 artifacts/llm/
 *.gguf
+artifacts/rust_migration/
+artifacts/application/
+artifacts/app_migration_*/
+artifacts/app_electron_react_*/
+artifacts/github_delivery/
+artifacts/delivery/
+runtime_assets.json
+target/
+dist/
+*.bin
+# Only tiny synthetic migration test assets may be versioned; production models
+# and captures retain their global exclusions above.
+!evaluation/fixtures/rust_migration/v1/models/*.ubj
+!evaluation/fixtures/rust_migration/v1/models/xai_reference.npz
+!evaluation/fixtures/rust_migration/v1/packet/model.ubj
+!evaluation/fixtures/rust_migration/v1/packet/xai_reference.npz
+!evaluation/fixtures/rust_migration/v1/live/synthetic.pcap

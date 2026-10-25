@@ -1,5 +1,7 @@
 # NetSec
 
+Current desktop: **Electron + React/TypeScript + Rust native inference**, with ten visible models and the existing theme. See [the native application guide](docs/NATIVE_APP.md) for architecture, build and verification. Python sections below describe retained research and legacy workflows.
+
 A local desktop research app for **PC traffic observation → model prediction → explainable evidence → optional language explanation**.
 
 The app separates OS connection rules, the promoted 84-class XGBoost model, an experimental binary packet comparison and the synthetic architecture demo. The promoted model accepts full/partial DataSense CSVs and seven measured Npcap counts in completed ten-second windows; unavailable features remain missing. Saved-model inference, TreeSHAP, LIME and optional Qwen generation run locally on CPU. Monitoring and language generation start only when requested.
@@ -12,7 +14,7 @@ From the existing project environment in Windows PowerShell:
 .\.venv\Scripts\python.exe run_desktop.py
 ```
 
-The Electron window starts its own authenticated Python service on a random local port and closes that service when the window exits. No browser address, API key or GPU is needed.
+The Electron window hosts the React/TypeScript interface and starts its own authenticated native Rust service on a random local port. The service and its native workers close with the window. No browser address, API key or GPU is needed.
 
 For a source checkout, install the Python dependencies from `requirements-desktop.txt` and desktop dependencies with `npm install --prefix framework/app/desktop`. The real Qwen weights are prepared separately with `python -m experiment.setup_local_llm`; this initial download needs internet access. See [app setup](docs/APP.md) for dependency and packaging details.
 

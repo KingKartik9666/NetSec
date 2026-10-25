@@ -1,0 +1,270 @@
+{
+  "schema_version": 1,
+  "title": "IMDAI offline explanation knowledge",
+  "curated_at": "2026-09-30",
+  "authorship": "Original concise project-curated wording, paraphrased from checked project documentation and source; not copied research papers.",
+  "scope": "Background explanation only; no raw observations, training rows, external website retrieval or operational security claims.",
+  "chunks": [
+    {
+      "id": "shap-margin-directions",
+      "title": "Signed SHAP explains the predicted class margin",
+      "scopes": [
+        "common"
+      ],
+      "terms": [
+        "SHAP",
+        "TreeSHAP",
+        "signed",
+        "raw margin",
+        "support oppose",
+        "contribution"
+      ],
+      "text": "For the predicted class, positive SHAP supports its raw margin and negative SHAP opposes it. Bias plus all contributions reconstructs that margin. These are not probability percentage points, a comparison with benign, or causal proof.",
+      "source": {
+        "file": "docs/APP.md",
+        "section": "What each explanation means / Native TreeSHAP",
+        "sha256": "12cf355675f786868c675e7d22e896fb2aa0103a68f2f528b4470c0ec7e3e717"
+      },
+      "chunk_sha256": "e3097ec7bb45e559e8ca83f84145478a2e8dfdd1909390b0a3f90aee373bd1c1"
+    },
+    {
+      "id": "lime-local-fidelity",
+      "title": "LIME is an approximate local explanation",
+      "scopes": [
+        "common"
+      ],
+      "terms": [
+        "LIME",
+        "local fidelity",
+        "surrogate",
+        "R2",
+        "perturbations"
+      ],
+      "text": "LIME approximates the classifier with a local linear surrogate. Compare its prediction with the model score and inspect fidelity R-squared. Perturbations are synthetic, can break feature correlations, and are neither captured traffic nor causal evidence.",
+      "source": {
+        "file": "docs/APP.md",
+        "section": "What each explanation means / LIME",
+        "sha256": "12cf355675f786868c675e7d22e896fb2aa0103a68f2f528b4470c0ec7e3e717"
+      },
+      "chunk_sha256": "7833b82feff3ce20eaf5f9123b83a6315277206217338ad4bfde09cda0797076"
+    },
+    {
+      "id": "xgboost-global-statistics",
+      "title": "Gain, split count and cover describe the trained trees",
+      "scopes": [
+        "common"
+      ],
+      "terms": [
+        "XGBoost",
+        "global",
+        "gain",
+        "weight",
+        "cover",
+        "total_gain",
+        "total_cover"
+      ],
+      "text": "XGBoost weight counts splits using a feature. Gain is mean training-loss reduction per split; cover is mean Hessian-weighted coverage. Total gain and total cover sum those quantities. These global tree statistics do not explain one observation or establish causation.",
+      "source": {
+        "file": "framework/xai/model_evidence.py",
+        "section": "explain_additional / statistics definitions",
+        "sha256": "760fb3faaaa9c80daed15dce57947071ad741c5f595a5baffde60b25817cae79"
+      },
+      "chunk_sha256": "d5b7e38f68271e1d236b109eefa3877eaea04b05147ded70e4dcef10aa63b7db"
+    },
+    {
+      "id": "uncalibrated-model-scores",
+      "title": "Classifier scores are uncalibrated",
+      "scopes": [
+        "common"
+      ],
+      "terms": [
+        "score",
+        "confidence",
+        "uncalibrated",
+        "uncertainty",
+        "model prediction"
+      ],
+      "text": "A displayed classifier score is uncalibrated. It is not the measured chance that an attack occurred and does not establish safety. Validation scores concern the stated dataset and split; they do not measure accuracy on the current PC's traffic.",
+      "source": {
+        "file": "docs/APP.md",
+        "section": "Evidence and limitations",
+        "sha256": "12cf355675f786868c675e7d22e896fb2aa0103a68f2f528b4470c0ec7e3e717"
+      },
+      "chunk_sha256": "5dde7c9a7be7ede6413b1b12e9d11703da45726926648245b3c7ed38b4298906"
+    },
+    {
+      "id": "live-rule-disagreement",
+      "title": "Live rules and packet model can disagree",
+      "scopes": [
+        "packet"
+      ],
+      "terms": [
+        "rule model disagreement",
+        "benign looking",
+        "suspicious",
+        "independent rules"
+      ],
+      "text": "Live behavior rules and the packet classifier use different decision logic. A suspicious model prediction with benign-looking rules is disagreement, not a confirmed incident. Keep both results visible and verify the observed traffic before deciding what happened.",
+      "source": {
+        "file": "docs/LIVE_MONITORING.md",
+        "section": "Rules and model outputs / rule evidence",
+        "sha256": "1a544869360dc98dd3e39b34be2eb8158a31b435b7252a22fd63687397668cac"
+      },
+      "chunk_sha256": "cc0e728ca41b02ecc038e67f1bd708788e1bfe2ef69326a105a1c2a984883d48"
+    },
+    {
+      "id": "packet-header-coverage",
+      "title": "Packet monitoring observes selected local headers",
+      "scopes": [
+        "packet"
+      ],
+      "terms": [
+        "capture",
+        "Npcap",
+        "packet headers",
+        "adapter",
+        "encrypted payload",
+        "coverage"
+      ],
+      "text": "Packet mode passively counts headers involving the selected adapter's own addresses. It does not inspect encrypted payload contents or prove that other devices are safe. No traffic payload or PCAP is saved and no network mitigation is executed.",
+      "source": {
+        "file": "docs/LIVE_MONITORING.md",
+        "section": "Privacy, lifecycle and reproduction",
+        "sha256": "1a544869360dc98dd3e39b34be2eb8158a31b435b7252a22fd63687397668cac"
+      },
+      "chunk_sha256": "75c2d8633ff4837c9c4bb6aad16f0169f8ad88a70563192269dc094e1b106e17"
+    },
+    {
+      "id": "packet-window-inputs",
+      "title": "The live classifier uses seven header counts",
+      "scopes": [
+        "packet"
+      ],
+      "terms": [
+        "packets count",
+        "tcp flags",
+        "ACK FIN PSH RST SYN URG",
+        "ten seconds",
+        "window"
+      ],
+      "text": "The separate packet classifier uses total packets and ACK, FIN, PSH, RST, SYN and URG counts per ten-second window. One packet can have multiple flags. Empty or substantially delayed windows have no model verdict; absence of a prediction does not establish safety.",
+      "source": {
+        "file": "docs/LIVE_MONITORING.md",
+        "section": "Separate saved-model paths / packet inputs",
+        "sha256": "1a544869360dc98dd3e39b34be2eb8158a31b435b7252a22fd63687397668cac"
+      },
+      "chunk_sha256": "4da003a7f229091813869caed6141593e1b307ccf0f8ea1d7de45d969c1ed344"
+    },
+    {
+      "id": "packet-generalization-limit",
+      "title": "DataSense packet validation is not live-PC accuracy",
+      "scopes": [
+        "packet"
+      ],
+      "terms": [
+        "DataSense",
+        "validation",
+        "projection",
+        "overlap",
+        "false positive",
+        "generalization"
+      ],
+      "text": "Packet validation is a binary DataSense task. Some validation count vectors also occur in training after projection, and live extractor equivalence is unverified. Real capture proves execution, not labelled accuracy; unfamiliar legitimate traffic can produce false alarms.",
+      "source": {
+        "file": "docs/LIVE_MONITORING.md",
+        "section": "Separate saved-model paths / retained partitions",
+        "sha256": "1a544869360dc98dd3e39b34be2eb8158a31b435b7252a22fd63687397668cac"
+      },
+      "chunk_sha256": "aeacf042394f226a4dc68617b9d18fd5df4409fc478b185e316211575ca19d3e"
+    },
+    {
+      "id": "datasense-csv-scope",
+      "title": "CSV analysis requires the frozen DataSense schema",
+      "scopes": [
+        "csv"
+      ],
+      "terms": [
+        "DataSense",
+        "CSV",
+        "sensor",
+        "log features",
+        "validation",
+        "upload",
+        "schema"
+      ],
+      "text": "CSV analysis uses the saved DataSense model and its full feature schema, including sensor and log inputs. Included samples are validation observations used in model selection. This is distinct from live packet analysis and is not independently verified CIC-IIoT2025 research.",
+      "source": {
+        "file": "docs/APP.md",
+        "section": "Frozen CSV model and input contract",
+        "sha256": "12cf355675f786868c675e7d22e896fb2aa0103a68f2f528b4470c0ec7e3e717"
+      },
+      "chunk_sha256": "fc89fb8f568f7a1fb11c2e48644d95da26dbf1b19d338f920197555d32afc67a"
+    },
+    {
+      "id": "csv-missing-inputs",
+      "title": "Missing numeric evidence remains missing",
+      "scopes": [
+        "csv"
+      ],
+      "terms": [
+        "NaN",
+        "missing",
+        "schema",
+        "protocol",
+        "UNSEEN",
+        "features"
+      ],
+      "text": "Individual missing numeric values remain missing during saved-model inference. The app rejects incompatible feature schemas rather than inventing sensor values. A protocol UNSEEN indicator only marks vocabulary mismatch; it does not detect an unknown attack.",
+      "source": {
+        "file": "docs/APP.md",
+        "section": "Frozen CSV model and input contract / validation",
+        "sha256": "12cf355675f786868c675e7d22e896fb2aa0103a68f2f528b4470c0ec7e3e717"
+      },
+      "chunk_sha256": "3d1644fe03ce6d03bf4eb104d47f9508ee3056be747160aed201cb9c0697cf36"
+    },
+    {
+      "id": "unknown-attacks-unvalidated",
+      "title": "Unknown attack detection remains unvalidated",
+      "scopes": [
+        "common"
+      ],
+      "terms": [
+        "unknown",
+        "novel",
+        "zero day",
+        "HEM",
+        "closed set",
+        "novelty"
+      ],
+      "text": "These desktop classifiers have not been evaluated for unknown or zero-day attack detection. A supported class label or high score is not evidence that unfamiliar attacks will be recognized. Original HEM inference and held-out unknown-attack experiments remain separate work.",
+      "source": {
+        "file": "docs/APP.md",
+        "section": "Evidence and limitations",
+        "sha256": "12cf355675f786868c675e7d22e896fb2aa0103a68f2f528b4470c0ec7e3e717"
+      },
+      "chunk_sha256": "3df55138905a758b020fe9b84806cfb2df1493f963670b3beb34d111eabfb960"
+    },
+    {
+      "id": "human-verification",
+      "title": "Verify measured evidence before responding",
+      "scopes": [
+        "common"
+      ],
+      "terms": [
+        "human verification",
+        "uncertainty",
+        "model prediction",
+        "normal",
+        "suspicious",
+        "incident"
+      ],
+      "text": "A prediction or generated explanation requires human verification against the measured observation and its source. Neither normal nor suspicious output confirms safety or an incident. Recommendations are advisory; this app does not block devices or alter network policy.",
+      "source": {
+        "file": "docs/APP.md",
+        "section": "What each explanation means / Local assistant",
+        "sha256": "12cf355675f786868c675e7d22e896fb2aa0103a68f2f528b4470c0ec7e3e717"
+      },
+      "chunk_sha256": "8fb3803e4dc8914d24317883da2f48cb71965ca87498889c720757ff47f6bf42"
+    }
+  ]
+}

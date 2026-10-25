@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light"><title>Model research — NetSec</title>
+  <link rel="icon" href="/static/netsec.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/static/style.css"><link rel="stylesheet" href="/static/studio.css">
+  <link rel="stylesheet" href="/static/models.css"><script src="/static/models.js" defer></script>
+</head>
+<body class="analysis-page models-page">
+  <a class="skip-link" href="#workspace">Skip to model research</a>
+  {% include 'navigation.html' %}
+  <main id="workspace" class="main">
+    <section class="workspace-heading" aria-labelledby="page-title">
+      <div><div class="eyebrow">04 / COMPARE &amp; EXPLAIN</div><h1 id="page-title">Model research<span>.</span></h1></div>
+      <p>Four original families. Independent predictions, measured comparisons and clear limits. Each model loads only when requested.</p>
+    </section>
+    <div id="models-announcement" class="sr-only" role="status" aria-live="polite"></div>
+    <section class="model-selection panel" aria-labelledby="model-selection-title">
+      <div class="panel-heading"><div><span class="section-number">01</span><h2 id="model-selection-title">Choose a model</h2></div><button id="models-refresh" class="secondary-button" type="button">Refresh availability</button></div>
+      <div id="model-selector" class="model-selector" aria-label="Model family selection"></div>
+      <p class="field-help">A missing model or explanation affects its own capability. Live screening continues to use the separately identified partial-input XGBoost; choosing a research model here does not change packet capture.</p>
+      <div id="models-catalog-error" class="insight-error" role="alert" hidden></div>
+    </section>
+    <div class="research-model-grid">
+      <section class="panel model-dashboard" aria-labelledby="selected-model-title">
+        <div class="panel-heading"><div><span class="section-number">02</span><h2 id="selected-model-title">Select a family</h2></div><span id="selected-model-state" class="mini-tag">NOT LOADED</span></div>
+        <p id="selected-model-description" class="panel-intro">Inspect a model’s architecture and supported inputs before running it.</p>
+        <div id="selected-model-error" class="insight-error" role="alert" hidden></div>
+        <div id="model-capabilities" class="model-capabilities"></div>
+        <dl id="model-metadata" class="model-metadata"></dl>
+        <details class="research-disclosure"><summary>Input schema &amp; research limitations</summary><div id="model-schema"></div><ul id="selected-model-limitations"></ul></details>
+      </section>
+      <section class="panel model-experiment" aria-labelledby="model-predict-title">
+        <div class="panel-heading"><div><span class="section-number">03</span><h2 id="model-predict-title">Run an observation</h2></div><span class="mini-tag">LOCAL / CPU</span></div>
+        <p class="panel-intro">Included samples are source-validation observations. They are not independent tests or live traffic.</p>
+        <label class="field-label" for="model-sample">Shared validation example</label>
+        <select id="model-sample" disabled><option value="">Loading included observations…</option></select>
+        <p id="model-sample-status" class="field-help"></p>
+        <button id="model-predict-sample" class="primary-button" type="button" disabled>Run selected model <span aria-hidden="true">↗</span></button>
+        <details class="model-custom-input"><summary>Use your prepared feature values</summary>
+          <p class="field-help">Prepared CSV columns are matched by name. Include the selected model’s full schema unless its metadata explicitly supports partial inputs. Labels are never model inputs.</p>
+          <label class="field-label" for="model-csv">Prepared traffic CSV · 500 rows / 10 MB maximum</label>
+          <input id="model-csv" type="file" accept=".csv,text/csv">
+          <button id="model-predict-csv" class="secondary-button" type="button" disabled>Classify prepared CSV</button>
+          <p class="field-help">Enter one JSON feature row, in the selected model’s displayed order. Missing values use null, genuine measured zeros use 0. Full-input models reject unavailable measurements.</p>
+          <label class="sr-only" for="model-input-row">Ordered feature row JSON</label>
+          <textarea id="model-input-row" rows="5" spellcheck="false" placeholder="[12, 0, null, ...]"></textarea>
+          <button id="model-predict-row" class="secondary-button" type="button" disabled>Classify ordered values</button>
+        </details>
+        <div id="model-prediction-error" class="insight-error" role="alert" hidden></div>
+        <div id="model-prediction-result" class="model-prediction-result" role="status"><p class="field-help">No prediction has been requested.</p></div>
+        <label class="field-label" for="model-explain-method">Available explanation method</label>
+        <select id="model-explain-method" disabled><option value="native">Native model explanation</option></select>
+        <button id="model-explain" class="secondary-button" type="button" disabled>Explain this prediction</button>
+        <div id="model-explanation-error" class="insight-error" role="alert" hidden></div>
+        <div id="model-explanation-result" class="model-explanation-result"></div>
+      </section>
+    </div>
+    <section class="panel model-comparison" aria-labelledby="model-comparison-title">
+      <div class="panel-heading"><div><span class="section-number">04</span><h2 id="model-comparison-title">Measured comparisons</h2></div><span class="mini-tag">VALIDATION / TEST LOCKED</span></div>
+      <p id="model-comparison-note" class="panel-intro">Loading documented evaluation conditions…</p>
+      <div id="model-comparison-error" class="insight-error" role="alert" hidden></div>
+      <div id="model-comparison-table" class="model-comparison-table"></div>
+      <p class="field-help">Missing metrics stay unavailable. Scores from incompatible tasks or input profiles are not ranked. Model output never confirms an incident or guarantees safety.</p>
+    </section>
+    <footer class="page-footer"><a class="footer-brand" href="/">NetSec.</a><a href="#workspace">Back to model selection ↑</a><a class="session-exit" href="/exit?return=/models">Exit workspace ↗</a></footer>
+  </main>
+</body>
+</html>

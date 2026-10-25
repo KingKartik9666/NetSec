@@ -1,0 +1,1 @@
+{"assessment":{"label":"Synthetic rule transport fixture","status":"benign_looking"},"error":null,"fixture_provenance":"Synthetic transport state; not OS observation or live validation","interface":"synthetic-fixture","metrics":{"packets_observed":0},"mode":"connections","model_prediction":null,"multiclass_prediction":null,"running":false,"state":"stopped"}

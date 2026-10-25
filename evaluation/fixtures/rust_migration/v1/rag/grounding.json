@@ -1,0 +1,646 @@
+{
+  "cases": [
+    {
+      "id": "faithful",
+      "input": {
+        "evidence": {
+          "prediction": {
+            "is_attack": true,
+            "label": "Suspicious traffic pattern"
+          },
+          "rules": null,
+          "source": {
+            "kind": "Synthetic packet observation",
+            "mode": "packets",
+            "synthetic": true
+          },
+          "xai": {
+            "features": [
+              {
+                "feature": "network_packets_all_count",
+                "shap_value": 0.4,
+                "value": 100
+              },
+              {
+                "feature": "network_tcp-flags-syn_count",
+                "shap_value": -0.2,
+                "value": 20
+              }
+            ],
+            "method": "Exact native TreeSHAP"
+          }
+        },
+        "finish_reason": "stop",
+        "passages": [],
+        "text": "The detector predicted Suspicious traffic pattern. The packets all count feature supported this prediction. The TCP syn count feature opposed this prediction. This prediction needs human verification and does not confirm an attack or guarantee safety."
+      },
+      "output": {
+        "issues": [],
+        "limitations": "Heuristic checks can miss paraphrased or semantic errors. Passing is not proof of correctness or citation entailment.",
+        "method": "Deterministic lexical checks of labels, percentages, uncertainty, partial coverage, missing-input routing, directions and source identifiers",
+        "passed": true
+      }
+    },
+    {
+      "id": "valid_citation",
+      "input": {
+        "evidence": {
+          "prediction": {
+            "is_attack": true,
+            "label": "Suspicious traffic pattern"
+          },
+          "rules": null,
+          "source": {
+            "kind": "Synthetic packet observation",
+            "mode": "packets",
+            "synthetic": true
+          },
+          "xai": {
+            "features": [
+              {
+                "feature": "network_packets_all_count",
+                "shap_value": 0.4,
+                "value": 100
+              },
+              {
+                "feature": "network_tcp-flags-syn_count",
+                "shap_value": -0.2,
+                "value": 20
+              }
+            ],
+            "method": "Exact native TreeSHAP"
+          }
+        },
+        "finish_reason": "stop",
+        "passages": [
+          {
+            "chunk_sha256": "cc0e728ca41b02ecc038e67f1bd708788e1bfe2ef69326a105a1c2a984883d48",
+            "corpus_sha256": "febde238f247bc06d839b109cc691326021dfc41ba77176033648f046d51b844",
+            "id": "live-rule-disagreement",
+            "scopes": [
+              "packet"
+            ],
+            "score": 0.363209,
+            "source": {
+              "file": "docs/LIVE_MONITORING.md",
+              "section": "Rules and model outputs / rule evidence",
+              "sha256": "1a544869360dc98dd3e39b34be2eb8158a31b435b7252a22fd63687397668cac"
+            },
+            "text": "Live behavior rules and the packet classifier use different decision logic. A suspicious model prediction with benign-looking rules is disagreement, not a confirmed incident. Keep both results visible and verify the observed traffic before deciding what happened.",
+            "title": "Live rules and packet model can disagree"
+          },
+          {
+            "chunk_sha256": "4da003a7f229091813869caed6141593e1b307ccf0f8ea1d7de45d969c1ed344",
+            "corpus_sha256": "febde238f247bc06d839b109cc691326021dfc41ba77176033648f046d51b844",
+            "id": "packet-window-inputs",
+            "scopes": [
+              "packet"
+            ],
+            "score": 0.228429,
+            "source": {
+              "file": "docs/LIVE_MONITORING.md",
+              "section": "Separate saved-model paths / packet inputs",
+              "sha256": "1a544869360dc98dd3e39b34be2eb8158a31b435b7252a22fd63687397668cac"
+            },
+            "text": "The separate packet classifier uses total packets and ACK, FIN, PSH, RST, SYN and URG counts per ten-second window. One packet can have multiple flags. Empty or substantially delayed windows have no model verdict; absence of a prediction does not establish safety.",
+            "title": "The live classifier uses seven header counts"
+          }
+        ],
+        "text": "The detector predicted Suspicious traffic pattern. The packets all count feature supported this prediction. The TCP syn count feature opposed this prediction. This prediction needs human verification and does not confirm an attack or guarantee safety. [live-rule-disagreement]"
+      },
+      "output": {
+        "issues": [],
+        "limitations": "Heuristic checks can miss paraphrased or semantic errors. Passing is not proof of correctness or citation entailment.",
+        "method": "Deterministic lexical checks of labels, percentages, uncertainty, partial coverage, missing-input routing, directions and source identifiers",
+        "passed": true
+      }
+    },
+    {
+      "id": "partial_missing_routing",
+      "input": {
+        "evidence": {
+          "feature_coverage": {
+            "missing": 163,
+            "observed": 7,
+            "total": 170,
+            "validated_profile": false
+          },
+          "prediction": {
+            "is_attack": true,
+            "label": "Suspicious traffic pattern"
+          },
+          "rules": null,
+          "source": {
+            "kind": "Synthetic packet observation",
+            "mode": "packets",
+            "synthetic": true
+          },
+          "xai": {
+            "features": [
+              {
+                "feature": "network_packets_all_count",
+                "shap_value": 0.4,
+                "value": 100
+              },
+              {
+                "feature": "network_tcp-flags-syn_count",
+                "is_missing": true,
+                "observed": false,
+                "shap_value": -0.2,
+                "value": null
+              }
+            ],
+            "method": "Exact native TreeSHAP"
+          }
+        },
+        "finish_reason": "stop",
+        "passages": [],
+        "text": "The detector predicted Suspicious traffic pattern. The packets all count feature supported this prediction. The unavailable TCP syn count feature uses missing-value default routing and opposed this prediction. This prediction needs human verification and does not confirm an attack or guarantee safety. Input is partial and limited; this profile has not been validated."
+      },
+      "output": {
+        "issues": [],
+        "limitations": "Heuristic checks can miss paraphrased or semantic errors. Passing is not proof of correctness or citation entailment.",
+        "method": "Deterministic lexical checks of labels, percentages, uncertainty, partial coverage, missing-input routing, directions and source identifiers",
+        "passed": true
+      }
+    },
+    {
+      "id": "rule_disagreement",
+      "input": {
+        "evidence": {
+          "prediction": {
+            "is_attack": true,
+            "label": "Suspicious traffic pattern"
+          },
+          "rules": {
+            "status": "benign_looking"
+          },
+          "source": {
+            "kind": "Synthetic packet observation",
+            "mode": "packets",
+            "synthetic": true
+          },
+          "xai": {
+            "features": [
+              {
+                "feature": "network_packets_all_count",
+                "shap_value": 0.4,
+                "value": 100
+              },
+              {
+                "feature": "network_tcp-flags-syn_count",
+                "shap_value": -0.2,
+                "value": 20
+              }
+            ],
+            "method": "Exact native TreeSHAP"
+          }
+        },
+        "finish_reason": "stop",
+        "passages": [],
+        "text": "The detector predicted Suspicious traffic pattern. The packets all count feature supported this prediction. The TCP syn count feature opposed this prediction. This prediction needs human verification and does not confirm an attack or guarantee safety. The rules did not flag this pattern and disagree with the model."
+      },
+      "output": {
+        "issues": [],
+        "limitations": "Heuristic checks can miss paraphrased or semantic errors. Passing is not proof of correctness or citation entailment.",
+        "method": "Deterministic lexical checks of labels, percentages, uncertainty, partial coverage, missing-input routing, directions and source identifiers",
+        "passed": true
+      }
+    },
+    {
+      "id": "unsupported_percentage",
+      "input": {
+        "evidence": {
+          "prediction": {
+            "is_attack": true,
+            "label": "Suspicious traffic pattern"
+          },
+          "rules": null,
+          "source": {
+            "kind": "Synthetic packet observation",
+            "mode": "packets",
+            "synthetic": true
+          },
+          "xai": {
+            "features": [
+              {
+                "feature": "network_packets_all_count",
+                "shap_value": 0.4,
+                "value": 100
+              },
+              {
+                "feature": "network_tcp-flags-syn_count",
+                "shap_value": -0.2,
+                "value": 20
+              }
+            ],
+            "method": "Exact native TreeSHAP"
+          }
+        },
+        "finish_reason": "stop",
+        "passages": [],
+        "text": "The detector predicted Suspicious traffic pattern. The packets all count feature supported this prediction. The TCP syn count feature opposed this prediction. This prediction needs human verification and does not confirm an attack or guarantee safety. It is 99.97% certain."
+      },
+      "output": {
+        "issues": [
+          "unsupported_percentage",
+          "unsupported_number"
+        ],
+        "limitations": "Heuristic checks can miss paraphrased or semantic errors. Passing is not proof of correctness or citation entailment.",
+        "method": "Deterministic lexical checks of labels, percentages, uncertainty, partial coverage, missing-input routing, directions and source identifiers",
+        "passed": false
+      }
+    },
+    {
+      "id": "wrong_label",
+      "input": {
+        "evidence": {
+          "prediction": {
+            "is_attack": true,
+            "label": "Suspicious traffic pattern"
+          },
+          "rules": null,
+          "source": {
+            "kind": "Synthetic packet observation",
+            "mode": "packets",
+            "synthetic": true
+          },
+          "xai": {
+            "features": [
+              {
+                "feature": "network_packets_all_count",
+                "shap_value": 0.4,
+                "value": 100
+              },
+              {
+                "feature": "network_tcp-flags-syn_count",
+                "shap_value": -0.2,
+                "value": 20
+              }
+            ],
+            "method": "Exact native TreeSHAP"
+          }
+        },
+        "finish_reason": "stop",
+        "passages": [],
+        "text": "The detector predicted Normal traffic. The packets all count feature supported this prediction. The TCP syn count feature opposed this prediction. This prediction needs human verification and does not confirm an attack or guarantee safety."
+      },
+      "output": {
+        "issues": [
+          "predicted_label_missing_or_changed"
+        ],
+        "limitations": "Heuristic checks can miss paraphrased or semantic errors. Passing is not proof of correctness or citation entailment.",
+        "method": "Deterministic lexical checks of labels, percentages, uncertainty, partial coverage, missing-input routing, directions and source identifiers",
+        "passed": false
+      }
+    },
+    {
+      "id": "reversed_direction",
+      "input": {
+        "evidence": {
+          "prediction": {
+            "is_attack": true,
+            "label": "Suspicious traffic pattern"
+          },
+          "rules": null,
+          "source": {
+            "kind": "Synthetic packet observation",
+            "mode": "packets",
+            "synthetic": true
+          },
+          "xai": {
+            "features": [
+              {
+                "feature": "network_packets_all_count",
+                "shap_value": 0.4,
+                "value": 100
+              },
+              {
+                "feature": "network_tcp-flags-syn_count",
+                "shap_value": -0.2,
+                "value": 20
+              }
+            ],
+            "method": "Exact native TreeSHAP"
+          }
+        },
+        "finish_reason": "stop",
+        "passages": [],
+        "text": "The detector predicted Suspicious traffic pattern. The packets all count feature opposed this prediction. The TCP syn count feature opposed this prediction. This prediction needs human verification and does not confirm an attack or guarantee safety."
+      },
+      "output": {
+        "issues": [
+          "feature_direction_changed:network_packets_all_count"
+        ],
+        "limitations": "Heuristic checks can miss paraphrased or semantic errors. Passing is not proof of correctness or citation entailment.",
+        "method": "Deterministic lexical checks of labels, percentages, uncertainty, partial coverage, missing-input routing, directions and source identifiers",
+        "passed": false
+      }
+    },
+    {
+      "id": "invented_citation",
+      "input": {
+        "evidence": {
+          "prediction": {
+            "is_attack": true,
+            "label": "Suspicious traffic pattern"
+          },
+          "rules": null,
+          "source": {
+            "kind": "Synthetic packet observation",
+            "mode": "packets",
+            "synthetic": true
+          },
+          "xai": {
+            "features": [
+              {
+                "feature": "network_packets_all_count",
+                "shap_value": 0.4,
+                "value": 100
+              },
+              {
+                "feature": "network_tcp-flags-syn_count",
+                "shap_value": -0.2,
+                "value": 20
+              }
+            ],
+            "method": "Exact native TreeSHAP"
+          }
+        },
+        "finish_reason": "stop",
+        "passages": [
+          {
+            "chunk_sha256": "cc0e728ca41b02ecc038e67f1bd708788e1bfe2ef69326a105a1c2a984883d48",
+            "corpus_sha256": "febde238f247bc06d839b109cc691326021dfc41ba77176033648f046d51b844",
+            "id": "live-rule-disagreement",
+            "scopes": [
+              "packet"
+            ],
+            "score": 0.363209,
+            "source": {
+              "file": "docs/LIVE_MONITORING.md",
+              "section": "Rules and model outputs / rule evidence",
+              "sha256": "1a544869360dc98dd3e39b34be2eb8158a31b435b7252a22fd63687397668cac"
+            },
+            "text": "Live behavior rules and the packet classifier use different decision logic. A suspicious model prediction with benign-looking rules is disagreement, not a confirmed incident. Keep both results visible and verify the observed traffic before deciding what happened.",
+            "title": "Live rules and packet model can disagree"
+          },
+          {
+            "chunk_sha256": "4da003a7f229091813869caed6141593e1b307ccf0f8ea1d7de45d969c1ed344",
+            "corpus_sha256": "febde238f247bc06d839b109cc691326021dfc41ba77176033648f046d51b844",
+            "id": "packet-window-inputs",
+            "scopes": [
+              "packet"
+            ],
+            "score": 0.228429,
+            "source": {
+              "file": "docs/LIVE_MONITORING.md",
+              "section": "Separate saved-model paths / packet inputs",
+              "sha256": "1a544869360dc98dd3e39b34be2eb8158a31b435b7252a22fd63687397668cac"
+            },
+            "text": "The separate packet classifier uses total packets and ACK, FIN, PSH, RST, SYN and URG counts per ten-second window. One packet can have multiple flags. Empty or substantially delayed windows have no model verdict; absence of a prediction does not establish safety.",
+            "title": "The live classifier uses seven header counts"
+          }
+        ],
+        "text": "The detector predicted Suspicious traffic pattern. The packets all count feature supported this prediction. The TCP syn count feature opposed this prediction. This prediction needs human verification and does not confirm an attack or guarantee safety. [invented-evidence]"
+      },
+      "output": {
+        "issues": [
+          "invented_source_identifier"
+        ],
+        "limitations": "Heuristic checks can miss paraphrased or semantic errors. Passing is not proof of correctness or citation entailment.",
+        "method": "Deterministic lexical checks of labels, percentages, uncertainty, partial coverage, missing-input routing, directions and source identifiers",
+        "passed": false
+      }
+    },
+    {
+      "id": "missing_routing_warning",
+      "input": {
+        "evidence": {
+          "feature_coverage": {
+            "missing": 163,
+            "observed": 7,
+            "total": 170,
+            "validated_profile": false
+          },
+          "prediction": {
+            "is_attack": true,
+            "label": "Suspicious traffic pattern"
+          },
+          "rules": null,
+          "source": {
+            "kind": "Synthetic packet observation",
+            "mode": "packets",
+            "synthetic": true
+          },
+          "xai": {
+            "features": [
+              {
+                "feature": "network_packets_all_count",
+                "shap_value": 0.4,
+                "value": 100
+              },
+              {
+                "feature": "network_tcp-flags-syn_count",
+                "is_missing": true,
+                "observed": false,
+                "shap_value": -0.2,
+                "value": null
+              }
+            ],
+            "method": "Exact native TreeSHAP"
+          }
+        },
+        "finish_reason": "stop",
+        "passages": [],
+        "text": "The detector predicted Suspicious traffic pattern. The packets all count feature supported this prediction. The TCP syn count feature opposed this prediction. This prediction needs human verification and does not confirm an attack or guarantee safety. Input is partial and limited; this profile has not been validated."
+      },
+      "output": {
+        "issues": [
+          "missing_input_presented_as_observed:network_tcp-flags-syn_count"
+        ],
+        "limitations": "Heuristic checks can miss paraphrased or semantic errors. Passing is not proof of correctness or citation entailment.",
+        "method": "Deterministic lexical checks of labels, percentages, uncertainty, partial coverage, missing-input routing, directions and source identifiers",
+        "passed": false
+      }
+    },
+    {
+      "id": "missing_disagreement",
+      "input": {
+        "evidence": {
+          "prediction": {
+            "is_attack": true,
+            "label": "Suspicious traffic pattern"
+          },
+          "rules": {
+            "status": "benign_looking"
+          },
+          "source": {
+            "kind": "Synthetic packet observation",
+            "mode": "packets",
+            "synthetic": true
+          },
+          "xai": {
+            "features": [
+              {
+                "feature": "network_packets_all_count",
+                "shap_value": 0.4,
+                "value": 100
+              },
+              {
+                "feature": "network_tcp-flags-syn_count",
+                "shap_value": -0.2,
+                "value": 20
+              }
+            ],
+            "method": "Exact native TreeSHAP"
+          }
+        },
+        "finish_reason": "stop",
+        "passages": [],
+        "text": "The detector predicted Suspicious traffic pattern. The packets all count feature supported this prediction. The TCP syn count feature opposed this prediction. This prediction needs human verification and does not confirm an attack or guarantee safety."
+      },
+      "output": {
+        "issues": [
+          "rule_model_disagreement_missing"
+        ],
+        "limitations": "Heuristic checks can miss paraphrased or semantic errors. Passing is not proof of correctness or citation entailment.",
+        "method": "Deterministic lexical checks of labels, percentages, uncertainty, partial coverage, missing-input routing, directions and source identifiers",
+        "passed": false
+      }
+    },
+    {
+      "id": "truncation",
+      "input": {
+        "evidence": {
+          "prediction": {
+            "is_attack": true,
+            "label": "Suspicious traffic pattern"
+          },
+          "rules": null,
+          "source": {
+            "kind": "Synthetic packet observation",
+            "mode": "packets",
+            "synthetic": true
+          },
+          "xai": {
+            "features": [
+              {
+                "feature": "network_packets_all_count",
+                "shap_value": 0.4,
+                "value": 100
+              },
+              {
+                "feature": "network_tcp-flags-syn_count",
+                "shap_value": -0.2,
+                "value": 20
+              }
+            ],
+            "method": "Exact native TreeSHAP"
+          }
+        },
+        "finish_reason": "length",
+        "passages": [],
+        "text": "The detector predicted Suspicious traffic pattern. The packets all count feature supported this prediction. The TCP syn count feature opposed this prediction. This prediction needs human verification and does not confirm an attack or guarantee safety."
+      },
+      "output": {
+        "issues": [
+          "truncated_response"
+        ],
+        "limitations": "Heuristic checks can miss paraphrased or semantic errors. Passing is not proof of correctness or citation entailment.",
+        "method": "Deterministic lexical checks of labels, percentages, uncertainty, partial coverage, missing-input routing, directions and source identifiers",
+        "passed": false
+      }
+    },
+    {
+      "id": "missing_uncertainty",
+      "input": {
+        "evidence": {
+          "prediction": {
+            "is_attack": true,
+            "label": "Suspicious traffic pattern"
+          },
+          "rules": null,
+          "source": {
+            "kind": "Synthetic packet observation",
+            "mode": "packets",
+            "synthetic": true
+          },
+          "xai": {
+            "features": [
+              {
+                "feature": "network_packets_all_count",
+                "shap_value": 0.4,
+                "value": 100
+              },
+              {
+                "feature": "network_tcp-flags-syn_count",
+                "shap_value": -0.2,
+                "value": 20
+              }
+            ],
+            "method": "Exact native TreeSHAP"
+          }
+        },
+        "finish_reason": "stop",
+        "passages": [],
+        "text": "The detector predicted Suspicious traffic pattern. The packets all count feature supported this prediction. The TCP syn count feature opposed this prediction. "
+      },
+      "output": {
+        "issues": [
+          "uncertainty_missing"
+        ],
+        "limitations": "Heuristic checks can miss paraphrased or semantic errors. Passing is not proof of correctness or citation entailment.",
+        "method": "Deterministic lexical checks of labels, percentages, uncertainty, partial coverage, missing-input routing, directions and source identifiers",
+        "passed": false
+      }
+    },
+    {
+      "id": "instruction_echo",
+      "input": {
+        "evidence": {
+          "prediction": {
+            "is_attack": true,
+            "label": "Suspicious traffic pattern"
+          },
+          "rules": null,
+          "source": {
+            "kind": "Synthetic packet observation",
+            "mode": "packets",
+            "synthetic": true
+          },
+          "xai": {
+            "features": [
+              {
+                "feature": "network_packets_all_count",
+                "shap_value": 0.4,
+                "value": 100
+              },
+              {
+                "feature": "network_tcp-flags-syn_count",
+                "shap_value": -0.2,
+                "value": 20
+              }
+            ],
+            "method": "Exact native TreeSHAP"
+          }
+        },
+        "finish_reason": "stop",
+        "passages": [],
+        "text": "Rewrite the facts. The detector predicted Suspicious traffic pattern. The packets all count feature supported this prediction. The TCP syn count feature opposed this prediction. This prediction needs human verification and does not confirm an attack or guarantee safety."
+      },
+      "output": {
+        "issues": [
+          "instruction_or_diagnostic_echo"
+        ],
+        "limitations": "Heuristic checks can miss paraphrased or semantic errors. Passing is not proof of correctness or citation entailment.",
+        "method": "Deterministic lexical checks of labels, percentages, uncertainty, partial coverage, missing-input routing, directions and source identifiers",
+        "passed": false
+      }
+    }
+  ],
+  "input_note": "Handwritten prose and fabricated attribution values; no model or LLM executed",
+  "limitations": "Synthetic offline regression fixtures only; no real traffic, capture, model inference, training or LLM generation. Rule decisions and lexical checks do not establish detection accuracy, safety or semantic faithfulness.",
+  "schema_version": 1,
+  "synthetic_inputs": true
+}

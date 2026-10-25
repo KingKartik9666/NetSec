@@ -1,0 +1,15 @@
+{
+  "categorical_indices": [],
+  "feature_names": [
+    "network_packets_all_count",
+    "network_tcp-flags-ack_count",
+    "network_tcp-flags-fin_count",
+    "network_tcp-flags-psh_count",
+    "network_tcp-flags-rst_count",
+    "network_tcp-flags-syn_count",
+    "network_tcp-flags-urg_count"
+  ],
+  "kind": "Synthetic migration training fixture; not research observations",
+  "rows": 120,
+  "sha256": "765d6b94366b14563c4d02b35a30e39e22e39c34fb23c3d5f47f8a0a323d0950"
+}

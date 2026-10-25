@@ -1,5 +1,4 @@
-"""Launch NetSec's Electron desktop app from the existing project environment."""
-import os
+"""Developer convenience launcher; the installed Electron app needs no Python."""
 from pathlib import Path
 import subprocess
 import sys
@@ -9,13 +8,11 @@ ROOT = Path(__file__).resolve().parent
 
 def main():
     desktop = ROOT / "framework/app/desktop"
-    binary = desktop / "node_modules/electron/dist" / ("electron.exe" if sys.platform == "win32" else "electron")
+    binary = desktop / "node_modules/electron/dist/electron.exe"
     if not binary.is_file():
-        raise SystemExit("Install desktop dependencies first: npm install --prefix framework/app/desktop")
-    env = {**os.environ, "IMDAI_PYTHON": sys.executable}
-    env.pop("ELECTRON_RUN_AS_NODE", None)
-    return subprocess.call([str(binary), str(desktop)], cwd=ROOT, env=env)
+        raise SystemExit("Install desktop build dependencies first; see docs/NATIVE_APP.md.")
+    return subprocess.call([str(binary), str(desktop)], cwd=ROOT)
 
 
 if __name__ == "__main__":
-    raise SystemExit(main())
+    sys.exit(main())

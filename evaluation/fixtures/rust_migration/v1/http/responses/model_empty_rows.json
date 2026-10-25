@@ -1,0 +1,1 @@
+{"capability":"predict","error":"Supply 1 to 500 ordered feature rows","model_id":"xgboost","status":"incompatible"}

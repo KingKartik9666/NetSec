@@ -1753,3 +1753,178 @@ UI, checkpoint, bundle and reference files. Windows installation verification is
 recorded separately after the install completes; merely editing source never updates
 an older installation. The user explicitly requested upgrading the existing
 `%LOCALAPPDATA%/Programs/IMDAI Security` folder. Its old installation was backed up.
+
+## 35. Current four-family optimization authorization — 11 October 2026
+
+The active research target is exactly four model families: a fixed conventional
+sklearn Random Forest baseline, XGBoost, genuine efficient-KAN and an adaptation
+using the original GitHub HEM neural classes. Historical standalone XGBoost
+forest artifacts remain preserved and are not a fifth selectable family.
+
+The user now explicitly permits architecture/capacity changes for XGBoost, KAN
+and HEM, superseding earlier architecture-preservation constraints for these
+three. RF remains unchanged. Original controls and upstream repositories must
+remain intact. Modified HEM network widths, PCA dimensionality and neighbor
+settings must be labelled HEM-derived experiments; they are not reproduction of
+the unchanged HEM architecture or its original unknown-attack evaluation.
+
+The detached, bounded 24-hour study uses the same train/validation observations
+and real labels; the test remains locked. Architecture and hyperparameter changes
+are separate ablations, and combinations require independently measured gains.
+95%+ accuracy is a target, not a claimed result. See `docs/OPTIMIZATION_24H.md`
+and `docs/RESUME_CONTEXT.md` for commands, immutable policy revisions, recovery,
+selection, measured progress and experiment evidence. Default app/demo inference
+remains offline, CPU-only and credential-free.
+
+A requested later stage would have four CSV and four Npcap/live deployment
+versions, still four model families. It stays blocked until all four CSV models
+individually reach 95% validated accuracy, including fixed RF, and independently
+labelled compatible live/capture data are available. Comparing unlabelled Npcap
+measurements to CIC IIoT2025 checks compatibility, not ground truth. No classifier
+predictions may be silently treated as verified labels. No automatic network
+mitigation, model promotion or installed-app replacement is performed by training.
+
+
+## 36. Full-CSV adaptive study (11 October 2026)
+
+The user superseded the earlier mixed CSV/live-mask objective: optimize XGBoost, KAN and upstream-derived HEM for complete CSV inputs first; retain fixed conventional RF. Separate live-screening versions are deferred. The new versioned csv_specialization_v2 study preserves original splits and the original 24-hour deadline. Per-round/epoch validation telemetry and plateau-aware between-fit proposals are documented in docs/CSV_MODEL_TRAINING.md. No test-set tuning, fabricated labels or automatic checkpoint promotion is permitted. RF is our conventional paper-family implementation, not original author code or a verified exact parameter reproduction. The first full-CSV XGBoost control achieved 79.50% validation accuracy; 96% remains unmet. Recovery details belong in docs/RESUME_CONTEXT.md.
+
+## 37. Open-ended training-only study (11 October 2026)
+
+The accepted csv_research_v3 plan supersedes v2's overall deadline and mixed/higher
+targets: success requires one full-CSV XGBoost, genuine efficient-KAN or HEM-derived
+recipe to reach >=95% real validation accuracy in seeds 42, 43 and 44, with explicit
+CUDA execution, raw-schema CPU reload and recall/false-alarm regression guards. RF
+remains fixed. This one-family criterion does not reopen the earlier all-four live
+training gate. The held-out test, live-model development, UI, packaging and installed
+application replacement remain deferred. Original study evidence stays preserved.
+
+The new isolated worker fits train-only MI/semantic transforms and constrained
+augmentation, saving the complete inference pipeline for ordered 170-column raw
+input. Neighbor samplers are labelled our constrained adaptations; actual optional
+CTGAN runs on CUDA. Synthetic labels are inherited conditions, never independently
+verified attack captures. HEM retains upstream-derived neural components and voting;
+changed capacity remains a closed-set adaptation, not the original novel-attack
+protocol. Its nearest-neighbor reference excludes synthetic observations.
+
+The detached controller uses hash-checked adoption, immutable recipe requests,
+duplicate suppression, sequential CUDA fits, Optuna TPE/pruning, compatible pairs,
+supported combinations, same-family ensembles and training-only OOF calibration.
+Six-fit plateau diagnostics can interleave capacity probes. Per-fit watchdogs grow
+from 20 minutes to one hour/four hours; there is no overall wall-clock deadline.
+Completed fits survive Stop; interrupted fits restart in a new attempt. Default app
+inference remains CPU-only, offline and credential-free. No new accuracy is implied
+by implementation or toy CUDA tests. See docs/CSV_MODEL_TRAINING.md and the current
+docs/RESUME_CONTEXT.md for verified status, commands and remaining work.
+
+## 38. Reversed cycle cancelled (12 October 2026)
+
+The user withdrew the earlier request to train on original test data and evaluate
+on original training data. This cancellation supersedes that authorization.
+`reversed_csv_v1` is cancelled: its detached watcher exited, its separate Windows
+startup recovery entry was removed and its STOP marker remains. No real test
+array was accessed or fitting request created by this stage; the original test
+remains locked. Do not queue, resume or automatically recover reverse training
+unless the user issues a new explicit instruction.
+
+The isolated implementation and verification evidence remain as historical work,
+not an active roadmap stage or research result. Current `csv_research_v3` training
+continues with its existing train/validation split, fixed RF and locked test.
+Its source/input pins, recovery entry and completed models remain unchanged.
+Live training, UI, packaging and application replacement remain deferred.
+Cancellation evidence is in artifacts/training/reversed_csv_v1/cancellation.json.
+
+## 39. Audited dataset copy and four-family calibration (13 October 2026)
+
+The user's isolated cleaning/training instruction is executed under
+`dataset/experiments/xgboost_data_audit_20261012_v1/deep_clean_v2/`.
+All 480,405 train and 30,000 validation records keep original IDs/labels.
+The other source records and locked test remain outside the audit/fits.
+Official DataSense paper/dataset research and two resumed bounded agent reviews
+support conservative zero, signed-value and suspected-censoring policies.
+All raw cells remain archived. The final master has 655 derived/model features;
+559 compact inputs omit 77 exact training duplicates and 19 constants. One
+duplicate relationship differs on five validation rows; full data preserve it.
+383,630 exact input/label groups retain multiplicities totaling 480,405.
+
+Eight fits and four-family probability/correctness calibration assessments are
+complete. Full source-validation accuracy/macro F1: fixed RF 79.1467/73.4811%,
+XGBoost 80.5267/77.6984%, genuine efficient-KAN 78.5100/72.9696%, HEM-derived
+75.7267/62.8095%. These combined representation/recipe comparisons are not gains
+caused solely by cleaning, paper reproduction, 95% results, or live validation.
+The prior enriched XGBoost accuracy remains slightly higher (80.6167%). HEM
+false alarms and RF attack misses regress. All tradeoffs remain reported.
+
+A separate isolated calibration assessment fits 14,545 early within-class
+validation rows and assesses 14,754 later rows, purging 701 touching/copy rows
+from this comparison only. Prior validation reuse makes these exploratory
+results. Decision-confidence ECE improves for all four; KAN correctness Brier
+slightly worsens. HEM confidence estimates unchanged vote correctness, not
+multiclass ensemble probabilities. The prior csv_research_v3 training-only OOF
+policy and cancelled reverse study remain unchanged.
+
+GPU experiments are explicit options; defaults/app inference remain offline CPU
+and credential-free. Checkpoints reload on CPU (all 30,000 rows for RF/XGBoost/KAN,
+128 for HEM). Source/candidate hashes and every exported CSV cell were verified.
+All five demos and 508 evaluation tests pass. See `docs/DATA_CLEANING_20261013.md`
+and the study's `RESULTS.md`, `report/`, `calibration/` and `verification/` for
+executed evidence, source snapshots, limitations and reproducible commands.
+
+## 40. Ten-model frozen study completed (24 October 2026)
+
+The user's instruction to finish the remaining model work is completed in
+`artifacts/training/all_models_wrapup_20261023_v1/`. The sealed continuation
+retains frozen selections from the day study and preserves historical sources,
+checkpoints and failures. Five compatible OOF records were reused, one saved
+TabM fold recovered after an explicit CPU/CUDA arithmetic audit with unchanged
+tolerance, and two missing KAN folds trained. All eight OOF branches, fourteen
+branch-repeat assessments, seven standalone CPU bundles and three hybrid CPU
+bundles completed. Each hybrid completed twelve TPE combiner trials. No
+controller or worker remains active; no further training is queued by this task.
+
+Highest full reused-validation accuracy/macro F1 is TabM + XGBoost + KAN at
+81.5033%/79.9590%; reserved within-validation assessment accuracy is 79.9170%.
+These are exploratory within-capture results. The held-out test stays locked;
+there is no live-network validation or application promotion. Default application
+execution remains offline, CPU-only and credential-free.
+
+Tradeoffs remain explicit: calibration can regress (RF assessment ECE worsens
+7.5164% to 23.9282%); TabPack + XGBoost assessment accuracy regresses despite
+full-validation improvement. The 2% alert FPR cap applies only to tuning, and
+binary-alert assessment FPR differs from the full-validation multiclass FPR.
+Fourteen repeats cover seven branches, including auxiliary TabPack and excluding
+fixed RF; hybrids were not independently repeated. TabPack repeats keep the
+same initialization seed while varying minibatch order. Tuning budgets were
+unequal. CPU replay proofs cover 128 observations per bundle, with standalone
+full-validation inference and supplementary hybrid reload/inference benchmarks.
+
+Read `artifacts/training/all_models_wrapup_20261023_v1/CLOSEOUT.md`,
+`FINAL_REPORT.md`, `FINAL_METRICS.json`, `INFERENCE_GUIDE.md`, and the final-closeout
+verification manifest before quoting scores or resuming work. Historical
+stopped/cancelled research controllers, especially reversed training, remain
+stopped; their unfinished historical roadmaps are not implicitly authorized.
+
+
+## 41. Electron / React / native Rust application correction (24 October 2026)
+
+The owner explicitly corrected the desktop direction: keep Electron, remove
+Tauri, use Rust as the backend, migrate to React + TypeScript, retain native Rust
+inference, expose ten models and keep the current theme. This supersedes the
+intermediate Tauri choice and earlier four-model or Python-worker migration
+proposals. Python research and frozen study artifacts remain separate.
+
+Active shell: framework/app/desktop; React source: rust/netsec/web/src; native
+runtime/model/explanation crates: rust/netsec/crates. The retired Tauri tree is
+recoverable under artifacts/app_electron_react_20261024/tauri_retired and is not
+part of the active build. Read docs/NATIVE_APP.md for commands and limitations.
+Source snapshot and verification reports are in the same migration evidence
+folder. Native model, explanation and core sources were preserved byte-for-byte.
+The ten visible full-schema choices include HEM-derived (not real HEM); the
+TabPack auxiliary branch is hidden. Live-compatible partial/binary models remain
+separately identified and do not imply full-schema Windows capture compatibility.
+
+The shell owns a Rust executable and native worker/llama descendants, with no
+Python inference process. React artifacts are compiled and sealed before staging.
+No training, held-out testing, research data mutation or packet capture occurs in
+this migration's regression checks. Clean-machine/signing/Store qualification is
+separate from a successful local package and installation check.

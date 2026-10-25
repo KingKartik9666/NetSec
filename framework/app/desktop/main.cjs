@@ -1,14 +1,12 @@
 'use strict';
 const {app, BrowserWindow, dialog, session, shell, Menu, ipcMain} = require('electron');
-const {spawn} = require('node:child_process');
+const {NativeRuntime} = require('./native-runtime.cjs');
 const crypto = require('node:crypto');
 const fs = require('node:fs');
 const path = require('node:path');
-const readline = require('node:readline');
 const {pathToFileURL} = require('node:url');
 let child, window, backendOrigin, starting = false, shuttingDown = false, allowExit = false;
 let exitRequested = false, serviceStatus = 'loading', serviceMessage = '';
-const expectedStops = new WeakSet();
 const root = path.resolve(__dirname, '../../..');
 const token = crypto.randomBytes(32).toString('hex');
 const loader = path.join(__dirname, 'loading.html');
@@ -17,10 +15,11 @@ const allowedExternal = new Set(['https://npcap.com/#download', 'https://npcap.c
 app.setName('NetSec');
 
 function publicState() {
-  return {maximized: Boolean(window && !window.isDestroyed() && window.isMaximized()),
+  return {desktop: true, maximized: Boolean(window && !window.isDestroyed() && window.isMaximized()),
     exitRequested, closing: shuttingDown, serviceStatus, message: serviceMessage};
 }
 function broadcast() {
+  child?.sendState(publicState());
   if (window && !window.isDestroyed()) window.webContents.send('netsec:state', publicState());
 }
 function trustedURL(url) {
@@ -52,36 +51,19 @@ async function serviceError(error) {
   }
 }
 
-function spawnBackend() {
-  return new Promise((resolve, reject) => {
-    const binary = process.platform === 'win32' ? 'imdai-backend.exe' : 'imdai-backend';
-    const python = process.env.IMDAI_PYTHON || path.join(root, '.venv', process.platform === 'win32' ? 'Scripts/python.exe' : 'bin/python');
-    const executable = app.isPackaged ? path.join(process.resourcesPath, 'backend', binary) : python;
-    if (!fs.existsSync(executable)) return reject(new Error('The local analysis runtime is missing. Restore the project environment or reinstall NetSec, then try again.'));
-    const args = app.isPackaged ? [] : ['-B', '-u', '-m', 'framework.app.desktop_backend'];
-    const owned = spawn(executable, args, {cwd: app.isPackaged ? process.resourcesPath : root,
-      windowsHide: true, stdio: ['pipe', 'pipe', 'pipe'],
-      env: {...process.env, PYTHONDONTWRITEBYTECODE: '1', IMDAI_SESSION_TOKEN: token,
-        IMDAI_LLM_DIR: app.isPackaged ? path.join(process.resourcesPath, 'models/qwen') : path.join(root, 'artifacts/llm/qwen')}});
-    child = owned;
-    let settled = false;
-    const finish = (error, value) => {if (!settled) {settled = true; clearTimeout(timer); error ? reject(error) : resolve(value);}};
-    const timer = setTimeout(() => finish(new Error('The local analysis runtime did not become ready within 60 seconds.')), 60000);
-    const lines = readline.createInterface({input: owned.stdout});
-    lines.on('line', line => {
-      try {const message = JSON.parse(line); if (message.type === 'ready' && Number.isInteger(message.port) && message.port > 0 && message.port < 65536) finish(null, 'http://127.0.0.1:' + message.port);} catch {}
-    });
-    // Keep diagnostics local and bounded. Never log the session token or evidence.
-    let diagnostics = '';
-    owned.stderr.on('data', chunk => {diagnostics = (diagnostics + chunk.toString()).slice(-12000);});
-    owned.on('error', error => finish(error));
-    owned.on('exit', code => {
-      if (!settled) finish(new Error('Local analysis runtime exited (' + code + '). ' + diagnostics.slice(-1500)));
-      else if (!shuttingDown && !expectedStops.has(owned) && child === owned) {
-        serviceError(new Error('The local analysis service stopped. Previous observations are no longer current. Restart the workspace to continue.')).catch(() => {});
-      }
-    });
+async function spawnBackend() {
+  const runtimeRoot = app.isPackaged ? path.join(process.resourcesPath, 'runtime') : (process.env.NETSEC_ROOT || root);
+  const owned = child = new NativeRuntime({root: runtimeRoot, token});
+  owned.on('failure', error => {if (!shuttingDown && child === owned) serviceError(error).catch(() => {});});
+  owned.on('window', action => {
+    if (!window || window.isDestroyed()) return;
+    if (action === 'minimize') window.minimize();
+    else if (action === 'toggle_maximize') window.isMaximized() ? window.unmaximize() : window.maximize();
+    else if (action === 'request_close') requestExit();
+    else if (action === 'cancel_close') {exitRequested = false; broadcast();}
+    else if (action === 'confirm_close' && exitRequested) void finishExit();
   });
+  return owned.start();
 }
 
 async function startService() {
@@ -98,7 +80,7 @@ async function startService() {
     if (shuttingDown) return;
     backendOrigin = origin;
     serviceStatus = 'ready';
-    await window.loadURL(origin);
+    await window.loadURL(origin + '/bootstrap?session=' + token);
     broadcast();
   } catch (error) {
     await stopBackend();
@@ -115,10 +97,6 @@ async function openWindow() {
   partition.webRequest.onBeforeRequest((details, callback) => {
     const permitted = trustedURL(details.url) || Boolean(backendOrigin && details.url.startsWith('blob:' + backendOrigin + '/'));
     callback({cancel: !permitted});
-  });
-  partition.webRequest.onBeforeSendHeaders((details, callback) => {
-    if (backendOrigin && details.url.startsWith(backendOrigin + '/')) details.requestHeaders['X-IMDAI-Session'] = token;
-    callback({requestHeaders: details.requestHeaders});
   });
   window = new BrowserWindow({width: 1480, height: 980, minWidth: 740, minHeight: 620,
     title: 'NetSec', backgroundColor: '#f6f5f2', show: false, frame: false, autoHideMenuBar: true,
@@ -137,22 +115,19 @@ async function openWindow() {
   window.webContents.on('will-navigate', (event, url) => {if (!trustedURL(url)) event.preventDefault();});
   window.webContents.on('will-attach-webview', event => event.preventDefault());
   window.webContents.on('did-finish-load', broadcast);
+  window.webContents.on('render-process-gone', () => {
+    stopBackend().then(() => serviceError(new Error('The interface stopped. Restart this workspace to continue.'))).catch(() => {});
+  });
   partition.on('will-download', (_event, item) => {
     item.setSaveDialogOptions({defaultPath: path.join(app.getPath('downloads'), path.basename(item.getFilename()))});
   });
   await startService();
 }
 
-function stopBackend() {
-  return new Promise(resolve => {
-    const owned = child;
-    if (!owned || owned.exitCode !== null || owned.signalCode !== null) return resolve();
-    expectedStops.add(owned);
-    const timer = setTimeout(() => {owned.kill(); resolve();}, 10000);
-    owned.once('exit', () => {clearTimeout(timer); resolve();});
-    owned.stdin.on('error', () => {});
-    if (!owned.stdin.destroyed && !owned.stdin.writableEnded) owned.stdin.end('shutdown\n');
-  });
+async function stopBackend() {
+  const owned = child;
+  if (owned) await owned.stop();
+  if (child === owned) child = null;
 }
 
 ipcMain.handle('netsec:window-state', event => {
@@ -176,6 +151,6 @@ else {
   app.whenReady().then(() => {Menu.setApplicationMenu(null); return openWindow();})
     .catch(error => {if (window && !window.isDestroyed()) serviceError(error).catch(() => {});
       else {dialog.showErrorBox('Unable to open NetSec', error.message); allowExit = true; app.quit();}});
-  app.on('window-all-closed', () => {allowExit = true; app.quit();});
+  app.on('window-all-closed', () => {shuttingDown = true; stopBackend().finally(() => {allowExit = true; app.quit();});});
   app.on('before-quit', event => {if (!allowExit) {event.preventDefault(); requestExit();}});
 }

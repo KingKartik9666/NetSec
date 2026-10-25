@@ -1,5 +1,7 @@
 # NetSec desktop application
 
+> Current desktop architecture (24 October 2026): Electron, React/TypeScript and native Rust inference across ten visible models. [NATIVE_APP.md](NATIVE_APP.md) supersedes historical Python-service, Tauri and four-model delivery directions below. Research workflows remain separate.
+
 The Windows packaging configuration installs NetSec, its embedded Python interpreter,
 CPU inference libraries, the original and promoted XGBoost checkpoints, training-only XAI
 reference rows, local fonts and a small quantized language model. The receiving

@@ -600,7 +600,7 @@
     return section;
   }
   function renderReport(report) {
-    if (!report.prediction || !report.explanation || !report.reasoning || !report.source) throw new Error("The analysis report is incomplete. No result was displayed.");
+    if (!report.prediction || !report.source) throw new Error("The analysis report contains no valid prediction. No result was displayed.");
     const prediction = report.prediction;
     const source = report.source;
     const root = document.createDocumentFragment();
@@ -621,7 +621,15 @@
     const tabs = node("div", "tabs report-tabs");
     tabs.setAttribute("role", "tablist");
     tabs.setAttribute("aria-label", "Analysis evidence sections");
-    const panels = [renderShap({...report.explanation, display_label: displayLabel}), renderAssessment(report.reasoning), renderFeatures(report.explanation)];
+    const unavailable = (capability, reason) => {
+      const section = node("section", "explanation-section");
+      section.append(node("h3", "", `${capability} unavailable`), node("p", "field-help", reason || "This optional capability is unavailable. The genuine model prediction remains available above; no substitute evidence was generated."));
+      return section;
+    };
+    const panels = [report.explanation ? renderShap({...report.explanation, display_label: displayLabel})
+      : unavailable("TreeSHAP", report.capability_errors?.explanation || report.capability_errors?.explain),
+      report.reasoning ? renderAssessment(report.reasoning) : unavailable("Offline report", report.capability_errors?.reasoning),
+      report.explanation ? renderFeatures(report.explanation) : unavailable("Feature attributions")];
     const buttons = ["TreeSHAP evidence", "Assessment", "All features"].map((label, index) => {
       const button = node("button", `tab${index === 0 ? " active" : ""}`, label);
       button.type = "button"; button.id = `report-tab-${index}`;
@@ -1049,7 +1057,9 @@
     }
     showError(errors.join(" "));
     refreshControls();
-    window.netsecUI?.setState(state.status ? null : "error", errors.join(" "));
+    // An unavailable detector is local to its analysis capability. The service,
+    // navigation, model research and independent monitoring remain operational.
+    window.netsecUI?.setState(null);
     pollLive();
   }
   changeInputMode(["live", "sample", "upload"].indexOf(state.inputMode));

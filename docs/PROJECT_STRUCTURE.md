@@ -65,3 +65,21 @@ The source DataSense CSV, prepared arrays, GGUF weights and training checkpoints
 - Software verification, within-capture validation and unknown/held-out/live generalization studies remain separate evidence.
 
 Keep external code isolated. Preserve checkpoints, prepared data, provenance, negative observations, source snapshots, environments and original research records. Generated caches may be recreated; only exact audited cleanup targets should be removed. This documentation update performs no deletion.
+
+## Runtime migration preparation (12 October 2026)
+
+See [RUST_MIGRATION.md](RUST_MIGRATION.md) for the current-source dependency map,
+HTTP compatibility contract, proposed boundaries and approval gates. Phase 0
+adds `tools/make_golden.py` with focused helpers `tools/golden_http.py` and
+`tools/golden_observations.py`; small synthetic contract fixtures belong under
+`evaluation/fixtures/rust_migration/v1/`, while baseline logs/source hashes belong
+under `artifacts/rust_migration/phase0/`. Fixtures are software evidence, not
+research results. The original structure document is preserved there as
+`project-structure-before.md`.
+
+The owner has sanctioned one future layout addition: `rust/`, containing
+`app/` and `crates/{core-api,core,shared,adapters,features}`. It is **planned, not
+implemented in Phase 0**. Python training/experiments and the separate synthetic
+CLI retain their locations. The current Python `framework/core/` model registry,
+`framework/detection/adapters/` and Models workspace also form part of the
+compatibility baseline; the older tree above does not list every current file.

@@ -1,0 +1,1 @@
+{"capability":"predict","error":"A row has no usable measured inputs","model_id":"xgboost","status":"incompatible"}

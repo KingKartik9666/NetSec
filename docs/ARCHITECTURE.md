@@ -1,5 +1,7 @@
 # Architecture
 
+> Current desktop architecture (24 October 2026): Electron, React/TypeScript and native Rust inference across ten visible models. [NATIVE_APP.md](NATIVE_APP.md) supersedes historical Python-service, Tauri and four-model delivery directions below. Research workflows remain separate.
+
 The framework separates observation, detection, explainability and language generation. The current desktop is a local research tool, with distinct real-data and synthetic paths. Read the historical research direction in [PROJECT_CONTEXT.md](PROJECT_CONTEXT.md); the boundaries below describe current source.
 
 ## Desktop runtime

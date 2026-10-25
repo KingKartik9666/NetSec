@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>End workspace — NetSec</title>
+  <link rel="icon" href="/static/netsec.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/static/style.css">
+  <link rel="stylesheet" href="/static/studio.css">
+</head>
+<body class="state-page" data-lifecycle-state="exit" data-return-url="/csv" data-error-code="">
+  <div class="window-chrome" hidden aria-label="NetSec window controls">
+  <a class="window-brand" href="/" aria-label="NetSec home">NetSec<span>.</span></a>
+  <span class="window-caption">YOUR NETWORK, IN FOCUS</span>
+  <div class="window-actions">
+    <button type="button" data-window-action="minimize" aria-label="Minimize window"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10"/></svg></button>
+    <button type="button" data-window-action="maximize" aria-label="Maximize window"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 4h8v8H4Z"/></svg></button>
+    <button type="button" data-window-action="close" aria-label="Close NetSec"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="m4 4 8 8m0-8-8 8"/></svg></button>
+  </div>
+</div>
+<script src="/static/chrome.js" defer></script>
+<header class="studio-header" aria-label="Workspace navigation">
+  <a class="brand" href="/" aria-label="NetSec home">NetSec<span class="brand-period" aria-hidden="true">.</span></a>
+  <nav class="studio-nav" aria-label="Main navigation">
+    <a class="nav-link active" href="/" aria-current="page">Home</a>
+    <a class="nav-link" href="/live">Live screening</a>
+    <a class="nav-link" href="/csv">CSV analysis</a>
+    <a class="nav-link" href="/samples">Samples</a>
+    <a class="nav-link" href="/models">Models</a>
+  </nav>
+  <span class="header-note"><span class="local-dot" aria-hidden="true"></span>LOCAL / CPU</span>
+</header>
+<section id="lifecycle-screen" class="lifecycle-screen" data-state="loading" role="dialog" aria-modal="true" aria-labelledby="lifecycle-title" aria-describedby="lifecycle-description">
+  <div class="state-card">
+    <div class="state-topline"><span>NETSEC / LOCAL WORKSPACE</span><span id="lifecycle-code">01 / INITIALIZING</span></div>
+    <div class="state-visual" aria-hidden="true"><span class="state-orbit"></span><span class="state-orbit orbit-two"></span><span class="state-symbol"><svg viewBox="0 0 32 32"><path class="state-shield" d="m16 4 10 5v8c0 6-10 11-10 11S6 23 6 17V9Z"/><path class="state-tick" d="m11 16 4 4 6-8"/><path class="state-power" d="M16 4v11M9 8a11 11 0 1 0 14 0"/><path class="state-alert" d="M16 9v9m0 5v1"/></svg></span></div>
+    <div class="state-copy" aria-live="polite" aria-atomic="true">
+      <h1 id="lifecycle-title" tabindex="-1">Bringing things<br>into focus.</h1>
+      <p id="lifecycle-description">Connecting to your local analysis service. Monitoring and language generation start only when you request them.</p>
+    </div>
+    <details id="lifecycle-details" hidden><summary>Technical details</summary><pre id="lifecycle-detail"></pre></details>
+    <div class="state-actions">
+      <button id="lifecycle-primary" class="button primary" type="button" hidden>Try again <span aria-hidden="true">↗</span></button>
+      <button id="lifecycle-cancel" class="button secondary" type="button" hidden>Keep working</button>
+      <a id="lifecycle-home" class="state-home" href="/">Back to home <span aria-hidden="true">↗</span></a>
+    </div>
+    <p class="state-footnote" id="lifecycle-footnote">Private by default. Local by design.</p>
+  </div>
+</section>
+  <main id="workspace" class="main"><span class="sr-only">NetSec workspace status</span></main>
+</body>
+</html>

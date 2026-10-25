@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="496.8pt" height="241.2pt" viewBox="0 0 496.8 241.2" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:date>2026-10-24T21:02:56.026777</dc:date>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.10.1, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 241.2 
+L 496.8 241.2 
+L 496.8 0 
+L 0 0 
+z
+" style="fill: #ffffff"/>
+  </g>
+  <g id="axes_1">
+   <g id="patch_2">
+    <path d="M 23.513043 100.6416 
+L 135.373913 100.6416 
+Q 140.966957 100.6416 140.966957 97.92 
+L 140.966957 43.488 
+Q 140.966957 40.7664 135.373913 40.7664 
+L 23.513043 40.7664 
+Q 17.92 40.7664 17.92 43.488 
+L 17.92 97.92 
+Q 17.92 100.6416 23.513043 100.6416 
+z
+" clip-path="url(#p3c90991cd8)" style="fill: #edf2f5; stroke: #344c5b; stroke-width: 1.3; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_3">
+    <path d="M 191.304348 100.6416 
+L 303.165217 100.6416 
+Q 308.758261 100.6416 308.758261 97.92 
+L 308.758261 43.488 
+Q 308.758261 40.7664 303.165217 40.7664 
+L 191.304348 40.7664 
+Q 185.711304 40.7664 185.711304 43.488 
+L 185.711304 97.92 
+Q 185.711304 100.6416 191.304348 100.6416 
+z
+" clip-path="url(#p3c90991cd8)" style="fill: #edf2f5; stroke: #344c5b; stroke-width: 1.3; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_4">
+    <path d="M 359.095652 100.6416 
+L 470.956522 100.6416 
+Q 476.549565 100.6416 476.549565 97.92 
+L 476.549565 43.488 
+Q 476.549565 40.7664 470.956522 40.7664 
+L 359.095652 40.7664 
+Q 353.502609 40.7664 353.502609 43.488 
+L 353.502609 97.92 
+Q 353.502609 100.6416 359.095652 100.6416 
+z
+" clip-path="url(#p3c90991cd8)" style="fill: #edf2f5; stroke: #344c5b; stroke-width: 1.3; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_5">
+    <path d="M 359.095652 202.7016 
+L 470.956522 202.7016 
+Q 476.549565 202.7016 476.549565 199.98 
+L 476.549565 145.548 
+Q 476.549565 142.8264 470.956522 142.8264 
+L 359.095652 142.8264 
+Q 353.502609 142.8264 353.502609 145.548 
+L 353.502609 199.98 
+Q 353.502609 202.7016 359.095652 202.7016 
+z
+" clip-path="url(#p3c90991cd8)" style="fill: #edf2f5; stroke: #344c5b; stroke-width: 1.3; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_6">
+    <path d="M 191.304348 202.7016 
+L 303.165217 202.7016 
+Q 308.758261 202.7016 308.758261 199.98 
+L 308.758261 145.548 
+Q 308.758261 142.8264 303.165217 142.8264 
+L 191.304348 142.8264 
+Q 185.711304 142.8264 185.711304 145.548 
+L 185.711304 199.98 
+Q 185.711304 202.7016 191.304348 202.7016 
+z
+" clip-path="url(#p3c90991cd8)" style="fill: #edf2f5; stroke: #344c5b; stroke-width: 1.3; stroke-linejoin: miter"/>
+   </g>
+   <g id="text_1">
+    <text style="font-size: 12px; font-family: 'DejaVu Sans'" transform="translate(31.055353 67.296563)">Compatible CSV</text>
+    <text style="font-size: 12px; font-family: 'DejaVu Sans'" transform="translate(23.872228 80.733938)">Schema validation</text>
+   </g>
+   <g id="text_2">
+    <text style="font-size: 12px; font-family: 'DejaVu Sans'" transform="translate(201.45572 67.296563)">Saved detector</text>
+    <text style="font-size: 12px; font-family: 'DejaVu Sans'" transform="translate(212.181658 80.733938)">Uncertainty</text>
+   </g>
+   <g id="text_3">
+    <text style="font-size: 12px; font-family: 'DejaVu Sans'" transform="translate(375.930462 67.296563)">XAI evidence</text>
+    <text style="font-size: 12px; font-family: 'DejaVu Sans'" transform="translate(358.787337 80.733938)">Structured context</text>
+   </g>
+   <g id="text_4">
+    <text style="font-size: 12px; font-family: 'DejaVu Sans'" transform="translate(359.999524 169.356562)">Optional local LLM</text>
+    <text style="font-size: 12px; font-family: 'DejaVu Sans'" transform="translate(364.034524 182.793938)">Curated retrieval</text>
+   </g>
+   <g id="text_5">
+    <text style="font-size: 12px; font-family: 'DejaVu Sans'" transform="translate(204.72572 169.356562)">Analyst report</text>
+    <text style="font-size: 12px; font-family: 'DejaVu Sans'" transform="translate(203.849158 182.793938)">Human review</text>
+   </g>
+   <g id="patch_7">
+    <path d="M 142.034655 70.704 
+Q 163.338472 70.704 182.965238 70.704 
+" style="fill: none; stroke: #344c5b; stroke-width: 1.5; stroke-linecap: round"/>
+    <path d="M 178.965238 68.704 
+L 182.965238 70.704 
+L 178.965238 72.704 
+" style="fill: none; stroke: #344c5b; stroke-width: 1.5; stroke-linecap: round"/>
+   </g>
+   <g id="patch_8">
+    <path d="M 309.82596 70.704 
+Q 331.129776 70.704 350.756542 70.704 
+" style="fill: none; stroke: #344c5b; stroke-width: 1.5; stroke-linecap: round"/>
+    <path d="M 346.756542 68.704 
+L 350.756542 70.704 
+L 346.756542 72.704 
+" style="fill: none; stroke: #344c5b; stroke-width: 1.5; stroke-linecap: round"/>
+   </g>
+   <g id="patch_9">
+    <path d="M 415.026087 102.189527 
+Q 415.026087 121.73534 415.026087 139.604102 
+" style="fill: none; stroke: #344c5b; stroke-width: 1.5; stroke-linecap: round"/>
+    <path d="M 417.026087 135.604102 
+L 415.026087 139.604102 
+L 413.026087 135.604102 
+" style="fill: none; stroke: #344c5b; stroke-width: 1.5; stroke-linecap: round"/>
+   </g>
+   <g id="patch_10">
+    <path d="M 352.43491 172.764 
+Q 331.131093 172.764 311.504327 172.764 
+" style="fill: none; stroke: #344c5b; stroke-width: 1.5; stroke-linecap: round"/>
+    <path d="M 315.504327 174.764 
+L 311.504327 172.764 
+L 315.504327 170.764 
+" style="fill: none; stroke: #344c5b; stroke-width: 1.5; stroke-linecap: round"/>
+   </g>
+   <g id="text_6">
+    <text style="font-size: 9px; font-family: 'DejaVu Sans'" transform="translate(23.513043 165.169406)">Research bundles are evaluated</text>
+    <text style="font-size: 9px; font-family: 'DejaVu Sans'" transform="translate(23.513043 175.247437)">separately from the current</text>
+    <text style="font-size: 9px; font-family: 'DejaVu Sans'" transform="translate(23.513043 185.325469)">application model.</text>
+   </g>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="p3c90991cd8">
+   <rect x="7.2" y="7.2" width="482.4" height="226.8"/>
+  </clipPath>
+ </defs>
+</svg>

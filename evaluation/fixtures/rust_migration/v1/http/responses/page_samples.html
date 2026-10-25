@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <meta name="description" content="Local PC traffic monitoring and DataSense intrusion classification with exact TreeSHAP evidence.">
+  <title>Sample analysis — NetSec</title>
+  <link rel="icon" href="/static/netsec.svg" type="image/svg+xml">
+  <link rel="preload" href="/static/fonts/InterVariable.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/static/style.css">
+  <link rel="stylesheet" href="/static/studio.css">
+  <script src="/static/app.js" defer></script>
+</head>
+<body class="analysis-page" data-workspace-mode="sample">
+  <a class="skip-link" href="#workspace">Skip to analysis workspace</a>
+  <div class="window-chrome" hidden aria-label="NetSec window controls">
+  <a class="window-brand" href="/" aria-label="NetSec home">NetSec<span>.</span></a>
+  <span class="window-caption">YOUR NETWORK, IN FOCUS</span>
+  <div class="window-actions">
+    <button type="button" data-window-action="minimize" aria-label="Minimize window"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10"/></svg></button>
+    <button type="button" data-window-action="maximize" aria-label="Maximize window"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 4h8v8H4Z"/></svg></button>
+    <button type="button" data-window-action="close" aria-label="Close NetSec"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="m4 4 8 8m0-8-8 8"/></svg></button>
+  </div>
+</div>
+<script src="/static/chrome.js" defer></script>
+<header class="studio-header" aria-label="Workspace navigation">
+  <a class="brand" href="/" aria-label="NetSec home">NetSec<span class="brand-period" aria-hidden="true">.</span></a>
+  <nav class="studio-nav" aria-label="Main navigation">
+    <a class="nav-link" href="/">Home</a>
+    <a class="nav-link" href="/live">Live screening</a>
+    <a class="nav-link" href="/csv">CSV analysis</a>
+    <a class="nav-link active" href="/samples" aria-current="page">Samples</a>
+    <a class="nav-link" href="/models">Models</a>
+  </nav>
+  <span class="header-note"><span class="local-dot" aria-hidden="true"></span>LOCAL / CPU</span>
+</header>
+<section id="lifecycle-screen" class="lifecycle-screen" data-state="loading" role="dialog" aria-modal="true" aria-labelledby="lifecycle-title" aria-describedby="lifecycle-description">
+  <div class="state-card">
+    <div class="state-topline"><span>NETSEC / LOCAL WORKSPACE</span><span id="lifecycle-code">01 / INITIALIZING</span></div>
+    <div class="state-visual" aria-hidden="true"><span class="state-orbit"></span><span class="state-orbit orbit-two"></span><span class="state-symbol"><svg viewBox="0 0 32 32"><path class="state-shield" d="m16 4 10 5v8c0 6-10 11-10 11S6 23 6 17V9Z"/><path class="state-tick" d="m11 16 4 4 6-8"/><path class="state-power" d="M16 4v11M9 8a11 11 0 1 0 14 0"/><path class="state-alert" d="M16 9v9m0 5v1"/></svg></span></div>
+    <div class="state-copy" aria-live="polite" aria-atomic="true">
+      <h1 id="lifecycle-title" tabindex="-1">Bringing things<br>into focus.</h1>
+      <p id="lifecycle-description">Connecting to your local analysis service. Monitoring and language generation start only when you request them.</p>
+    </div>
+    <details id="lifecycle-details" hidden><summary>Technical details</summary><pre id="lifecycle-detail"></pre></details>
+    <div class="state-actions">
+      <button id="lifecycle-primary" class="button primary" type="button" hidden>Try again <span aria-hidden="true">↗</span></button>
+      <button id="lifecycle-cancel" class="button secondary" type="button" hidden>Keep working</button>
+      <a id="lifecycle-home" class="state-home" href="/">Back to home <span aria-hidden="true">↗</span></a>
+    </div>
+    <p class="state-footnote" id="lifecycle-footnote">Private by default. Local by design.</p>
+  </div>
+</section>
+
+  <main id="workspace" class="main">
+    <section class="workspace-heading" aria-labelledby="page-title">
+      <div><div class="eyebrow">03 / EXPLORE</div><h1 id="page-title">Sample analysis<span>.</span></h1></div>
+      <p>Explore saved validation examples. Compare the model’s prediction with the supplied label.</p>
+    </section>
+
+
+
+
+    <div id="global-error" class="error-banner" role="alert" hidden></div>
+    <div id="activity-status" class="sr-only" role="status" aria-live="polite"></div>
+
+    <div id="analysis-workspace" class="workspace-grid">
+      <section class="panel input-panel" aria-labelledby="input-title">
+        <div class="panel-heading"><div><span class="section-number">01</span><h2 id="input-title">Choose an example</h2></div><span id="input-mode-tag" class="mini-tag">THIS PC</span></div>
+        <p class="panel-intro">Included observations are validation examples, not independent tests.</p>
+        <div class="tabs input-tabs" role="tablist" aria-label="Traffic input method" hidden>
+          <button id="live-tab" class="tab active" type="button" role="tab" aria-selected="false" aria-controls="live-panel" tabindex="-1">Live PC traffic</button>
+          <button id="sample-tab" class="tab" type="button" role="tab" aria-selected="true" aria-controls="sample-panel" tabindex="0">Samples</button>
+          <button id="upload-tab" class="tab" type="button" role="tab" aria-selected="false" aria-controls="upload-panel" tabindex="-1">Upload CSV</button>
+        </div>
+        <div id="live-panel" class="input-content" role="tabpanel" aria-labelledby="live-tab" hidden>
+          <div class="source-form"><div class="form-field">
+          <label class="field-label" for="live-interface">Network connection</label>
+          <select id="live-interface" disabled><option value="">Looking for network connections…</option></select>
+</div><div class="form-field">
+          <label class="field-label live-mode-label" for="live-mode">Monitoring mode</label>
+          <select id="live-mode" disabled><option value="connections">Connections &amp; traffic</option><option value="packets">Packet inspection</option></select>
+          <p id="live-mode-help" class="field-help">Uses real operating-system traffic counters and connection information.</p>
+          <p id="packet-model-note" class="field-help" hidden></p>
+          <div id="packet-setup" class="packet-setup" hidden><strong>Packet capture needs Npcap</strong><p id="packet-setup-message">Checking packet capture support…</p><a href="https://npcap.com/#download" target="_blank" rel="noopener noreferrer">Open Npcap setup <span aria-hidden="true">↗</span></a></div>
+</div><div class="source-action">
+          <div class="live-controls"><button id="live-start" class="primary-button" type="button" disabled><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m8 5 11 7-11 7Z"/></svg><span>Start monitoring</span></button><button id="live-stop" class="secondary-button" type="button" disabled>Stop</button></div>
+          <p class="field-help start-hint">Starts only on your request. Browse normally to see this PC’s activity.</p>
+</div></div>
+          <div class="live-method-note"><span id="live-shared-model-note" class="live-rule-badge">Checking shared-model support</span><p id="live-shared-model-description">Measured common columns use the CSV schema. Unavailable values stay missing. Live rules and the binary packet model remain separate comparisons.</p></div>
+        </div>
+        <div id="sample-panel" class="input-content" role="tabpanel" aria-labelledby="sample-tab">
+          <div class="source-form sample-form"><div class="form-field">
+          <label class="field-label" for="sample-select">Choose an example</label>
+          <select id="sample-select" disabled><option value="">Loading available samples…</option></select>
+          <p id="sample-help" class="field-help">Labels are shown for comparison; the detector uses traffic features only.</p>
+</div><div class="source-action">
+          <button id="analyze-button" class="primary-button" type="button" disabled><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m13 2-9 12h7l-1 8 10-12h-7Z"/></svg><span>Analyze sample</span><span class="button-arrow" aria-hidden="true">↗</span></button>
+</div></div>
+        </div>
+        <div id="upload-panel" class="input-content" role="tabpanel" aria-labelledby="upload-tab" hidden>
+          <div class="csv-form">          <label class="upload-zone" for="csv-file"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 16V3m-5 5 5-5 5 5M4 15v6h16v-6"/></svg><strong>Select a traffic CSV</strong><span id="upload-limit">Up to 500 rows · 10 MB maximum</span><span class="file-type">.CSV</span></label><div>
+
+          <input id="csv-file" type="file" accept=".csv,text/csv" disabled>
+          <p id="file-name" class="field-help">Files are processed for this request and are not saved by the app.</p>
+          <p id="csv-schema-help" class="field-help">Full or partial CSVs use the same 170 feature columns as live observations. Include known columns with usable numeric measurements; omitted columns and blank optional values stay missing.</p>
+          <div id="upload-compatibility"></div>
+          <a class="example-link" href="/api/example.csv" download>Download an example CSV <span aria-hidden="true">↗</span></a>
+          <button id="upload-button" class="primary-button" type="button" disabled><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m13 2-9 12h7l-1 8 10-12h-7Z"/></svg><span>Analyze CSV</span><span class="button-arrow" aria-hidden="true">↗</span></button>
+</div></div>
+        </div>
+        <div id="batch-section" class="batch-section" hidden>
+          <div class="batch-heading"><h3>CSV predictions</h3><span id="batch-count"></span></div>
+          <p class="field-help">Select a row to calculate its TreeSHAP explanation.</p>
+          <div id="batch-results" class="batch-results" aria-label="Uploaded row predictions"></div>
+        </div>
+        <div class="input-footer"><span class="info-icon" aria-hidden="true">i</span><p id="input-context-note">The shared model returns tentative categories from measured common features. Coverage and model version identify the evidence available for each result.</p></div>
+      </section>
+
+      <section id="live-report-panel" class="panel live-report-panel" aria-labelledby="live-report-title" aria-busy="false" hidden>
+        <div class="panel-heading"><div><span class="section-number">02</span><h2 id="live-report-title">Live PC observations</h2></div><div class="report-export-actions"><button id="download-live-csv" class="icon-button" type="button" disabled title="Download the displayed observation in the shared 170-column CSV schema"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12m-5-5 5 5 5-5M4 16v5h16v-5"/></svg><span>Download CSV</span></button><button id="download-live-report" class="icon-button" type="button" disabled><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12m-5-5 5 5 5-5M4 16v5h16v-5"/></svg><span>Export report</span></button></div></div>
+        <div id="live-status-banner" class="live-status-banner" role="status" aria-live="polite"><span id="live-state-dot" class="live-state-dot" aria-hidden="true"></span><div><strong id="live-state-label">Not started</strong><p id="live-state-detail">Choose your connection and press Start monitoring.</p></div></div>
+        <div class="live-metrics" aria-label="Observed live traffic"><div><span>PACKETS / SECOND</span><strong id="live-packet-rate">—</strong></div><div><span>BYTES / SECOND</span><strong id="live-byte-rate">—</strong></div><div><span>ACTIVE CONNECTIONS</span><strong id="live-connection-count">—</strong></div></div>
+        <div id="live-multiclass-model" class="live-multiclass-model"><div class="packet-model-heading"><h3>84-class traffic categories</h3><span class="live-rule-badge">Shared CSV schema</span></div><p class="packet-model-waiting">Start monitoring to collect a measured partial-input observation.</p></div>
+        <div id="live-assessment" class="live-assessment not-assessed"><span id="live-assessment-label">Traffic has not been assessed</span><p id="live-assessment-detail">No monitoring session is running. A lack of alerts is not proof of safety.</p></div>
+        <div id="live-packet-model" class="live-packet-model" hidden></div>
+        <div id="live-history" class="live-history" aria-label="Recent observed traffic rates" hidden></div>
+        <div class="live-section-grid">
+        <div class="live-section"><div class="section-caption"><h3>Observed rule evidence</h3><span id="live-observed-count">NO OBSERVATIONS YET</span></div><div id="live-evidence"><p class="live-empty-note">Evidence will appear after real traffic is observed.</p></div></div>
+        <div class="live-section"><div class="section-caption"><h3>Connections &amp; destinations</h3><span id="live-connection-caption">REAL OS OBSERVATIONS</span></div><div id="live-connections"><p class="live-empty-note">No connection observations yet.</p></div></div>
+        </div>
+        <div id="live-packets-section" class="live-section" hidden><div class="section-caption"><h3>Recent packet headers</h3><span>NO PAYLOAD STORAGE</span></div><div id="live-packets"></div></div>
+        <div class="live-report-footer"><span id="live-session-info">Monitoring is off.</span><p id="live-limitations">Rule evidence is not TreeSHAP. CSV validation accuracy does not apply to live monitoring. No automatic defensive actions are taken.</p></div>
+      </section>
+
+      <section id="report-panel" class="panel report-panel" aria-labelledby="report-title" aria-busy="false">
+        <div class="panel-heading"><div><span class="section-number">02</span><h2 id="report-title">Inspect the evidence</h2></div><button id="download-report" class="icon-button" type="button" disabled aria-label="Download complete report as JSON" title="Download JSON"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12m-5-5 5 5 5-5M4 16v5h16v-5"/></svg><span>JSON</span></button></div>
+        <div id="report-empty" class="empty-state"><div class="empty-graphic" aria-hidden="true"><span class="orbit orbit-one"></span><span class="orbit orbit-two"></span><svg viewBox="0 0 64 64"><path d="M32 10 50 19v15c0 9-18 20-18 20S14 43 14 34V19Z"/><path d="M21 34h7l4-12 5 20 4-8h6"/></svg></div><span class="eyebrow">A DECISION, WITH CONTEXT</span><h3>Your analysis starts here.</h3><p>Choose a validation sample or upload traffic features.<br>The model prediction and signed SHAP evidence will appear here.</p><div class="empty-steps"><span><b>01</b> Predict</span><span><b>02</b> Explain</span><span><b>03</b> Assess</span></div></div>
+        <div id="report-content" hidden></div>
+      </section>
+    </div>
+
+    <section id="insights-panel" class="panel insights-panel" aria-labelledby="insights-title">
+      <div class="panel-heading"><div><span class="section-number">03</span><h2 id="insights-title">XAI &amp; local AI</h2></div><span class="mini-tag">ON REQUEST</span></div>
+      <p id="insights-source" class="panel-intro">Analyze a sample or a CSV row, or wait for a shared-model live observation.</p>
+      <div class="insights-grid">
+        <section class="insight-card" aria-labelledby="extra-xai-title">
+          <div class="insight-card-heading"><div><span class="eyebrow">ANOTHER VIEW OF THE EVIDENCE</span><h3 id="extra-xai-title">Explainable AI (XAI)</h3></div><span class="insight-symbol" aria-hidden="true">↗</span></div>
+          <p class="insight-intro">Compare exact TreeSHAP with an approximate local explanation, global tree statistics and the actual input values.</p>
+          <button id="extra-xai-button" class="secondary-button insight-action" type="button" disabled>Inspect additional XAI</button>
+          <p id="extra-xai-status" class="insight-status" role="status" aria-live="polite">Available after a model prediction. Live rules alone have no model attributions.</p>
+          <div id="extra-xai-error" class="insight-error" role="alert" hidden></div>
+          <div id="extra-xai-content" class="extra-xai-content" hidden></div>
+        </section>
+        <section class="insight-card assistant-card" aria-labelledby="assistant-title">
+          <div class="insight-card-heading"><div><span class="eyebrow">PLAIN ENGLISH / LOCAL LLM INFERENCE</span><h3 id="assistant-title">Local LLM assistant</h3></div><span class="assistant-mark" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m12 3 2.5 6.5L21 12l-6.5 2.5L12 21l-2.5-6.5L3 12l6.5-2.5Z"/></svg></span></div>
+          <p class="insight-intro">A small local language model explains the evidence with retrieved security notes and bounded correction checks. It does not inspect traffic or replace the detector.</p>
+          <p id="assistant-model-status" class="assistant-model-status">Checking the local model…</p>
+          <button id="assistant-button" class="primary-button insight-action" type="button" disabled><span>Explain in plain English</span><span class="button-arrow" aria-hidden="true">↗</span></button>
+          <p id="assistant-status" class="insight-status" role="status" aria-live="polite">Generation starts only when requested. Evidence stays on this PC.</p>
+          <div id="assistant-error" class="insight-error" role="alert" hidden></div>
+          <div id="assistant-content" class="assistant-content" hidden></div>
+        </section>
+      </div>
+    </section>
+
+    <details class="model-reference"><summary>Saved CSV model &amp; validation reference — separate from live screening</summary>
+    <section id="model-details" class="model-strip" aria-label="Saved model and evaluation">
+      <div class="model-identity"><span class="model-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m12 3 9 5-9 5-9-5 9-5Zm-9 9 9 5 9-5M3 16l9 5 9-5"/></svg></span><div><span class="metric-label">SAVED 84-CLASS DETECTOR</span><strong id="model-name">Loading model…</strong><span id="model-dataset" class="metric-note">Verifying saved artifacts</span></div></div>
+      <div class="metric"><span class="metric-label">CSV VALIDATION ACCURACY</span><strong id="validation-accuracy">—</strong><span class="metric-note">Does not measure live PC detection</span></div>
+      <div class="metric"><span class="metric-label">MACRO F1</span><strong id="macro-f1">—</strong><span class="metric-note">All target classes</span></div>
+      <div class="metric"><span class="metric-label">TRAINING ROWS</span><strong id="training-rows">—</strong><span id="class-count" class="metric-note">— classes · — features</span></div>
+    </section>
+    </details>
+
+    <section id="research-notes" class="research-notes" aria-labelledby="research-title">
+      <div><span class="eyebrow">BUILT FOR RESEARCH / 04</span><h2 id="research-title">Evidence.<br>Not assumptions.</h2><span class="notes-arrow" aria-hidden="true">↗</span></div>
+      <div><p>Live monitoring reads actual counters, connections and optional packet headers. Experimental rules and packet-model predictions need human verification; they do not establish safety or confirm an attack.</p><p>CSV validation scores apply to DataSense features, not live PC detection. TreeSHAP explains model margins; LIME uses synthetic perturbations; global gain and cover describe trained trees. None establishes causation. Default reports use an offline template. Optional local AI runs only when requested and may make mistakes. No automatic defensive actions are taken.</p><details class="research-disclosure"><summary>Evaluation limits &amp; research status</summary><ul id="model-limitations"></ul></details><details class="provenance"><summary>Saved model provenance</summary><dl id="provenance-details"><dt>Status</dt><dd>Waiting for saved-model metadata.</dd></dl></details></div>
+    </section>
+    <footer class="page-footer"><a class="footer-brand" href="/" aria-label="NetSec home">NetSec.</a><a href="#workspace">Back to overview <span aria-hidden="true">↑</span></a><a class="session-exit" href="/exit?return=/samples">Exit workspace <span aria-hidden="true">↗</span></a></footer>
+  </main>
+</body>
+</html>

@@ -1,0 +1,106 @@
+{
+  "prepared_date": "2026-10-24",
+  "documents": [
+    {
+      "name": "01_IEEE_Research_Paper.docx",
+      "pages": 5,
+      "sha256": "614b9ac0b636df6776822a76f4bbd99096d0f882db45f37a6d2534971bb371db"
+    },
+    {
+      "name": "02_Springer_Research_Paper.docx",
+      "pages": 8,
+      "sha256": "5aad4a33bdc81df856661f6ea1bea88900581fc7411276d080c74b7ed86bbb33"
+    },
+    {
+      "name": "03_Final_Project_Report.docx",
+      "pages": 11,
+      "sha256": "e39d7915b746c9eb1a61861f5f7d531a2372c21b71206d306b83f1c10b1b8962"
+    },
+    {
+      "name": "04_Personal_Training_Technical_Journal.docx",
+      "pages": 18,
+      "sha256": "5443ce7add2c376779f010cacb71678fad937b1ca861a11fac4de9d3547b58ed"
+    },
+    {
+      "name": "05_Writing_Comparison_and_Revision_Guide.docx",
+      "pages": 5,
+      "sha256": "8963faa0f8cb0bd28deea0a1595dc233cd0ea32992f545428e476606d1f8e551"
+    }
+  ],
+  "presentation_slides": 18,
+  "tests_passed": 610,
+  "test_warnings": 17,
+  "all_five_demos_passed": true,
+  "files": [
+    {
+      "path": "01_IEEE_Research_Paper.docx",
+      "bytes": 155254,
+      "sha256": "614b9ac0b636df6776822a76f4bbd99096d0f882db45f37a6d2534971bb371db"
+    },
+    {
+      "path": "01_IEEE_Research_Paper.pdf",
+      "bytes": 261769,
+      "sha256": "3215fbdf99fc72b18ca5c3356dc99751970ca17e09ba096d6e741bf1abb9caea"
+    },
+    {
+      "path": "02_Springer_Research_Paper.docx",
+      "bytes": 178863,
+      "sha256": "5aad4a33bdc81df856661f6ea1bea88900581fc7411276d080c74b7ed86bbb33"
+    },
+    {
+      "path": "02_Springer_Research_Paper.pdf",
+      "bytes": 254481,
+      "sha256": "2ebefd9d0c3b50081addaa6c470116dba67d061a45de4e6df5ee9f1b170b1d1e"
+    },
+    {
+      "path": "03_Final_Project_Report.docx",
+      "bytes": 253140,
+      "sha256": "e39d7915b746c9eb1a61861f5f7d531a2372c21b71206d306b83f1c10b1b8962"
+    },
+    {
+      "path": "04_Personal_Training_Technical_Journal.docx",
+      "bytes": 182472,
+      "sha256": "5443ce7add2c376779f010cacb71678fad937b1ca861a11fac4de9d3547b58ed"
+    },
+    {
+      "path": "05_Writing_Comparison_and_Revision_Guide.docx",
+      "bytes": 43037,
+      "sha256": "8963faa0f8cb0bd28deea0a1595dc233cd0ea32992f545428e476606d1f8e551"
+    },
+    {
+      "path": "06_Research_Presentation.pptx",
+      "bytes": 83439,
+      "sha256": "522c86d6798a5932ec823b6779bb2148ff5dc16d2738c2c2bf72023fb95413e6"
+    },
+    {
+      "path": "Editable_Figures/accuracy.svg",
+      "bytes": 16955,
+      "sha256": "e4f8923684d3b7b6fba8c8b67ef3a554f840023b1e78eed4b66dbb7596d96105"
+    },
+    {
+      "path": "Editable_Figures/architecture.mmd",
+      "bytes": 197,
+      "sha256": "8770f85e44d2f9d91c1f72d83a5d44b4bb0520f5ed97d3a697cd23e312bc1f00"
+    },
+    {
+      "path": "Editable_Figures/architecture.svg",
+      "bytes": 6786,
+      "sha256": "1dcfe1f7324db36a782049a6a3ece9c807cca8a311d0b2092901b314dd49921d"
+    },
+    {
+      "path": "Editable_Figures/protocol.svg",
+      "bytes": 5084,
+      "sha256": "9895d8a491bb7d7dee37f35ed8560b00c2d4483358b6829653f2c3d86c1b9b5c"
+    },
+    {
+      "path": "START_HERE.md",
+      "bytes": 4108,
+      "sha256": "febff32f8c96dd18ca0bea8b7b4228bbb2bd81d1c1c4163b5413bd10391956b8"
+    },
+    {
+      "path": "Training_Run_Record_Register.csv",
+      "bytes": 959594,
+      "sha256": "195652754d47c97fbe1bc711ffcad047290ca4d9bb2d69744012fe7b96c4b69c"
+    }
+  ]
+}

@@ -1,0 +1,4 @@
+# Optional research dependencies. Existing PyTorch installation is retained.
+# Official upstream packages; offline app/demo imports do not require these.
+tabm==0.0.3
+rtdl-num-embeddings==0.0.12

@@ -1,0 +1,1 @@
+{"comparable":false,"models":[{"metrics":null,"model_id":"random_forest","status":"unavailable"},{"metrics":null,"model_id":"xgboost","status":"unavailable"},{"metrics":null,"model_id":"kan","status":"unavailable"},{"metrics":null,"model_id":"hem","status":"unavailable"}],"reason":"Synthetic HTTP fixture has no research metrics"}

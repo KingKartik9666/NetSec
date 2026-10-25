@@ -1,0 +1,1925 @@
+{
+  "cases": [
+    {
+      "id": "mixed_headers",
+      "input": {
+        "local_addresses": [
+          "192.0.2.10",
+          "2001:db8::10"
+        ],
+        "local_macs": [
+          "02:00:00:00:00:10"
+        ],
+        "packet_count": 9,
+        "packet_start": 0,
+        "pcap": "live/synthetic.pcap",
+        "window_seconds": 10.0,
+        "window_start_epoch_seconds": 1704067200
+      },
+      "output": {
+        "assessment": {
+          "evidence": [],
+          "label": "Benign-looking activity",
+          "limitations": "Experimental behavior rules, not the trained XGBoost model or SHAP. No rule alert means benign-looking within this observation only, not proof of safety. Alerts may be legitimate activity and do not confirm an attack. Encrypted payloads are not inspected.",
+          "method": "Live behavior rules",
+          "status": "benign_looking"
+        },
+        "recent_packets": [
+          {
+            "destination": "198.51.100.20",
+            "length": 54,
+            "protocol": "TCP",
+            "source": "192.0.2.10",
+            "time": "2024-01-01T00:00:01+00:00"
+          },
+          {
+            "destination": "198.51.100.20",
+            "length": 54,
+            "protocol": "TCP",
+            "source": "192.0.2.10",
+            "time": "2024-01-01T00:00:02+00:00"
+          },
+          {
+            "destination": "198.51.100.20",
+            "length": 54,
+            "protocol": "TCP",
+            "source": "192.0.2.10",
+            "time": "2024-01-01T00:00:03+00:00"
+          },
+          {
+            "destination": "198.51.100.20",
+            "length": 54,
+            "protocol": "TCP",
+            "source": "192.0.2.10",
+            "time": "2024-01-01T00:00:04+00:00"
+          },
+          {
+            "destination": "198.51.100.20",
+            "length": 42,
+            "protocol": "UDP",
+            "source": "192.0.2.10",
+            "time": "2024-01-01T00:00:05+00:00"
+          },
+          {
+            "destination": "198.51.100.20",
+            "length": 42,
+            "protocol": "ICMP",
+            "source": "192.0.2.10",
+            "time": "2024-01-01T00:00:06+00:00"
+          },
+          {
+            "destination": "2001:db8::20",
+            "length": 74,
+            "protocol": "TCP",
+            "source": "2001:db8::10",
+            "time": "2024-01-01T00:00:07+00:00"
+          },
+          {
+            "destination": "198.51.100.20",
+            "length": 42,
+            "protocol": "ARP",
+            "source": "192.0.2.10",
+            "time": "2024-01-01T00:00:08+00:00"
+          },
+          {
+            "destination": "02:00:00:00:00:20",
+            "length": 14,
+            "protocol": "Ethernet",
+            "source": "02:00:00:00:00:10",
+            "time": "2024-01-01T00:00:09+00:00"
+          }
+        ],
+        "stats": {
+          "ack": 3,
+          "bytes": 430,
+          "fin": 1,
+          "packets": 9,
+          "psh": 1,
+          "rst": 1,
+          "seconds": 10.0,
+          "syn": 1,
+          "syn_ack": 1,
+          "syn_all": 2,
+          "unique_ports_per_source": {
+            "192.0.2.10>198.51.100.20": 1
+          },
+          "urg": 1
+        }
+      }
+    },
+    {
+      "id": "syn_burst",
+      "input": {
+        "local_addresses": [
+          "192.0.2.10",
+          "2001:db8::10"
+        ],
+        "local_macs": [
+          "02:00:00:00:00:10"
+        ],
+        "packet_count": 100,
+        "packet_start": 9,
+        "pcap": "live/synthetic.pcap",
+        "window_seconds": 2.0,
+        "window_start_epoch_seconds": 1704067260
+      },
+      "output": {
+        "assessment": {
+          "evidence": [
+            {
+              "message": "100 SYN-only packets in 2.0 seconds, with few other packets. Possible connection-attempt flooding; verify the endpoints.",
+              "observed": 50.0,
+              "rule": "syn_burst",
+              "threshold": 50
+            }
+          ],
+          "label": "Suspicious activity — review needed",
+          "limitations": "Experimental behavior rules, not the trained XGBoost model or SHAP. No rule alert means benign-looking within this observation only, not proof of safety. Alerts may be legitimate activity and do not confirm an attack. Encrypted payloads are not inspected.",
+          "method": "Live behavior rules",
+          "status": "suspicious"
+        },
+        "recent_packets": [
+          {
+            "destination": "198.51.100.20",
+            "length": 54,
+            "protocol": "TCP",
+            "source": "192.0.2.10",
+            "time": "2024-01-01T00:01:01.207920+00:00"
+          },
+          {
+            "destination": "198.51.100.20",
+            "length": 54,
+            "protocol": "TCP",
+            "source": "192.0.2.10",
+            "time": "2024-01-01T00:01:01.227722+00:00"
+          },
+          {
+            "destination": "198.51.100.20",
+            "length": 54,
+            "protocol": "TCP",
+            "source": "192.0.2.10",
+            "time": "2024-01-01T00:01:01.247524+00:00"
+          },
+          {
+            "destination": "198.51.100.20",
+            "length": 54,
+            "protocol": "TCP",
+            "source": "192.0.2.10",
+            "time": "2024-01-01T00:01:01.267326+00:00"
+          },
+          {
+            "destination": "198.51.100.20",
+            "length": 54,
+            "protocol": "TCP",
+            "source": "192.0.2.10",
+            "time": "2024-01-01T00:01:01.287128+00:00"
+          },
+          {
+            "destination": "198.51.100.20",
+            "length": 54,
+            "protocol": "TCP",
+            "source": "192.0.2.10",
+            "time": "2024-01-01T00:01:01.306930+00:00"
+          },
+          {
+            "destination": "198.51.100.20",
+            "length": 54,
+            "protocol": "TCP",
+            "source": "192.0.2.10",
+            "time": "2024-01-01T00:01:01.326732+00:00"
+          },
+          {
+            "destination": "198.51.100.20",
+            "length": 54,
+            "protocol": "TCP",
+            "source": "192.0.2.10",
+            "time": "2024-01-01T00:01:01.346534+00:00"
+          },
+          {
+            "destination": "198.51.100.20",
+            "length": 54,
+            "protocol": "TCP",
+            "source": "192.0.2.10",
+            "time": "2024-01-01T00:01:01.366336+00:00"
+          },
+          {
+            "destination": "198.51.100.20",
+            "length": 54,
+            "protocol": "TCP",
+            "source": "192.0.2.10",
+            "time": "2024-01-01T00:01:01.386138+00:00"
+          },
+          {
+            "destination": "198.51.100.20",
+            "length": 54,
+            "protocol": "TCP",
+            "source": "192.0.2.10",
+            "time": "2024-01-01T00:01:01.405940+00:00"
+          },
+          {
+            "destination": "198.51.100.20",
+            "length": 54,
+            "protocol": "TCP",
+            "source": "192.0.2.10",
+            "time": "2024-01-01T00:01:01.425742+00:00"
+          },
+          {
+            "destination": "198.51.100.20",
+            "length": 54,
+            "protocol": "TCP",
+            "source": "192.0.2.10",
+            "time": "2024-01-01T00:01:01.445544+00:00"
+          },
+          {
+            "destination": "198.51.100.20",
+            "length": 54,
+            "protocol": "TCP",
+            "source": "192.0.2.10",
+            "time": "2024-01-01T00:01:01.465346+00:00"
+          },
+          {
+            "destination": "198.51.100.20",
+            "length": 54,
+            "protocol": "TCP",
+            "source": "192.0.2.10",
+            "time": "2024-01-01T00:01:01.485148+00:00"
+          },
+          {
+            "destination": "198.51.100.20",
+            "length": 54,
+            "protocol": "TCP",
+            "source": "192.0.2.10",
+            "time": "2024-01-01T00:01:01.504950+00:00"
+          },
+          {
+            "destination": "198.51.100.20",
+            "length": 54,
+            "protocol": "TCP",
+            "source": "192.0.2.10",
+            "time": "2024-01-01T00:01:01.524752+00:00"
+          },
+          {
+            "destination": "198.51.100.20",
+            "length": 54,
+            "protocol": "TCP",
+            "source": "192.0.2.10",
+            "time": "2024-01-01T00:01:01.544554+00:00"
+          },
+          {
+            "destination": "198.51.100.20",
+            "length": 54,
+            "protocol": "TCP",
+            "source": "192.0.2.10",
+            "time": "2024-01-01T00:01:01.564356+00:00"
+          },
+          {
+            "destination": "198.51.100.20",
+            "length": 54,
+            "protocol": "TCP",
+            "source": "192.0.2.10",
+            "time": "2024-01-01T00:01:01.584158+00:00"
+          },
+          {
+            "destination": "198.51.100.20",
+            "length": 54,
+            "protocol": "TCP",
+            "source": "192.0.2.10",
+            "time": "2024-01-01T00:01:01.603960+00:00"
+          },
+          {
+            "destination": "198.51.100.20",
+            "length": 54,
+            "protocol": "TCP",
+            "source": "192.0.2.10",
+            "time": "2024-01-01T00:01:01.623762+00:00"
+          },
+          {
+            "destination": "198.51.100.20",
+            "length": 54,
+            "protocol": "TCP",
+            "source": "192.0.2.10",
+            "time": "2024-01-01T00:01:01.643564+00:00"
+          },
+          {
+            "destination": "198.51.100.20",
+            "length": 54,
+            "protocol": "TCP",
+            "source": "192.0.2.10",
+            "time": "2024-01-01T00:01:01.663366+00:00"
+          },
+          {
+            "destination": "198.51.100.20",
+            "length": 54,
+            "protocol": "TCP",
+            "source": "192.0.2.10",
+            "time": "2024-01-01T00:01:01.683168+00:00"
+          },
+          {
+            "destination": "198.51.100.20",
+            "length": 54,
+            "protocol": "TCP",
+            "source": "192.0.2.10",
+            "time": "2024-01-01T00:01:01.702970+00:00"
+          },
+          {
+            "destination": "198.51.100.20",
+            "length": 54,
+            "protocol": "TCP",
+            "source": "192.0.2.10",
+            "time": "2024-01-01T00:01:01.722772+00:00"
+          },
+          {
+            "destination": "198.51.100.20",
+            "length": 54,
+            "protocol": "TCP",
+            "source": "192.0.2.10",
+            "time": "2024-01-01T00:01:01.742574+00:00"
+          },
+          {
+            "destination": "198.51.100.20",
+            "length": 54,
+            "protocol": "TCP",
+            "source": "192.0.2.10",
+            "time": "2024-01-01T00:01:01.762376+00:00"
+          },
+          {
+            "destination": "198.51.100.20",
+            "length": 54,
+            "protocol": "TCP",
+            "source": "192.0.2.10",
+            "time": "2024-01-01T00:01:01.782178+00:00"
+          },
+          {
+            "destination": "198.51.100.20",
+            "length": 54,
+            "protocol": "TCP",
+            "source": "192.0.2.10",
+            "time": "2024-01-01T00:01:01.801980+00:00"
+          },
+          {
+            "destination": "198.51.100.20",
+            "length": 54,
+            "protocol": "TCP",
+            "source": "192.0.2.10",
+            "time": "2024-01-01T00:01:01.821782+00:00"
+          },
+          {
+            "destination": "198.51.100.20",
+            "length": 54,
+            "protocol": "TCP",
+            "source": "192.0.2.10",
+            "time": "2024-01-01T00:01:01.841584+00:00"
+          },
+          {
+            "destination": "198.51.100.20",
+            "length": 54,
+            "protocol": "TCP",
+            "source": "192.0.2.10",
+            "time": "2024-01-01T00:01:01.861386+00:00"
+          },
+          {
+            "destination": "198.51.100.20",
+            "length": 54,
+            "protocol": "TCP",
+            "source": "192.0.2.10",
+            "time": "2024-01-01T00:01:01.881188+00:00"
+          },
+          {
+            "destination": "198.51.100.20",
+            "length": 54,
+            "protocol": "TCP",
+            "source": "192.0.2.10",
+            "time": "2024-01-01T00:01:01.900990+00:00"
+          },
+          {
+            "destination": "198.51.100.20",
+            "length": 54,
+            "protocol": "TCP",
+            "source": "192.0.2.10",
+            "time": "2024-01-01T00:01:01.920792+00:00"
+          },
+          {
+            "destination": "198.51.100.20",
+            "length": 54,
+            "protocol": "TCP",
+            "source": "192.0.2.10",
+            "time": "2024-01-01T00:01:01.940594+00:00"
+          },
+          {
+            "destination": "198.51.100.20",
+            "length": 54,
+            "protocol": "TCP",
+            "source": "192.0.2.10",
+            "time": "2024-01-01T00:01:01.960396+00:00"
+          },
+          {
+            "destination": "198.51.100.20",
+            "length": 54,
+            "protocol": "TCP",
+            "source": "192.0.2.10",
+            "time": "2024-01-01T00:01:01.980198+00:00"
+          }
+        ],
+        "stats": {
+          "ack": 0,
+          "bytes": 5400,
+          "fin": 0,
+          "packets": 100,
+          "psh": 0,
+          "rst": 0,
+          "seconds": 2.0,
+          "syn": 100,
+          "syn_ack": 0,
+          "syn_all": 100,
+          "unique_ports_per_source": {
+            "192.0.2.10>198.51.100.20": 1
+          },
+          "urg": 0
+        }
+      }
+    },
+    {
+      "id": "syn_below_count",
+      "input": {
+        "local_addresses": [
+          "192.0.2.10",
+          "2001:db8::10"
+        ],
+        "local_macs": [
+          "02:00:00:00:00:10"
+        ],
+        "packet_count": 99,
+        "packet_start": 109,
+        "pcap": "live/synthetic.pcap",
+        "window_seconds": 2.0,
+        "window_start_epoch_seconds": 1704067320
+      },
+      "output": {
+        "assessment": {
+          "evidence": [],
+          "label": "Benign-looking activity",
+          "limitations": "Experimental behavior rules, not the trained XGBoost model or SHAP. No rule alert means benign-looking within this observation only, not proof of safety. Alerts may be legitimate activity and do not confirm an attack. Encrypted payloads are not inspected.",
+          "method": "Live behavior rules",
+          "status": "benign_looking"
+        },
+        "recent_packets": [
+          {
+            "destination": "198.51.100.20",
+            "length": 54,
+            "protocol": "TCP",
+            "source": "192.0.2.10",
+            "time": "2024-01-01T00:02:01.200000+00:00"
+          },
+          {
+            "destination": "198.51.100.20",
+            "length": 54,
+            "protocol": "TCP",
+            "source": "192.0.2.10",
+            "time": "2024-01-01T00:02:01.220000+00:00"
+          },
+          {
+            "destination": "198.51.100.20",
+            "length": 54,
+            "protocol": "TCP",
+            "source": "192.0.2.10",
+            "time": "2024-01-01T00:02:01.240000+00:00"
+          },
+          {
+            "destination": "198.51.100.20",
+            "length": 54,
+            "protocol": "TCP",
+            "source": "192.0.2.10",
+            "time": "2024-01-01T00:02:01.260000+00:00"
+          },
+          {
+            "destination": "198.51.100.20",
+            "length": 54,
+            "protocol": "TCP",
+            "source": "192.0.2.10",
+            "time": "2024-01-01T00:02:01.280000+00:00"
+          },
+          {
+            "destination": "198.51.100.20",
+            "length": 54,
+            "protocol": "TCP",
+            "source": "192.0.2.10",
+            "time": "2024-01-01T00:02:01.300000+00:00"
+          },
+          {
+            "destination": "198.51.100.20",
+            "length": 54,
+            "protocol": "TCP",
+            "source": "192.0.2.10",
+            "time": "2024-01-01T00:02:01.320000+00:00"
+          },
+          {
+            "destination": "198.51.100.20",
+            "length": 54,
+            "protocol": "TCP",
+            "source": "192.0.2.10",
+            "time": "2024-01-01T00:02:01.340000+00:00"
+          },
+          {
+            "destination": "198.51.100.20",
+            "length": 54,
+            "protocol": "TCP",
+            "source": "192.0.2.10",
+            "time": "2024-01-01T00:02:01.360000+00:00"
+          },
+          {
+            "destination": "198.51.100.20",
+            "length": 54,
+            "protocol": "TCP",
+            "source": "192.0.2.10",
+            "time": "2024-01-01T00:02:01.380000+00:00"
+          },
+          {
+            "destination": "198.51.100.20",
+            "length": 54,
+            "protocol": "TCP",
+            "source": "192.0.2.10",
+            "time": "2024-01-01T00:02:01.400000+00:00"
+          },
+          {
+            "destination": "198.51.100.20",
+            "length": 54,
+            "protocol": "TCP",
+            "source": "192.0.2.10",
+            "time": "2024-01-01T00:02:01.420000+00:00"
+          },
+          {
+            "destination": "198.51.100.20",
+            "length": 54,
+            "protocol": "TCP",
+            "source": "192.0.2.10",
+            "time": "2024-01-01T00:02:01.440000+00:00"
+          },
+          {
+            "destination": "198.51.100.20",
+            "length": 54,
+            "protocol": "TCP",
+            "source": "192.0.2.10",
+            "time": "2024-01-01T00:02:01.460000+00:00"
+          },
+          {
+            "destination": "198.51.100.20",
+            "length": 54,
+            "protocol": "TCP",
+            "source": "192.0.2.10",
+            "time": "2024-01-01T00:02:01.480000+00:00"
+          },
+          {
+            "destination": "198.51.100.20",
+            "length": 54,
+            "protocol": "TCP",
+            "source": "192.0.2.10",
+            "time": "2024-01-01T00:02:01.500000+00:00"
+          },
+          {
+            "destination": "198.51.100.20",
+            "length": 54,
+            "protocol": "TCP",
+            "source": "192.0.2.10",
+            "time": "2024-01-01T00:02:01.520000+00:00"
+          },
+          {
+            "destination": "198.51.100.20",
+            "length": 54,
+            "protocol": "TCP",
+            "source": "192.0.2.10",
+            "time": "2024-01-01T00:02:01.540000+00:00"
+          },
+          {
+            "destination": "198.51.100.20",
+            "length": 54,
+            "protocol": "TCP",
+            "source": "192.0.2.10",
+            "time": "2024-01-01T00:02:01.560000+00:00"
+          },
+          {
+            "destination": "198.51.100.20",
+            "length": 54,
+            "protocol": "TCP",
+            "source": "192.0.2.10",
+            "time": "2024-01-01T00:02:01.580000+00:00"
+          },
+          {
+            "destination": "198.51.100.20",
+            "length": 54,
+            "protocol": "TCP",
+            "source": "192.0.2.10",
+            "time": "2024-01-01T00:02:01.600000+00:00"
+          },
+          {
+            "destination": "198.51.100.20",
+            "length": 54,
+            "protocol": "TCP",
+            "source": "192.0.2.10",
+            "time": "2024-01-01T00:02:01.620000+00:00"
+          },
+          {
+            "destination": "198.51.100.20",
+            "length": 54,
+            "protocol": "TCP",
+            "source": "192.0.2.10",
+            "time": "2024-01-01T00:02:01.640000+00:00"
+          },
+          {
+            "destination": "198.51.100.20",
+            "length": 54,
+            "protocol": "TCP",
+            "source": "192.0.2.10",
+            "time": "2024-01-01T00:02:01.660000+00:00"
+          },
+          {
+            "destination": "198.51.100.20",
+            "length": 54,
+            "protocol": "TCP",
+            "source": "192.0.2.10",
+            "time": "2024-01-01T00:02:01.680000+00:00"
+          },
+          {
+            "destination": "198.51.100.20",
+            "length": 54,
+            "protocol": "TCP",
+            "source": "192.0.2.10",
+            "time": "2024-01-01T00:02:01.700000+00:00"
+          },
+          {
+            "destination": "198.51.100.20",
+            "length": 54,
+            "protocol": "TCP",
+            "source": "192.0.2.10",
+            "time": "2024-01-01T00:02:01.720000+00:00"
+          },
+          {
+            "destination": "198.51.100.20",
+            "length": 54,
+            "protocol": "TCP",
+            "source": "192.0.2.10",
+            "time": "2024-01-01T00:02:01.740000+00:00"
+          },
+          {
+            "destination": "198.51.100.20",
+            "length": 54,
+            "protocol": "TCP",
+            "source": "192.0.2.10",
+            "time": "2024-01-01T00:02:01.760000+00:00"
+          },
+          {
+            "destination": "198.51.100.20",
+            "length": 54,
+            "protocol": "TCP",
+            "source": "192.0.2.10",
+            "time": "2024-01-01T00:02:01.780000+00:00"
+          },
+          {
+            "destination": "198.51.100.20",
+            "length": 54,
+            "protocol": "TCP",
+            "source": "192.0.2.10",
+            "time": "2024-01-01T00:02:01.800000+00:00"
+          },
+          {
+            "destination": "198.51.100.20",
+            "length": 54,
+            "protocol": "TCP",
+            "source": "192.0.2.10",
+            "time": "2024-01-01T00:02:01.820000+00:00"
+          },
+          {
+            "destination": "198.51.100.20",
+            "length": 54,
+            "protocol": "TCP",
+            "source": "192.0.2.10",
+            "time": "2024-01-01T00:02:01.840000+00:00"
+          },
+          {
+            "destination": "198.51.100.20",
+            "length": 54,
+            "protocol": "TCP",
+            "source": "192.0.2.10",
+            "time": "2024-01-01T00:02:01.860000+00:00"
+          },
+          {
+            "destination": "198.51.100.20",
+            "length": 54,
+            "protocol": "TCP",
+            "source": "192.0.2.10",
+            "time": "2024-01-01T00:02:01.880000+00:00"
+          },
+          {
+            "destination": "198.51.100.20",
+            "length": 54,
+            "protocol": "TCP",
+            "source": "192.0.2.10",
+            "time": "2024-01-01T00:02:01.900000+00:00"
+          },
+          {
+            "destination": "198.51.100.20",
+            "length": 54,
+            "protocol": "TCP",
+            "source": "192.0.2.10",
+            "time": "2024-01-01T00:02:01.920000+00:00"
+          },
+          {
+            "destination": "198.51.100.20",
+            "length": 54,
+            "protocol": "TCP",
+            "source": "192.0.2.10",
+            "time": "2024-01-01T00:02:01.940000+00:00"
+          },
+          {
+            "destination": "198.51.100.20",
+            "length": 54,
+            "protocol": "TCP",
+            "source": "192.0.2.10",
+            "time": "2024-01-01T00:02:01.960000+00:00"
+          },
+          {
+            "destination": "198.51.100.20",
+            "length": 54,
+            "protocol": "TCP",
+            "source": "192.0.2.10",
+            "time": "2024-01-01T00:02:01.980000+00:00"
+          }
+        ],
+        "stats": {
+          "ack": 0,
+          "bytes": 5346,
+          "fin": 0,
+          "packets": 99,
+          "psh": 0,
+          "rst": 0,
+          "seconds": 2.0,
+          "syn": 99,
+          "syn_ack": 0,
+          "syn_all": 99,
+          "unique_ports_per_source": {
+            "192.0.2.10>198.51.100.20": 1
+          },
+          "urg": 0
+        }
+      }
+    },
+    {
+      "id": "syn_below_rate",
+      "input": {
+        "local_addresses": [
+          "192.0.2.10",
+          "2001:db8::10"
+        ],
+        "local_macs": [
+          "02:00:00:00:00:10"
+        ],
+        "packet_count": 100,
+        "packet_start": 208,
+        "pcap": "live/synthetic.pcap",
+        "window_seconds": 2.1,
+        "window_start_epoch_seconds": 1704067380
+      },
+      "output": {
+        "assessment": {
+          "evidence": [],
+          "label": "Benign-looking activity",
+          "limitations": "Experimental behavior rules, not the trained XGBoost model or SHAP. No rule alert means benign-looking within this observation only, not proof of safety. Alerts may be legitimate activity and do not confirm an attack. Encrypted payloads are not inspected.",
+          "method": "Live behavior rules",
+          "status": "benign_looking"
+        },
+        "recent_packets": [
+          {
+            "destination": "198.51.100.20",
+            "length": 54,
+            "protocol": "TCP",
+            "source": "192.0.2.10",
+            "time": "2024-01-01T00:03:01.268316+00:00"
+          },
+          {
+            "destination": "198.51.100.20",
+            "length": 54,
+            "protocol": "TCP",
+            "source": "192.0.2.10",
+            "time": "2024-01-01T00:03:01.289108+00:00"
+          },
+          {
+            "destination": "198.51.100.20",
+            "length": 54,
+            "protocol": "TCP",
+            "source": "192.0.2.10",
+            "time": "2024-01-01T00:03:01.309900+00:00"
+          },
+          {
+            "destination": "198.51.100.20",
+            "length": 54,
+            "protocol": "TCP",
+            "source": "192.0.2.10",
+            "time": "2024-01-01T00:03:01.330693+00:00"
+          },
+          {
+            "destination": "198.51.100.20",
+            "length": 54,
+            "protocol": "TCP",
+            "source": "192.0.2.10",
+            "time": "2024-01-01T00:03:01.351485+00:00"
+          },
+          {
+            "destination": "198.51.100.20",
+            "length": 54,
+            "protocol": "TCP",
+            "source": "192.0.2.10",
+            "time": "2024-01-01T00:03:01.372277+00:00"
+          },
+          {
+            "destination": "198.51.100.20",
+            "length": 54,
+            "protocol": "TCP",
+            "source": "192.0.2.10",
+            "time": "2024-01-01T00:03:01.393069+00:00"
+          },
+          {
+            "destination": "198.51.100.20",
+            "length": 54,
+            "protocol": "TCP",
+            "source": "192.0.2.10",
+            "time": "2024-01-01T00:03:01.413861+00:00"
+          },
+          {
+            "destination": "198.51.100.20",
+            "length": 54,
+            "protocol": "TCP",
+            "source": "192.0.2.10",
+            "time": "2024-01-01T00:03:01.434653+00:00"
+          },
+          {
+            "destination": "198.51.100.20",
+            "length": 54,
+            "protocol": "TCP",
+            "source": "192.0.2.10",
+            "time": "2024-01-01T00:03:01.455445+00:00"
+          },
+          {
+            "destination": "198.51.100.20",
+            "length": 54,
+            "protocol": "TCP",
+            "source": "192.0.2.10",
+            "time": "2024-01-01T00:03:01.476237+00:00"
+          },
+          {
+            "destination": "198.51.100.20",
+            "length": 54,
+            "protocol": "TCP",
+            "source": "192.0.2.10",
+            "time": "2024-01-01T00:03:01.497029+00:00"
+          },
+          {
+            "destination": "198.51.100.20",
+            "length": 54,
+            "protocol": "TCP",
+            "source": "192.0.2.10",
+            "time": "2024-01-01T00:03:01.517821+00:00"
+          },
+          {
+            "destination": "198.51.100.20",
+            "length": 54,
+            "protocol": "TCP",
+            "source": "192.0.2.10",
+            "time": "2024-01-01T00:03:01.538613+00:00"
+          },
+          {
+            "destination": "198.51.100.20",
+            "length": 54,
+            "protocol": "TCP",
+            "source": "192.0.2.10",
+            "time": "2024-01-01T00:03:01.559405+00:00"
+          },
+          {
+            "destination": "198.51.100.20",
+            "length": 54,
+            "protocol": "TCP",
+            "source": "192.0.2.10",
+            "time": "2024-01-01T00:03:01.580198+00:00"
+          },
+          {
+            "destination": "198.51.100.20",
+            "length": 54,
+            "protocol": "TCP",
+            "source": "192.0.2.10",
+            "time": "2024-01-01T00:03:01.600990+00:00"
+          },
+          {
+            "destination": "198.51.100.20",
+            "length": 54,
+            "protocol": "TCP",
+            "source": "192.0.2.10",
+            "time": "2024-01-01T00:03:01.621782+00:00"
+          },
+          {
+            "destination": "198.51.100.20",
+            "length": 54,
+            "protocol": "TCP",
+            "source": "192.0.2.10",
+            "time": "2024-01-01T00:03:01.642574+00:00"
+          },
+          {
+            "destination": "198.51.100.20",
+            "length": 54,
+            "protocol": "TCP",
+            "source": "192.0.2.10",
+            "time": "2024-01-01T00:03:01.663366+00:00"
+          },
+          {
+            "destination": "198.51.100.20",
+            "length": 54,
+            "protocol": "TCP",
+            "source": "192.0.2.10",
+            "time": "2024-01-01T00:03:01.684158+00:00"
+          },
+          {
+            "destination": "198.51.100.20",
+            "length": 54,
+            "protocol": "TCP",
+            "source": "192.0.2.10",
+            "time": "2024-01-01T00:03:01.704950+00:00"
+          },
+          {
+            "destination": "198.51.100.20",
+            "length": 54,
+            "protocol": "TCP",
+            "source": "192.0.2.10",
+            "time": "2024-01-01T00:03:01.725742+00:00"
+          },
+          {
+            "destination": "198.51.100.20",
+            "length": 54,
+            "protocol": "TCP",
+            "source": "192.0.2.10",
+            "time": "2024-01-01T00:03:01.746534+00:00"
+          },
+          {
+            "destination": "198.51.100.20",
+            "length": 54,
+            "protocol": "TCP",
+            "source": "192.0.2.10",
+            "time": "2024-01-01T00:03:01.767326+00:00"
+          },
+          {
+            "destination": "198.51.100.20",
+            "length": 54,
+            "protocol": "TCP",
+            "source": "192.0.2.10",
+            "time": "2024-01-01T00:03:01.788118+00:00"
+          },
+          {
+            "destination": "198.51.100.20",
+            "length": 54,
+            "protocol": "TCP",
+            "source": "192.0.2.10",
+            "time": "2024-01-01T00:03:01.808910+00:00"
+          },
+          {
+            "destination": "198.51.100.20",
+            "length": 54,
+            "protocol": "TCP",
+            "source": "192.0.2.10",
+            "time": "2024-01-01T00:03:01.829702+00:00"
+          },
+          {
+            "destination": "198.51.100.20",
+            "length": 54,
+            "protocol": "TCP",
+            "source": "192.0.2.10",
+            "time": "2024-01-01T00:03:01.850495+00:00"
+          },
+          {
+            "destination": "198.51.100.20",
+            "length": 54,
+            "protocol": "TCP",
+            "source": "192.0.2.10",
+            "time": "2024-01-01T00:03:01.871287+00:00"
+          },
+          {
+            "destination": "198.51.100.20",
+            "length": 54,
+            "protocol": "TCP",
+            "source": "192.0.2.10",
+            "time": "2024-01-01T00:03:01.892079+00:00"
+          },
+          {
+            "destination": "198.51.100.20",
+            "length": 54,
+            "protocol": "TCP",
+            "source": "192.0.2.10",
+            "time": "2024-01-01T00:03:01.912871+00:00"
+          },
+          {
+            "destination": "198.51.100.20",
+            "length": 54,
+            "protocol": "TCP",
+            "source": "192.0.2.10",
+            "time": "2024-01-01T00:03:01.933663+00:00"
+          },
+          {
+            "destination": "198.51.100.20",
+            "length": 54,
+            "protocol": "TCP",
+            "source": "192.0.2.10",
+            "time": "2024-01-01T00:03:01.954455+00:00"
+          },
+          {
+            "destination": "198.51.100.20",
+            "length": 54,
+            "protocol": "TCP",
+            "source": "192.0.2.10",
+            "time": "2024-01-01T00:03:01.975247+00:00"
+          },
+          {
+            "destination": "198.51.100.20",
+            "length": 54,
+            "protocol": "TCP",
+            "source": "192.0.2.10",
+            "time": "2024-01-01T00:03:01.996039+00:00"
+          },
+          {
+            "destination": "198.51.100.20",
+            "length": 54,
+            "protocol": "TCP",
+            "source": "192.0.2.10",
+            "time": "2024-01-01T00:03:02.016831+00:00"
+          },
+          {
+            "destination": "198.51.100.20",
+            "length": 54,
+            "protocol": "TCP",
+            "source": "192.0.2.10",
+            "time": "2024-01-01T00:03:02.037623+00:00"
+          },
+          {
+            "destination": "198.51.100.20",
+            "length": 54,
+            "protocol": "TCP",
+            "source": "192.0.2.10",
+            "time": "2024-01-01T00:03:02.058415+00:00"
+          },
+          {
+            "destination": "198.51.100.20",
+            "length": 54,
+            "protocol": "TCP",
+            "source": "192.0.2.10",
+            "time": "2024-01-01T00:03:02.079207+00:00"
+          }
+        ],
+        "stats": {
+          "ack": 0,
+          "bytes": 5400,
+          "fin": 0,
+          "packets": 100,
+          "psh": 0,
+          "rst": 0,
+          "seconds": 2.1,
+          "syn": 100,
+          "syn_ack": 0,
+          "syn_all": 100,
+          "unique_ports_per_source": {
+            "192.0.2.10>198.51.100.20": 1
+          },
+          "urg": 0
+        }
+      }
+    },
+    {
+      "id": "port_sweep",
+      "input": {
+        "local_addresses": [
+          "192.0.2.10",
+          "2001:db8::10"
+        ],
+        "local_macs": [
+          "02:00:00:00:00:10"
+        ],
+        "packet_count": 25,
+        "packet_start": 308,
+        "pcap": "live/synthetic.pcap",
+        "window_seconds": 10.0,
+        "window_start_epoch_seconds": 1704067440
+      },
+      "output": {
+        "assessment": {
+          "evidence": [
+            {
+              "message": "One source sent connection attempts to 25 distinct destination ports. Possible port scanning; verify intent.",
+              "observed": 25,
+              "rule": "port_sweep",
+              "threshold": 25
+            }
+          ],
+          "label": "Suspicious activity — review needed",
+          "limitations": "Experimental behavior rules, not the trained XGBoost model or SHAP. No rule alert means benign-looking within this observation only, not proof of safety. Alerts may be legitimate activity and do not confirm an attack. Encrypted payloads are not inspected.",
+          "method": "Live behavior rules",
+          "status": "suspicious"
+        },
+        "recent_packets": [
+          {
+            "destination": "198.51.100.20",
+            "length": 54,
+            "protocol": "TCP",
+            "source": "192.0.2.10",
+            "time": "2024-01-01T00:04:00.384615+00:00"
+          },
+          {
+            "destination": "198.51.100.20",
+            "length": 54,
+            "protocol": "TCP",
+            "source": "192.0.2.10",
+            "time": "2024-01-01T00:04:00.769230+00:00"
+          },
+          {
+            "destination": "198.51.100.20",
+            "length": 54,
+            "protocol": "TCP",
+            "source": "192.0.2.10",
+            "time": "2024-01-01T00:04:01.153846+00:00"
+          },
+          {
+            "destination": "198.51.100.20",
+            "length": 54,
+            "protocol": "TCP",
+            "source": "192.0.2.10",
+            "time": "2024-01-01T00:04:01.538461+00:00"
+          },
+          {
+            "destination": "198.51.100.20",
+            "length": 54,
+            "protocol": "TCP",
+            "source": "192.0.2.10",
+            "time": "2024-01-01T00:04:01.923076+00:00"
+          },
+          {
+            "destination": "198.51.100.20",
+            "length": 54,
+            "protocol": "TCP",
+            "source": "192.0.2.10",
+            "time": "2024-01-01T00:04:02.307692+00:00"
+          },
+          {
+            "destination": "198.51.100.20",
+            "length": 54,
+            "protocol": "TCP",
+            "source": "192.0.2.10",
+            "time": "2024-01-01T00:04:02.692307+00:00"
+          },
+          {
+            "destination": "198.51.100.20",
+            "length": 54,
+            "protocol": "TCP",
+            "source": "192.0.2.10",
+            "time": "2024-01-01T00:04:03.076923+00:00"
+          },
+          {
+            "destination": "198.51.100.20",
+            "length": 54,
+            "protocol": "TCP",
+            "source": "192.0.2.10",
+            "time": "2024-01-01T00:04:03.461538+00:00"
+          },
+          {
+            "destination": "198.51.100.20",
+            "length": 54,
+            "protocol": "TCP",
+            "source": "192.0.2.10",
+            "time": "2024-01-01T00:04:03.846153+00:00"
+          },
+          {
+            "destination": "198.51.100.20",
+            "length": 54,
+            "protocol": "TCP",
+            "source": "192.0.2.10",
+            "time": "2024-01-01T00:04:04.230769+00:00"
+          },
+          {
+            "destination": "198.51.100.20",
+            "length": 54,
+            "protocol": "TCP",
+            "source": "192.0.2.10",
+            "time": "2024-01-01T00:04:04.615384+00:00"
+          },
+          {
+            "destination": "198.51.100.20",
+            "length": 54,
+            "protocol": "TCP",
+            "source": "192.0.2.10",
+            "time": "2024-01-01T00:04:05+00:00"
+          },
+          {
+            "destination": "198.51.100.20",
+            "length": 54,
+            "protocol": "TCP",
+            "source": "192.0.2.10",
+            "time": "2024-01-01T00:04:05.384615+00:00"
+          },
+          {
+            "destination": "198.51.100.20",
+            "length": 54,
+            "protocol": "TCP",
+            "source": "192.0.2.10",
+            "time": "2024-01-01T00:04:05.769230+00:00"
+          },
+          {
+            "destination": "198.51.100.20",
+            "length": 54,
+            "protocol": "TCP",
+            "source": "192.0.2.10",
+            "time": "2024-01-01T00:04:06.153846+00:00"
+          },
+          {
+            "destination": "198.51.100.20",
+            "length": 54,
+            "protocol": "TCP",
+            "source": "192.0.2.10",
+            "time": "2024-01-01T00:04:06.538461+00:00"
+          },
+          {
+            "destination": "198.51.100.20",
+            "length": 54,
+            "protocol": "TCP",
+            "source": "192.0.2.10",
+            "time": "2024-01-01T00:04:06.923076+00:00"
+          },
+          {
+            "destination": "198.51.100.20",
+            "length": 54,
+            "protocol": "TCP",
+            "source": "192.0.2.10",
+            "time": "2024-01-01T00:04:07.307692+00:00"
+          },
+          {
+            "destination": "198.51.100.20",
+            "length": 54,
+            "protocol": "TCP",
+            "source": "192.0.2.10",
+            "time": "2024-01-01T00:04:07.692307+00:00"
+          },
+          {
+            "destination": "198.51.100.20",
+            "length": 54,
+            "protocol": "TCP",
+            "source": "192.0.2.10",
+            "time": "2024-01-01T00:04:08.076923+00:00"
+          },
+          {
+            "destination": "198.51.100.20",
+            "length": 54,
+            "protocol": "TCP",
+            "source": "192.0.2.10",
+            "time": "2024-01-01T00:04:08.461538+00:00"
+          },
+          {
+            "destination": "198.51.100.20",
+            "length": 54,
+            "protocol": "TCP",
+            "source": "192.0.2.10",
+            "time": "2024-01-01T00:04:08.846153+00:00"
+          },
+          {
+            "destination": "198.51.100.20",
+            "length": 54,
+            "protocol": "TCP",
+            "source": "192.0.2.10",
+            "time": "2024-01-01T00:04:09.230769+00:00"
+          },
+          {
+            "destination": "198.51.100.20",
+            "length": 54,
+            "protocol": "TCP",
+            "source": "192.0.2.10",
+            "time": "2024-01-01T00:04:09.615384+00:00"
+          }
+        ],
+        "stats": {
+          "ack": 0,
+          "bytes": 1350,
+          "fin": 0,
+          "packets": 25,
+          "psh": 0,
+          "rst": 0,
+          "seconds": 10.0,
+          "syn": 25,
+          "syn_ack": 0,
+          "syn_all": 25,
+          "unique_ports_per_source": {
+            "192.0.2.10>198.51.100.20": 25
+          },
+          "urg": 0
+        }
+      }
+    },
+    {
+      "id": "port_below_threshold",
+      "input": {
+        "local_addresses": [
+          "192.0.2.10",
+          "2001:db8::10"
+        ],
+        "local_macs": [
+          "02:00:00:00:00:10"
+        ],
+        "packet_count": 24,
+        "packet_start": 333,
+        "pcap": "live/synthetic.pcap",
+        "window_seconds": 10.0,
+        "window_start_epoch_seconds": 1704067500
+      },
+      "output": {
+        "assessment": {
+          "evidence": [],
+          "label": "Benign-looking activity",
+          "limitations": "Experimental behavior rules, not the trained XGBoost model or SHAP. No rule alert means benign-looking within this observation only, not proof of safety. Alerts may be legitimate activity and do not confirm an attack. Encrypted payloads are not inspected.",
+          "method": "Live behavior rules",
+          "status": "benign_looking"
+        },
+        "recent_packets": [
+          {
+            "destination": "198.51.100.20",
+            "length": 54,
+            "protocol": "TCP",
+            "source": "192.0.2.10",
+            "time": "2024-01-01T00:05:00.400000+00:00"
+          },
+          {
+            "destination": "198.51.100.20",
+            "length": 54,
+            "protocol": "TCP",
+            "source": "192.0.2.10",
+            "time": "2024-01-01T00:05:00.800000+00:00"
+          },
+          {
+            "destination": "198.51.100.20",
+            "length": 54,
+            "protocol": "TCP",
+            "source": "192.0.2.10",
+            "time": "2024-01-01T00:05:01.200000+00:00"
+          },
+          {
+            "destination": "198.51.100.20",
+            "length": 54,
+            "protocol": "TCP",
+            "source": "192.0.2.10",
+            "time": "2024-01-01T00:05:01.600000+00:00"
+          },
+          {
+            "destination": "198.51.100.20",
+            "length": 54,
+            "protocol": "TCP",
+            "source": "192.0.2.10",
+            "time": "2024-01-01T00:05:02+00:00"
+          },
+          {
+            "destination": "198.51.100.20",
+            "length": 54,
+            "protocol": "TCP",
+            "source": "192.0.2.10",
+            "time": "2024-01-01T00:05:02.400000+00:00"
+          },
+          {
+            "destination": "198.51.100.20",
+            "length": 54,
+            "protocol": "TCP",
+            "source": "192.0.2.10",
+            "time": "2024-01-01T00:05:02.800000+00:00"
+          },
+          {
+            "destination": "198.51.100.20",
+            "length": 54,
+            "protocol": "TCP",
+            "source": "192.0.2.10",
+            "time": "2024-01-01T00:05:03.200000+00:00"
+          },
+          {
+            "destination": "198.51.100.20",
+            "length": 54,
+            "protocol": "TCP",
+            "source": "192.0.2.10",
+            "time": "2024-01-01T00:05:03.600000+00:00"
+          },
+          {
+            "destination": "198.51.100.20",
+            "length": 54,
+            "protocol": "TCP",
+            "source": "192.0.2.10",
+            "time": "2024-01-01T00:05:04+00:00"
+          },
+          {
+            "destination": "198.51.100.20",
+            "length": 54,
+            "protocol": "TCP",
+            "source": "192.0.2.10",
+            "time": "2024-01-01T00:05:04.400000+00:00"
+          },
+          {
+            "destination": "198.51.100.20",
+            "length": 54,
+            "protocol": "TCP",
+            "source": "192.0.2.10",
+            "time": "2024-01-01T00:05:04.800000+00:00"
+          },
+          {
+            "destination": "198.51.100.20",
+            "length": 54,
+            "protocol": "TCP",
+            "source": "192.0.2.10",
+            "time": "2024-01-01T00:05:05.200000+00:00"
+          },
+          {
+            "destination": "198.51.100.20",
+            "length": 54,
+            "protocol": "TCP",
+            "source": "192.0.2.10",
+            "time": "2024-01-01T00:05:05.600000+00:00"
+          },
+          {
+            "destination": "198.51.100.20",
+            "length": 54,
+            "protocol": "TCP",
+            "source": "192.0.2.10",
+            "time": "2024-01-01T00:05:06+00:00"
+          },
+          {
+            "destination": "198.51.100.20",
+            "length": 54,
+            "protocol": "TCP",
+            "source": "192.0.2.10",
+            "time": "2024-01-01T00:05:06.400000+00:00"
+          },
+          {
+            "destination": "198.51.100.20",
+            "length": 54,
+            "protocol": "TCP",
+            "source": "192.0.2.10",
+            "time": "2024-01-01T00:05:06.800000+00:00"
+          },
+          {
+            "destination": "198.51.100.20",
+            "length": 54,
+            "protocol": "TCP",
+            "source": "192.0.2.10",
+            "time": "2024-01-01T00:05:07.200000+00:00"
+          },
+          {
+            "destination": "198.51.100.20",
+            "length": 54,
+            "protocol": "TCP",
+            "source": "192.0.2.10",
+            "time": "2024-01-01T00:05:07.600000+00:00"
+          },
+          {
+            "destination": "198.51.100.20",
+            "length": 54,
+            "protocol": "TCP",
+            "source": "192.0.2.10",
+            "time": "2024-01-01T00:05:08+00:00"
+          },
+          {
+            "destination": "198.51.100.20",
+            "length": 54,
+            "protocol": "TCP",
+            "source": "192.0.2.10",
+            "time": "2024-01-01T00:05:08.400000+00:00"
+          },
+          {
+            "destination": "198.51.100.20",
+            "length": 54,
+            "protocol": "TCP",
+            "source": "192.0.2.10",
+            "time": "2024-01-01T00:05:08.800000+00:00"
+          },
+          {
+            "destination": "198.51.100.20",
+            "length": 54,
+            "protocol": "TCP",
+            "source": "192.0.2.10",
+            "time": "2024-01-01T00:05:09.200000+00:00"
+          },
+          {
+            "destination": "198.51.100.20",
+            "length": 54,
+            "protocol": "TCP",
+            "source": "192.0.2.10",
+            "time": "2024-01-01T00:05:09.600000+00:00"
+          }
+        ],
+        "stats": {
+          "ack": 0,
+          "bytes": 1296,
+          "fin": 0,
+          "packets": 24,
+          "psh": 0,
+          "rst": 0,
+          "seconds": 10.0,
+          "syn": 24,
+          "syn_ack": 0,
+          "syn_all": 24,
+          "unique_ports_per_source": {
+            "192.0.2.10>198.51.100.20": 24
+          },
+          "urg": 0
+        }
+      }
+    },
+    {
+      "id": "zero_packets",
+      "input": {
+        "local_addresses": [
+          "192.0.2.10",
+          "2001:db8::10"
+        ],
+        "local_macs": [
+          "02:00:00:00:00:10"
+        ],
+        "packet_count": 0,
+        "packet_start": 357,
+        "pcap": "live/synthetic.pcap",
+        "window_seconds": 10.0,
+        "window_start_epoch_seconds": 1704067560
+      },
+      "output": {
+        "assessment": {
+          "evidence": [],
+          "label": "No traffic observed",
+          "limitations": "Experimental behavior rules, not the trained XGBoost model or SHAP. No rule alert means benign-looking within this observation only, not proof of safety. Alerts may be legitimate activity and do not confirm an attack. Encrypted payloads are not inspected.",
+          "method": "Live behavior rules",
+          "status": "idle"
+        },
+        "recent_packets": [],
+        "stats": {
+          "ack": 0,
+          "bytes": 0,
+          "fin": 0,
+          "packets": 0,
+          "psh": 0,
+          "rst": 0,
+          "seconds": 10.0,
+          "syn": 0,
+          "syn_ack": 0,
+          "syn_all": 0,
+          "unique_ports_per_source": {},
+          "urg": 0
+        }
+      }
+    },
+    {
+      "id": "unrelated_packets",
+      "input": {
+        "local_addresses": [
+          "192.0.2.10",
+          "2001:db8::10"
+        ],
+        "local_macs": [
+          "02:00:00:00:00:10"
+        ],
+        "packet_count": 2,
+        "packet_start": 357,
+        "pcap": "live/synthetic.pcap",
+        "window_seconds": 10.0,
+        "window_start_epoch_seconds": 1704067620
+      },
+      "output": {
+        "assessment": {
+          "evidence": [],
+          "label": "No traffic observed",
+          "limitations": "Experimental behavior rules, not the trained XGBoost model or SHAP. No rule alert means benign-looking within this observation only, not proof of safety. Alerts may be legitimate activity and do not confirm an attack. Encrypted payloads are not inspected.",
+          "method": "Live behavior rules",
+          "status": "idle"
+        },
+        "recent_packets": [],
+        "stats": {
+          "ack": 0,
+          "bytes": 0,
+          "fin": 0,
+          "packets": 0,
+          "psh": 0,
+          "rst": 0,
+          "seconds": 10.0,
+          "syn": 0,
+          "syn_ack": 0,
+          "syn_all": 0,
+          "unique_ports_per_source": {},
+          "urg": 0
+        }
+      }
+    }
+  ],
+  "clock_policy": "Recent header times use the corresponding PCAP timestamp in UTC",
+  "connection_cases": [
+    {
+      "id": "idle",
+      "input": {
+        "connections": [],
+        "packet_rate": 0.0
+      },
+      "output": {
+        "evidence": [],
+        "label": "No traffic observed",
+        "limitations": "Experimental behavior rules, not the trained XGBoost model or SHAP. No rule alert means benign-looking within this observation only, not proof of safety. Alerts may be legitimate activity and do not confirm an attack. Encrypted payloads are not inspected.",
+        "method": "Live behavior rules",
+        "status": "idle"
+      }
+    },
+    {
+      "id": "throughput_only",
+      "input": {
+        "connections": [],
+        "packet_rate": 10000.0
+      },
+      "output": {
+        "evidence": [],
+        "label": "Benign-looking activity",
+        "limitations": "Experimental behavior rules, not the trained XGBoost model or SHAP. No rule alert means benign-looking within this observation only, not proof of safety. Alerts may be legitimate activity and do not confirm an attack. Encrypted payloads are not inspected.",
+        "method": "Live behavior rules",
+        "status": "benign_looking"
+      }
+    },
+    {
+      "id": "pending_below_threshold",
+      "input": {
+        "connections": [
+          {
+            "status": "SYN_SENT"
+          },
+          {
+            "status": "SYN_SENT"
+          },
+          {
+            "status": "SYN_SENT"
+          },
+          {
+            "status": "SYN_SENT"
+          },
+          {
+            "status": "SYN_SENT"
+          },
+          {
+            "status": "SYN_SENT"
+          },
+          {
+            "status": "SYN_SENT"
+          },
+          {
+            "status": "SYN_SENT"
+          },
+          {
+            "status": "SYN_SENT"
+          },
+          {
+            "status": "SYN_SENT"
+          },
+          {
+            "status": "SYN_SENT"
+          },
+          {
+            "status": "SYN_SENT"
+          },
+          {
+            "status": "SYN_SENT"
+          },
+          {
+            "status": "SYN_SENT"
+          },
+          {
+            "status": "SYN_SENT"
+          },
+          {
+            "status": "SYN_SENT"
+          },
+          {
+            "status": "SYN_SENT"
+          },
+          {
+            "status": "SYN_SENT"
+          },
+          {
+            "status": "SYN_SENT"
+          },
+          {
+            "status": "SYN_SENT"
+          },
+          {
+            "status": "SYN_SENT"
+          },
+          {
+            "status": "SYN_SENT"
+          },
+          {
+            "status": "SYN_SENT"
+          },
+          {
+            "status": "SYN_SENT"
+          },
+          {
+            "status": "SYN_SENT"
+          },
+          {
+            "status": "SYN_SENT"
+          },
+          {
+            "status": "SYN_SENT"
+          },
+          {
+            "status": "SYN_SENT"
+          },
+          {
+            "status": "SYN_SENT"
+          },
+          {
+            "status": "SYN_SENT"
+          },
+          {
+            "status": "SYN_SENT"
+          },
+          {
+            "status": "SYN_SENT"
+          },
+          {
+            "status": "SYN_SENT"
+          },
+          {
+            "status": "SYN_SENT"
+          },
+          {
+            "status": "SYN_SENT"
+          },
+          {
+            "status": "SYN_SENT"
+          },
+          {
+            "status": "SYN_SENT"
+          },
+          {
+            "status": "SYN_SENT"
+          },
+          {
+            "status": "SYN_SENT"
+          }
+        ],
+        "packet_rate": 0.0
+      },
+      "output": {
+        "evidence": [],
+        "label": "Benign-looking activity",
+        "limitations": "Experimental behavior rules, not the trained XGBoost model or SHAP. No rule alert means benign-looking within this observation only, not proof of safety. Alerts may be legitimate activity and do not confirm an attack. Encrypted payloads are not inspected.",
+        "method": "Live behavior rules",
+        "status": "benign_looking"
+      }
+    },
+    {
+      "id": "pending_at_threshold",
+      "input": {
+        "connections": [
+          {
+            "status": "SYN_SENT"
+          },
+          {
+            "status": "SYN_SENT"
+          },
+          {
+            "status": "SYN_SENT"
+          },
+          {
+            "status": "SYN_SENT"
+          },
+          {
+            "status": "SYN_SENT"
+          },
+          {
+            "status": "SYN_SENT"
+          },
+          {
+            "status": "SYN_SENT"
+          },
+          {
+            "status": "SYN_SENT"
+          },
+          {
+            "status": "SYN_SENT"
+          },
+          {
+            "status": "SYN_SENT"
+          },
+          {
+            "status": "SYN_SENT"
+          },
+          {
+            "status": "SYN_SENT"
+          },
+          {
+            "status": "SYN_SENT"
+          },
+          {
+            "status": "SYN_SENT"
+          },
+          {
+            "status": "SYN_SENT"
+          },
+          {
+            "status": "SYN_SENT"
+          },
+          {
+            "status": "SYN_SENT"
+          },
+          {
+            "status": "SYN_SENT"
+          },
+          {
+            "status": "SYN_SENT"
+          },
+          {
+            "status": "SYN_SENT"
+          },
+          {
+            "status": "SYN_SENT"
+          },
+          {
+            "status": "SYN_SENT"
+          },
+          {
+            "status": "SYN_SENT"
+          },
+          {
+            "status": "SYN_SENT"
+          },
+          {
+            "status": "SYN_SENT"
+          },
+          {
+            "status": "SYN_SENT"
+          },
+          {
+            "status": "SYN_SENT"
+          },
+          {
+            "status": "SYN_SENT"
+          },
+          {
+            "status": "SYN_SENT"
+          },
+          {
+            "status": "SYN_SENT"
+          },
+          {
+            "status": "SYN_SENT"
+          },
+          {
+            "status": "SYN_SENT"
+          },
+          {
+            "status": "SYN_SENT"
+          },
+          {
+            "status": "SYN_SENT"
+          },
+          {
+            "status": "SYN_SENT"
+          },
+          {
+            "status": "SYN_SENT"
+          },
+          {
+            "status": "SYN_SENT"
+          },
+          {
+            "status": "SYN_SENT"
+          },
+          {
+            "status": "SYN_SENT"
+          },
+          {
+            "status": "SYN_SENT"
+          }
+        ],
+        "packet_rate": 0.0
+      },
+      "output": {
+        "evidence": [
+          {
+            "message": "40 connections are awaiting a TCP handshake. This may indicate repeated connection attempts or connection failures.",
+            "observed": 40,
+            "rule": "connection_attempt_burst",
+            "threshold": 40
+          }
+        ],
+        "label": "Suspicious activity — review needed",
+        "limitations": "Experimental behavior rules, not the trained XGBoost model or SHAP. No rule alert means benign-looking within this observation only, not proof of safety. Alerts may be legitimate activity and do not confirm an attack. Encrypted payloads are not inspected.",
+        "method": "Live behavior rules",
+        "status": "suspicious"
+      }
+    }
+  ],
+  "execution": "Offline PCAP replay through LiveMonitor._packet; no monitor start or model calls",
+  "limitations": "Synthetic offline regression fixtures only; no real traffic, capture, model inference, training or LLM generation. Rule decisions and lexical checks do not establish detection accuracy, safety or semantic faithfulness.",
+  "pcap_format": {
+    "byte_order": "little",
+    "link_type": 1,
+    "timestamp_resolution": "microseconds"
+  },
+  "pcap_sha256": "162bc69cd2f16d572630232ba7ca1e01da9428c43e346f44f8b4b4df80dbe216",
+  "schema_version": 1,
+  "synthetic": true
+}

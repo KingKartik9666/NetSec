@@ -1,0 +1,1 @@
+{"capability":"predict","error":"Expected exactly 16 ordered values per row for xgboost","model_id":"xgboost","status":"incompatible"}

@@ -1,0 +1,8 @@
+{
+  "source": "imdai-analysis.json",
+  "destination": "evaluation/fixtures/rust_migration/legacy/imdai-analysis.json",
+  "sha256": "414996f909355c4a6030271d449239fb953f3228e6d9be78eaa84df5aa15b50a",
+  "bytes": 116946,
+  "historical": true,
+  "current_contract": false
+}

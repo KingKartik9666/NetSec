@@ -1,0 +1,9 @@
+NetSec XGBoost migration spike
+
+The TreeSHAP algorithm implementation is adapted from:
+https://github.com/dmlc/xgboost/blob/v3.1.3/src/predictor/treeshap.cc
+and mean-value computation in src/predictor/cpu_predictor.cc.
+Copyright 2017-2025 XGBoost Contributors. Licensed under Apache-2.0.
+Changes: safe Rust data structures, bounded UBJSON model reader, no interaction
+conditioning, explicit error propagation and native checkpoint parity tests.
+This is a port with attribution, not original authorship of TreeSHAP.

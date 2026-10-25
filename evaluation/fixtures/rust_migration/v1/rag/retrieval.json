@@ -1,0 +1,441 @@
+{
+  "cases": [
+    {
+      "id": "packet_disagreement",
+      "input": {
+        "evidence": {
+          "prediction": {
+            "is_attack": true,
+            "label": "Suspicious traffic pattern"
+          },
+          "rules": {
+            "status": "benign_looking"
+          },
+          "source": {
+            "kind": "Synthetic packet observation",
+            "mode": "packets",
+            "synthetic": true
+          },
+          "xai": {
+            "features": [
+              {
+                "feature": "network_packets_all_count",
+                "shap_value": 0.4,
+                "value": 100
+              },
+              {
+                "feature": "network_tcp-flags-syn_count",
+                "shap_value": -0.2,
+                "value": 20
+              }
+            ],
+            "method": "Exact native TreeSHAP"
+          }
+        }
+      },
+      "method": "retrieve",
+      "output": {
+        "available": true,
+        "context": "[live-rule-disagreement] Live behavior rules and the packet classifier use different decision logic. A suspicious model prediction with benign-looking rules is disagreement, not a confirmed incident. Keep both results visible and verify the observed traffic before deciding what happened.\n[packet-window-inputs] The separate packet classifier uses total packets and ACK, FIN, PSH, RST, SYN and URG counts per ten-second window. One packet can have multiple flags. Empty or substantially delayed windows have no model verdict; absence of a prediction does not establish safety.",
+        "context_bytes": 576,
+        "context_chars": 576,
+        "corpus_sha256": "febde238f247bc06d839b109cc691326021dfc41ba77176033648f046d51b844",
+        "correction_attempted": false,
+        "device": "cpu",
+        "error": null,
+        "limitations": "Small curated project corpus; lexical relevance thresholds are heuristic. Retrieval is background knowledge, not traffic evidence, incident confirmation or measured reasoning accuracy.",
+        "matched": true,
+        "max_context_bytes": 700,
+        "max_passage_bytes": 300,
+        "method": "Local lexical TF-IDF cosine similarity",
+        "offline": true,
+        "passages": [
+          {
+            "chunk_sha256": "cc0e728ca41b02ecc038e67f1bd708788e1bfe2ef69326a105a1c2a984883d48",
+            "corpus_sha256": "febde238f247bc06d839b109cc691326021dfc41ba77176033648f046d51b844",
+            "id": "live-rule-disagreement",
+            "scopes": [
+              "packet"
+            ],
+            "score": 0.363209,
+            "source": {
+              "file": "docs/LIVE_MONITORING.md",
+              "section": "Rules and model outputs / rule evidence",
+              "sha256": "1a544869360dc98dd3e39b34be2eb8158a31b435b7252a22fd63687397668cac"
+            },
+            "text": "Live behavior rules and the packet classifier use different decision logic. A suspicious model prediction with benign-looking rules is disagreement, not a confirmed incident. Keep both results visible and verify the observed traffic before deciding what happened.",
+            "title": "Live rules and packet model can disagree"
+          },
+          {
+            "chunk_sha256": "4da003a7f229091813869caed6141593e1b307ccf0f8ea1d7de45d969c1ed344",
+            "corpus_sha256": "febde238f247bc06d839b109cc691326021dfc41ba77176033648f046d51b844",
+            "id": "packet-window-inputs",
+            "scopes": [
+              "packet"
+            ],
+            "score": 0.228429,
+            "source": {
+              "file": "docs/LIVE_MONITORING.md",
+              "section": "Separate saved-model paths / packet inputs",
+              "sha256": "1a544869360dc98dd3e39b34be2eb8158a31b435b7252a22fd63687397668cac"
+            },
+            "text": "The separate packet classifier uses total packets and ACK, FIN, PSH, RST, SYN and URG counts per ten-second window. One packet can have multiple flags. Empty or substantially delayed windows have no model verdict; absence of a prediction does not establish safety.",
+            "title": "The live classifier uses seven header counts"
+          }
+        ],
+        "query": "Suspicious traffic pattern Exact native TreeSHAP network packets all count network tcp flags syn count benign looking rule model disagreement rule model disagreement",
+        "retrieval_attempts": [
+          {
+            "matched": true,
+            "query": "Suspicious traffic pattern Exact native TreeSHAP network packets all count network tcp flags syn count benign looking rule model disagreement rule model disagreement",
+            "reason": "structured evidence query",
+            "top_score": 0.363209
+          }
+        ],
+        "scope": "packet"
+      }
+    },
+    {
+      "id": "csv_scope",
+      "input": {
+        "query": "DataSense CSV sensor log features validation",
+        "scope": "csv"
+      },
+      "method": "retrieve_query",
+      "output": {
+        "available": true,
+        "context": "[datasense-csv-scope] CSV analysis uses the saved DataSense model and its full feature schema, including sensor and log inputs. Included samples are validation observations used in model selection. This is distinct from live packet analysis and is not independently verified CIC-IIoT2025 research.",
+        "context_bytes": 297,
+        "context_chars": 297,
+        "corpus_sha256": "febde238f247bc06d839b109cc691326021dfc41ba77176033648f046d51b844",
+        "correction_attempted": false,
+        "device": "cpu",
+        "error": null,
+        "limitations": "Small curated project corpus; lexical relevance thresholds are heuristic. Retrieval is background knowledge, not traffic evidence, incident confirmation or measured reasoning accuracy.",
+        "matched": true,
+        "max_context_bytes": 700,
+        "max_passage_bytes": 300,
+        "method": "Local lexical TF-IDF cosine similarity",
+        "offline": true,
+        "passages": [
+          {
+            "chunk_sha256": "fc89fb8f568f7a1fb11c2e48644d95da26dbf1b19d338f920197555d32afc67a",
+            "corpus_sha256": "febde238f247bc06d839b109cc691326021dfc41ba77176033648f046d51b844",
+            "id": "datasense-csv-scope",
+            "scopes": [
+              "csv"
+            ],
+            "score": 0.575763,
+            "source": {
+              "file": "docs/APP.md",
+              "section": "Frozen CSV model and input contract",
+              "sha256": "12cf355675f786868c675e7d22e896fb2aa0103a68f2f528b4470c0ec7e3e717"
+            },
+            "text": "CSV analysis uses the saved DataSense model and its full feature schema, including sensor and log inputs. Included samples are validation observations used in model selection. This is distinct from live packet analysis and is not independently verified CIC-IIoT2025 research.",
+            "title": "CSV analysis requires the frozen DataSense schema"
+          }
+        ],
+        "query": "DataSense CSV sensor log features validation",
+        "retrieval_attempts": [
+          {
+            "matched": true,
+            "query": "DataSense CSV sensor log features validation",
+            "reason": "literal query",
+            "top_score": 0.575763
+          }
+        ],
+        "scope": "csv"
+      }
+    },
+    {
+      "id": "weak_supported_evidence",
+      "input": {
+        "evidence": {
+          "prediction": {
+            "is_attack": false,
+            "label": "Quiet activity"
+          },
+          "rules": null,
+          "source": {
+            "kind": "Synthetic packet observation",
+            "mode": "packets",
+            "synthetic": true
+          },
+          "xai": {
+            "features": [
+              {
+                "feature": "opaque_a",
+                "shap_value": 0.4
+              }
+            ],
+            "method": "arbor explanation"
+          }
+        }
+      },
+      "method": "retrieve",
+      "output": {
+        "available": true,
+        "context": "[shap-margin-directions] For the predicted class, positive SHAP supports its raw margin and negative SHAP opposes it. Bias plus all contributions reconstructs that margin. These are not probability percentage points, a comparison with benign, or causal proof.\n[human-verification] A prediction or generated explanation requires human verification against the measured observation and its source. Neither normal nor suspicious output confirms safety or an incident. Recommendations are advisory; this app does not block devices or alter network policy.",
+        "context_bytes": 551,
+        "context_chars": 551,
+        "corpus_sha256": "febde238f247bc06d839b109cc691326021dfc41ba77176033648f046d51b844",
+        "correction_attempted": true,
+        "device": "cpu",
+        "error": null,
+        "limitations": "Small curated project corpus; lexical relevance thresholds are heuristic. Retrieval is background knowledge, not traffic evidence, incident confirmation or measured reasoning accuracy.",
+        "matched": true,
+        "max_context_bytes": 700,
+        "max_passage_bytes": 300,
+        "method": "Local lexical TF-IDF cosine similarity",
+        "offline": true,
+        "passages": [
+          {
+            "chunk_sha256": "e3097ec7bb45e559e8ca83f84145478a2e8dfdd1909390b0a3f90aee373bd1c1",
+            "corpus_sha256": "febde238f247bc06d839b109cc691326021dfc41ba77176033648f046d51b844",
+            "id": "shap-margin-directions",
+            "scopes": [
+              "common"
+            ],
+            "score": 0.499905,
+            "source": {
+              "file": "docs/APP.md",
+              "section": "What each explanation means / Native TreeSHAP",
+              "sha256": "12cf355675f786868c675e7d22e896fb2aa0103a68f2f528b4470c0ec7e3e717"
+            },
+            "text": "For the predicted class, positive SHAP supports its raw margin and negative SHAP opposes it. Bias plus all contributions reconstructs that margin. These are not probability percentage points, a comparison with benign, or causal proof.",
+            "title": "Signed SHAP explains the predicted class margin"
+          },
+          {
+            "chunk_sha256": "8fb3803e4dc8914d24317883da2f48cb71965ca87498889c720757ff47f6bf42",
+            "corpus_sha256": "febde238f247bc06d839b109cc691326021dfc41ba77176033648f046d51b844",
+            "id": "human-verification",
+            "scopes": [
+              "common"
+            ],
+            "score": 0.157714,
+            "source": {
+              "file": "docs/APP.md",
+              "section": "What each explanation means / Local assistant",
+              "sha256": "12cf355675f786868c675e7d22e896fb2aa0103a68f2f528b4470c0ec7e3e717"
+            },
+            "text": "A prediction or generated explanation requires human verification against the measured observation and its source. Neither normal nor suspicious output confirms safety or an incident. Recommendations are advisory; this app does not block devices or alter network policy.",
+            "title": "Verify measured evidence before responding"
+          }
+        ],
+        "query": "Quiet activity arbor explanation opaque a SHAP signed raw margin directions model prediction uncertainty",
+        "retrieval_attempts": [
+          {
+            "matched": true,
+            "query": "Quiet activity arbor explanation opaque a",
+            "reason": "structured evidence query",
+            "top_score": 0.147579
+          },
+          {
+            "matched": true,
+            "query": "Quiet activity arbor explanation opaque a SHAP signed raw margin directions model prediction uncertainty",
+            "reason": "bounded evidence-topic expansion",
+            "top_score": 0.499905
+          }
+        ],
+        "scope": "packet"
+      }
+    },
+    {
+      "id": "unrelated_query",
+      "input": {
+        "query": "banana cheesecake lunar agriculture",
+        "scope": "packet"
+      },
+      "method": "retrieve_query",
+      "output": {
+        "available": true,
+        "context": "",
+        "context_bytes": 0,
+        "context_chars": 0,
+        "corpus_sha256": "febde238f247bc06d839b109cc691326021dfc41ba77176033648f046d51b844",
+        "correction_attempted": false,
+        "device": "cpu",
+        "error": null,
+        "limitations": "Small curated project corpus; lexical relevance thresholds are heuristic. Retrieval is background knowledge, not traffic evidence, incident confirmation or measured reasoning accuracy.",
+        "matched": false,
+        "max_context_bytes": 700,
+        "max_passage_bytes": 300,
+        "method": "Local lexical TF-IDF cosine similarity",
+        "offline": true,
+        "passages": [],
+        "query": "banana cheesecake lunar agriculture",
+        "retrieval_attempts": [
+          {
+            "matched": false,
+            "query": "banana cheesecake lunar agriculture",
+            "reason": "literal query",
+            "top_score": 0.0
+          }
+        ],
+        "scope": "packet"
+      }
+    },
+    {
+      "id": "empty_query",
+      "input": {
+        "query": "",
+        "scope": "common"
+      },
+      "method": "retrieve_query",
+      "output": {
+        "available": true,
+        "context": "",
+        "context_bytes": 0,
+        "context_chars": 0,
+        "corpus_sha256": "febde238f247bc06d839b109cc691326021dfc41ba77176033648f046d51b844",
+        "correction_attempted": false,
+        "device": "cpu",
+        "error": null,
+        "limitations": "Small curated project corpus; lexical relevance thresholds are heuristic. Retrieval is background knowledge, not traffic evidence, incident confirmation or measured reasoning accuracy.",
+        "matched": false,
+        "max_context_bytes": 700,
+        "max_passage_bytes": 300,
+        "method": "Local lexical TF-IDF cosine similarity",
+        "offline": true,
+        "passages": [],
+        "query": "",
+        "retrieval_attempts": [
+          {
+            "matched": false,
+            "query": "",
+            "reason": "literal query",
+            "top_score": 0.0
+          }
+        ],
+        "scope": "common"
+      }
+    },
+    {
+      "id": "unsupported_source",
+      "input": {
+        "evidence": {
+          "prediction": {
+            "label": "Sunny"
+          },
+          "source": {
+            "kind": "Synthetic weather record"
+          }
+        }
+      },
+      "method": "retrieve",
+      "output": {
+        "available": true,
+        "context": "",
+        "context_bytes": 0,
+        "context_chars": 0,
+        "corpus_sha256": "febde238f247bc06d839b109cc691326021dfc41ba77176033648f046d51b844",
+        "correction_attempted": false,
+        "device": "cpu",
+        "error": null,
+        "limitations": "Small curated project corpus; lexical relevance thresholds are heuristic. Retrieval is background knowledge, not traffic evidence, incident confirmation or measured reasoning accuracy.",
+        "matched": false,
+        "max_context_bytes": 700,
+        "max_passage_bytes": 300,
+        "method": "Local lexical TF-IDF cosine similarity",
+        "offline": true,
+        "passages": [],
+        "query": "",
+        "retrieval_attempts": [],
+        "scope": "common"
+      }
+    },
+    {
+      "id": "bounded_results",
+      "input": {
+        "max_results": 50,
+        "query": "SHAP LIME fidelity gain cover calibrated scores human verification uncertainty",
+        "scope": "csv"
+      },
+      "method": "retrieve_query",
+      "output": {
+        "available": true,
+        "context": "[xgboost-global-statistics] XGBoost weight counts splits using a feature. Gain is mean training-loss reduction per split; cover is mean Hessian-weighted coverage. Total gain and total cover sum those quantities. These global tree statistics do not explain one observation or establish causation.\n[human-verification] A prediction or generated explanation requires human verification against the measured observation and its source. Neither normal nor suspicious output confirms safety or an incident. Recommendations are advisory; this app does not block devices or alter network policy.",
+        "context_bytes": 587,
+        "context_chars": 587,
+        "corpus_sha256": "febde238f247bc06d839b109cc691326021dfc41ba77176033648f046d51b844",
+        "correction_attempted": false,
+        "device": "cpu",
+        "error": null,
+        "limitations": "Small curated project corpus; lexical relevance thresholds are heuristic. Retrieval is background knowledge, not traffic evidence, incident confirmation or measured reasoning accuracy.",
+        "matched": true,
+        "max_context_bytes": 700,
+        "max_passage_bytes": 300,
+        "method": "Local lexical TF-IDF cosine similarity",
+        "offline": true,
+        "passages": [
+          {
+            "chunk_sha256": "d5b7e38f68271e1d236b109eefa3877eaea04b05147ded70e4dcef10aa63b7db",
+            "corpus_sha256": "febde238f247bc06d839b109cc691326021dfc41ba77176033648f046d51b844",
+            "id": "xgboost-global-statistics",
+            "scopes": [
+              "common"
+            ],
+            "score": 0.238649,
+            "source": {
+              "file": "framework/xai/model_evidence.py",
+              "section": "explain_additional / statistics definitions",
+              "sha256": "760fb3faaaa9c80daed15dce57947071ad741c5f595a5baffde60b25817cae79"
+            },
+            "text": "XGBoost weight counts splits using a feature. Gain is mean training-loss reduction per split; cover is mean Hessian-weighted coverage. Total gain and total cover sum those quantities. These global tree statistics do not explain one observation or establish causation.",
+            "title": "Gain, split count and cover describe the trained trees"
+          },
+          {
+            "chunk_sha256": "8fb3803e4dc8914d24317883da2f48cb71965ca87498889c720757ff47f6bf42",
+            "corpus_sha256": "febde238f247bc06d839b109cc691326021dfc41ba77176033648f046d51b844",
+            "id": "human-verification",
+            "scopes": [
+              "common"
+            ],
+            "score": 0.227995,
+            "source": {
+              "file": "docs/APP.md",
+              "section": "What each explanation means / Local assistant",
+              "sha256": "12cf355675f786868c675e7d22e896fb2aa0103a68f2f528b4470c0ec7e3e717"
+            },
+            "text": "A prediction or generated explanation requires human verification against the measured observation and its source. Neither normal nor suspicious output confirms safety or an incident. Recommendations are advisory; this app does not block devices or alter network policy.",
+            "title": "Verify measured evidence before responding"
+          }
+        ],
+        "query": "SHAP LIME fidelity gain cover calibrated scores human verification uncertainty",
+        "retrieval_attempts": [
+          {
+            "matched": true,
+            "query": "SHAP LIME fidelity gain cover calibrated scores human verification uncertainty",
+            "reason": "literal query",
+            "top_score": 0.238649
+          }
+        ],
+        "scope": "csv"
+      }
+    }
+  ],
+  "knowledge": {
+    "file": "rag/knowledge.json",
+    "sha256": "febde238f247bc06d839b109cc691326021dfc41ba77176033648f046d51b844",
+    "source": "framework/rag/knowledge.json",
+    "status": {
+      "available": true,
+      "chunks": 12,
+      "corpus_sha256": "febde238f247bc06d839b109cc691326021dfc41ba77176033648f046d51b844",
+      "correction_threshold": 0.32,
+      "device": "cpu",
+      "error": null,
+      "llm_executed": false,
+      "max_context_bytes": 700,
+      "max_results": 2,
+      "max_retrieval_attempts": 2,
+      "method": "Local lexical TF-IDF cosine similarity",
+      "minimum_similarity": 0.14,
+      "offline": true,
+      "retriever": "stdlib TF-IDF"
+    }
+  },
+  "limitations": "Synthetic offline regression fixtures only; no real traffic, capture, model inference, training or LLM generation. Rule decisions and lexical checks do not establish detection accuracy, safety or semantic faithfulness.",
+  "schema_version": 1,
+  "synthetic_inputs": true
+}

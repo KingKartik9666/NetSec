@@ -52,13 +52,23 @@ def test_stale_live_xai_cannot_be_presented_as_the_current_observation(detector)
         assert "observation changed" in response.json["error"]
 
 
-def test_desktop_backend_exits_when_parent_pipe_closes(detector):
+@pytest.mark.parametrize("shutdown", ["eof", "command"])
+def test_desktop_backend_serves_model_requests_until_parent_shutdown(detector, tmp_path, shutdown):
+    """Exercise real spawn while the desktop control pipe stays open and idle."""
+    import psutil
+
+    root = Path(__file__).resolve().parents[1]
+    configuration = json.loads((root / "framework/models/four_models/config.json").read_text())
+    configuration["request_timeout_seconds"] = 10
+    config_path = tmp_path / "desktop-model-config.json"
+    config_path.write_text(json.dumps(configuration))
     token = "b" * 64
     child = subprocess.Popen([sys.executable, "-B", "-u", "-m", "framework.app.desktop_backend",
-                              "--bundle", str(detector.bundle_path)],
-                             cwd=Path(__file__).resolve().parents[1],
+                              "--bundle", str(detector.bundle_path), "--model-config", str(config_path)],
+                             cwd=root,
                              env={**os.environ, "IMDAI_SESSION_TOKEN": token},
                              stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+    owned = []
     try:
         line = child.stdout.readline()
         assert line, child.stderr.read()
@@ -71,9 +81,43 @@ def test_desktop_backend_exits_when_parent_pipe_closes(detector):
         request = urllib.request.Request(url, headers={"X-IMDAI-Session": token})
         with urllib.request.urlopen(request, timeout=3) as response:
             assert json.load(response)["running"] is False
-        child.stdin.close()
+        # A live-status check alone does not start a model worker. These calls
+        # must complete before any shutdown bytes or EOF reach the control pipe.
+        def model_request(route, payload=None):
+            request = urllib.request.Request(
+                f"http://127.0.0.1:{ready['port']}{route}",
+                data=None if payload is None else json.dumps(payload).encode(),
+                headers={"X-IMDAI-Session": token, "Content-Type": "application/json"})
+            with urllib.request.urlopen(request, timeout=15) as response:
+                return json.load(response)
+
+        assert model_request("/api/status")["execution"]["device"] == "cpu"
+        assert model_request("/api/samples")["samples"]
+        report = model_request("/api/analyze", {"sample_id": 0})
+        assert report["model"]["run_id"] == "cpu_test_fixture"
+        assert report["explanation"]["method"] == "Exact TreeSHAP (native XGBoost)"
+        assert report["explanation"]["reconstruction_error"] < 1e-4
+        assert report["reasoning"]["llm_executed"] is False
+        owned = psutil.Process(child.pid).children(recursive=True)
+        assert owned  # Includes the model worker (and Windows venv launcher).
+        if shutdown == "command":
+            child.stdin.write("shutdown\n")
+            child.stdin.flush()
+        else:
+            child.stdin.close()
         assert child.wait(timeout=10) == 0
+        _, remaining = psutil.wait_procs(owned, timeout=5)
+        assert not remaining, "Desktop shutdown left an owned process alive"
     finally:
+        if not child.stdin.closed:
+            child.stdin.close()
+        if child.poll() is None:
+            try:
+                child.wait(timeout=10)
+            except subprocess.TimeoutExpired:
+                pass
         if child.poll() is None:
             child.kill()
             child.wait(timeout=5)
+        child.stdout.close()
+        child.stderr.close()

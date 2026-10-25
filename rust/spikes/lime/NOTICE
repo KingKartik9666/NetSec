@@ -1,0 +1,14 @@
+The seeded Rust LIME spike independently reimplements the tabular explanation
+algorithm in lime 0.2.0.1, including quartile discretization, empirical category
+sampling, the default exponential kernel, auto feature selection and weighted
+Ridge. Algorithm references: https://github.com/marcotcr/lime .
+
+LIME copyright (c) 2016 Marco Tulio Correia Ribeiro; BSD-2-Clause license text
+accompanies this spike. This code is not the Python lime package. Rust RNG,
+distribution arithmetic, solver details and constant-target handling differ as
+documented in docs/RUST_SPIKE_LIME.md.
+
+The path dependency netsec-xgboost-spike carries its separate Apache-2.0
+TreeSHAP algorithm attribution and license. Cargo.lock pins dependencies; their
+copyrights/licenses remain with their respective authors. NumPy's public NPY
+format specification guided the bounded numeric reference reader.

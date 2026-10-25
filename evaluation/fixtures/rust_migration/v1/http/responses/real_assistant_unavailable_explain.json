@@ -1,0 +1,1 @@
+{"error":"Local language model unavailable. Run python -m experiment.setup_local_llm and install desktop requirements."}

@@ -6,6 +6,7 @@ import copy
 from datetime import datetime, timezone
 import importlib.util
 import ipaddress
+import logging
 import os
 from pathlib import Path
 import platform
@@ -61,10 +62,15 @@ class LiveMonitor:
                    if windows and not npcap else "Install requirements-live.txt for packet inspection.")
         preferred = next((v["id"] for v in interfaces if v["is_up"] and v["name"].lower() in {"wi-fi", "wifi", "ethernet"}),
                          next((v["id"] for v in interfaces if v["is_up"]), ""))
+        model_error = None
+        try:
+            model_compatible = bool(self._detector and self._detector.partial_input_supported)
+        except Exception as error:
+            model_compatible, model_error = False, str(error)
         return {"interfaces": interfaces, "recommended_interface": preferred, "connections_available": available,
                 "packet_capture_available": capture_available, "packet_capture_message": message,
                 "setup_url": "https://npcap.com/#download",
-                "model_compatible": bool(self._detector and self._detector.partial_input_supported),
+                "model_compatible": model_compatible, "model_error": model_error,
                 "packet_model_available": (Path(__file__).resolve().parents[1] / "models/packet_live/bundle.json").is_file(),
                 "packet_model_message": "Separate experimental 7-count XGBoost model; DataSense binary validation does not measure live PC accuracy."}
 
@@ -263,10 +269,17 @@ class LiveMonitor:
                         self._window = self._empty_window()
                 connections = self._connections()
                 if mode == "packets":
-                    binary = self._predict_window(stats) if count else None
+                    try:
+                        binary = self._predict_window(stats) if count else None
+                    except Exception as error:
+                        binary = self._model_failure("Binary packet model", error)
                     if binary is not None:
                         binary.update(observation_id=observation_id, observed_at=observed_at)
-                    multiclass = self._predict_multiclass_window(stats, observation_id, observed_at)
+                    try:
+                        multiclass = self._predict_multiclass_window(stats, observation_id, observed_at)
+                    except Exception as error:
+                        multiclass = {**self._model_failure("Shared multiclass model", error),
+                                      "observation_id": observation_id, "observed_at": observed_at}
                 else:
                     count = max(0, current.packets_sent + current.packets_recv - previous.packets_sent - previous.packets_recv)
                     size = max(0, current.bytes_sent + current.bytes_recv - previous.bytes_sent - previous.bytes_recv)
@@ -320,22 +333,37 @@ class LiveMonitor:
         if not path.is_file():
             return {"label": "Packet model unavailable", "available": False,
                     "limitations": "Only live behavior rules were evaluated; no model prediction was made."}
-        if self._packet_model is None:
-            from framework.detection.packet_xgboost import PacketXGBoost
-            self._packet_model = PacketXGBoost(path)
-        return {**self._packet_model.predict(stats), "observation_id": uuid.uuid4().hex,
-                "observed_at": datetime.now(timezone.utc).isoformat()}
+        try:
+            if self._packet_model is None:
+                from framework.detection.packet_xgboost import PacketXGBoost
+                self._packet_model = PacketXGBoost(path)
+            return {**self._packet_model.predict(stats), "observation_id": uuid.uuid4().hex,
+                    "observed_at": datetime.now(timezone.utc).isoformat()}
+        except Exception as error:
+            return self._model_failure("Binary packet model", error)
+
+    @staticmethod
+    def _model_failure(name, error):
+        logging.getLogger(__name__).warning("%s unavailable: %s", name, error)
+        return {"available": False, "label": name + " unavailable", "error": str(error),
+                "limitations": "This model capability failed. Packet observation and independent behavior rules continue; no substitute prediction was returned."}
 
     def _predict_multiclass_window(self, stats, observation_id, observed_at):
-        if (not self._detector or not self._detector.partial_input_supported
-                or not stats.get("packets") or abs(stats.get("seconds", 0) - 10) > 1):
+        if not self._detector or not stats.get("packets") or abs(stats.get("seconds", 0) - 10) > 1:
             return None
-        from framework.data.feature_schema import packet_vector
-        from framework.detection.trained_xgboost import json_features
-        values = packet_vector(stats, self._detector.feature_names)
-        report = self._detector.analyze(json_features(values), {
-            "kind": "Actual local packet observation", "mode": "packets", "synthetic": False,
-            "observation_id": observation_id, "observed_at": observed_at,
-            "interface": self._data["interface"], "observed_window_seconds": stats["seconds"]})
-        return {**report, "observation_id": observation_id, "observed_at": observed_at,
-                "observed_window_seconds": stats["seconds"]}
+        try:
+            if not self._detector.partial_input_supported:
+                return None
+            from framework.data.feature_schema import packet_vector
+            from framework.detection.trained_xgboost import json_features
+            values = packet_vector(stats, self._detector.feature_names)
+            report = self._detector.analyze(json_features(values), {
+                "kind": "Actual local packet observation", "mode": "packets", "synthetic": False,
+                "observation_id": observation_id, "observed_at": observed_at,
+                "interface": self._data["interface"], "observed_window_seconds": stats["seconds"]})
+            return {**report, "observation_id": observation_id, "observed_at": observed_at,
+                    "observed_window_seconds": stats["seconds"]}
+        except Exception as error:
+            return {**self._model_failure("Shared multiclass model", error),
+                    "observation_id": observation_id, "observed_at": observed_at,
+                    "observed_window_seconds": stats["seconds"]}

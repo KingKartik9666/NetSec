@@ -1,0 +1,1 @@
+{"connections_available":true,"interfaces":[{"description":"Synthetic HTTP transport fixture","name":"synthetic-fixture"}],"model_compatible":true,"packet_capture_available":false,"packet_capture_message":"Synthetic fixture: no OS capture is performed","recommended_interface":"synthetic-fixture"}

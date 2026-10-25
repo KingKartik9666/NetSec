@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <meta name="description" content="NetSec: local network screening, saved-model CSV analysis and explainable security evidence.">
+  <title>NetSec — Network in focus</title>
+  <link rel="icon" href="/static/netsec.svg" type="image/svg+xml">
+  <link rel="preload" href="/static/fonts/InterVariable.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/static/style.css">
+  <link rel="stylesheet" href="/static/studio.css">
+  <script src="/static/home.js" defer></script>
+</head>
+<body class="home-page">
+  <a class="skip-link" href="#workspace">Skip to main content</a>
+  <div class="window-chrome" hidden aria-label="NetSec window controls">
+  <a class="window-brand" href="/" aria-label="NetSec home">NetSec<span>.</span></a>
+  <span class="window-caption">YOUR NETWORK, IN FOCUS</span>
+  <div class="window-actions">
+    <button type="button" data-window-action="minimize" aria-label="Minimize window"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10"/></svg></button>
+    <button type="button" data-window-action="maximize" aria-label="Maximize window"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 4h8v8H4Z"/></svg></button>
+    <button type="button" data-window-action="close" aria-label="Close NetSec"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="m4 4 8 8m0-8-8 8"/></svg></button>
+  </div>
+</div>
+<script src="/static/chrome.js" defer></script>
+<header class="studio-header" aria-label="Workspace navigation">
+  <a class="brand" href="/" aria-label="NetSec home">NetSec<span class="brand-period" aria-hidden="true">.</span></a>
+  <nav class="studio-nav" aria-label="Main navigation">
+    <a class="nav-link active" href="/" aria-current="page">Home</a>
+    <a class="nav-link" href="/live">Live screening</a>
+    <a class="nav-link" href="/csv">CSV analysis</a>
+    <a class="nav-link" href="/samples">Samples</a>
+    <a class="nav-link" href="/models">Models</a>
+  </nav>
+  <span class="header-note"><span class="local-dot" aria-hidden="true"></span>LOCAL / CPU</span>
+</header>
+<section id="lifecycle-screen" class="lifecycle-screen" data-state="loading" role="dialog" aria-modal="true" aria-labelledby="lifecycle-title" aria-describedby="lifecycle-description" hidden>
+  <div class="state-card">
+    <div class="state-topline"><span>NETSEC / LOCAL WORKSPACE</span><span id="lifecycle-code">01 / INITIALIZING</span></div>
+    <div class="state-visual" aria-hidden="true"><span class="state-orbit"></span><span class="state-orbit orbit-two"></span><span class="state-symbol"><svg viewBox="0 0 32 32"><path class="state-shield" d="m16 4 10 5v8c0 6-10 11-10 11S6 23 6 17V9Z"/><path class="state-tick" d="m11 16 4 4 6-8"/><path class="state-power" d="M16 4v11M9 8a11 11 0 1 0 14 0"/><path class="state-alert" d="M16 9v9m0 5v1"/></svg></span></div>
+    <div class="state-copy" aria-live="polite" aria-atomic="true">
+      <h1 id="lifecycle-title" tabindex="-1">Bringing things<br>into focus.</h1>
+      <p id="lifecycle-description">Connecting to your local analysis service. Monitoring and language generation start only when you request them.</p>
+    </div>
+    <details id="lifecycle-details" hidden><summary>Technical details</summary><pre id="lifecycle-detail"></pre></details>
+    <div class="state-actions">
+      <button id="lifecycle-primary" class="button primary" type="button" hidden>Try again <span aria-hidden="true">↗</span></button>
+      <button id="lifecycle-cancel" class="button secondary" type="button" hidden>Keep working</button>
+      <a id="lifecycle-home" class="state-home" href="/">Back to home <span aria-hidden="true">↗</span></a>
+    </div>
+    <p class="state-footnote" id="lifecycle-footnote">Private by default. Local by design.</p>
+  </div>
+</section>
+  <main id="workspace" class="main">
+    <section class="page-heading" aria-labelledby="home-title">
+      <div class="heading-copy">
+        <div class="eyebrow"><span class="heading-line" aria-hidden="true"></span>LESS GUESSWORK. MORE CONTEXT.</div>
+        <h1 id="home-title">Your network.<br><span>In focus.</span></h1>
+        <div class="hero-bottom"><p>A closer look at your traffic.<br>Understand the signals. See the evidence.</p><a class="hero-scroll" href="#workspaces" aria-label="Explore NetSec workspaces"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v18m-7-7 7 7 7-7"/></svg></a></div>
+      </div>
+      <div class="heading-visual" aria-hidden="true">
+        <div class="network-stage">
+          <div class="network-grid"></div>
+          <div class="network-scene">
+            <span class="network-ring ring-equator"></span><span class="network-ring ring-meridian"></span><span class="network-ring ring-inclined"></span><span class="network-ring ring-outer"></span>
+            <span class="network-core"><svg viewBox="0 0 32 32"><path d="M16 4 25 9v8c0 5-9 11-9 11S7 22 7 17V9Z"/><path d="m11 16 4 4 6-8"/></svg></span>
+            <span class="network-point point-one"></span><span class="network-point point-two"></span><span class="network-point point-three"></span><span class="network-point point-four"></span>
+          </div>
+          <span class="network-coordinate coordinate-top">FIG. 01 / SIGNAL &amp; CONTEXT</span><span class="network-coordinate coordinate-bottom">OBSERVE → EXPLAIN → UNDERSTAND</span>
+        </div>
+        <span class="visual-sticker">Your PC.<br>Your evidence.<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20 20 4M4 4h16v16"/></svg></span>
+        <span class="workspace-tag">INDEPENDENT SECURITY RESEARCH / LOCAL INFERENCE</span>
+      </div>
+    </section>
+    <div class="chapter-line"><span>INTRUSION ANALYSIS, WITH PERSPECTIVE.</span><span>01 / OBSERVE &nbsp; 02 / EXPLAIN &nbsp; 03 / UNDERSTAND</span></div>
+    <section id="workspaces" class="home-workspaces" aria-labelledby="workspaces-title">
+      <div class="workspace-title"><div><span class="eyebrow">THREE WAYS IN. ONE CLEARER PICTURE.</span><h2 id="workspaces-title">Where do we begin?</h2></div><span class="workspace-caption">Every workspace includes XAI &amp; a local LLM assistant.</span></div>
+      <div class="route-cards">
+        <a class="route-card route-live" href="/live"><div class="route-card-top"><span class="route-number">01 / THIS PC</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12h5l3-8 4 16 3-8h3"/></svg></div><h3>Live screening<span aria-hidden="true">↗</span></h3><p>Observe this PC’s connections and traffic. Start a monitoring session when you’re ready.</p><div class="route-card-bottom"><span>Real observations</span><span>Open workspace →</span></div></a>
+        <a class="route-card route-csv" href="/csv"><div class="route-card-top"><span class="route-number">02 / YOUR DATA</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 3h10l4 4v14H5ZM14 3v5h5M8 12h8M8 16h8"/></svg></div><h3>CSV analysis<span aria-hidden="true">↗</span></h3><p>Upload compatible traffic features. Inspect each prediction and the evidence behind it.</p><div class="route-card-bottom"><span>Saved-model inference</span><span>Open workspace →</span></div></a>
+        <a class="route-card route-samples" href="/samples"><div class="route-card-top"><span class="route-number">03 / EXPLORE</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 9 5-9 5-9-5 9-5Zm-9 9 9 5 9-5M3 16l9 5 9-5"/></svg></div><h3>Samples<span aria-hidden="true">↗</span></h3><p>Explore included validation examples. Compare model predictions with their supplied labels.</p><div class="route-card-bottom"><span>Validation observations</span><span>Open workspace →</span></div></a>
+      </div>
+    </section>
+    <section class="home-principle" aria-label="Research approach"><span class="eyebrow">EVIDENCE OVER ASSUMPTIONS.</span><p>Detection finds the signal. XAI explains the decision.<br>The local assistant helps you understand the evidence.</p><a href="/samples">See it in action <span aria-hidden="true">↗</span></a></section>
+    <footer class="page-footer"><a class="footer-brand" href="/" aria-label="NetSec home">NetSec.</a><span>Local inference. Human judgement.</span><a class="session-exit" href="/exit">Exit workspace <span aria-hidden="true">↗</span></a></footer>
+  </main>
+</body>
+</html>

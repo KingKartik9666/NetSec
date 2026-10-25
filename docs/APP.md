@@ -1,5 +1,7 @@
 # NetSec desktop and saved-model analysis
 
+> Current desktop architecture (24 October 2026): Electron, React/TypeScript and native Rust inference across ten visible models. [NATIVE_APP.md](NATIVE_APP.md) supersedes historical Python-service, Tauri and four-model delivery directions below. Research workflows remain separate.
+
 The Electron app provides local PC observation, saved-model CSV analysis, exact TreeSHAP, optional LIME/model statistics and explicitly requested local Qwen generation. Model inference and language generation run on CPU. Launching the app starts its service, but starts neither monitoring, training nor generation.
 
 ## Launch from source

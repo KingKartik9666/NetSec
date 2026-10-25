@@ -8,12 +8,11 @@ from __future__ import annotations
 
 import hashlib
 import json
+import logging
 from numbers import Real
 from pathlib import Path
 
 import numpy as np
-
-from framework.xai.tree_shap import explain_tree
 
 ROOT = Path(__file__).resolve().parents[2]
 FEATURE_NAMES = [
@@ -113,7 +112,14 @@ class PacketXGBoost:
         if scores.shape != (2,) or not np.isfinite(scores).all():
             raise RuntimeError("Unexpected packet-classifier probability output")
         index = int(scores.argmax())
-        explanation = explain_tree(self.booster, values, FEATURE_NAMES, CLASSES, CLASSES[index])
+        explanation = None
+        capability_errors = {}
+        try:
+            from framework.xai.tree_shap import explain_tree
+            explanation = explain_tree(self.booster, values, FEATURE_NAMES, CLASSES, CLASSES[index])
+        except Exception as error:
+            capability_errors["explanation"] = str(error)
+            logging.getLogger(__name__).warning("Packet explanation unavailable: %s", error)
         return {
             "label": "Model predicts suspicious traffic" if index else "Model predicts normal traffic",
             "is_attack": bool(index), "score": float(scores[index]),
@@ -122,6 +128,7 @@ class PacketXGBoost:
             "observed_window_seconds": float(stats.get("seconds", WINDOW_SECONDS)),
             "window_timing_note": "Training windows are exactly ten seconds; capture scheduling jitter is not covered by the dataset validation.",
             "explanation": explanation,
+            "capability_errors": capability_errors,
             "dataset_validation_accuracy": float(self.bundle["validation_metrics"]["accuracy"]),
             "limitations": " ".join(LIMITATIONS),
         }

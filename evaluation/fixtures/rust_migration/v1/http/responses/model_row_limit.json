@@ -1,0 +1,1 @@
+{"capability":"upload","error":"CSV must contain at most 500 rows","model_id":"xgboost","status":"incompatible"}

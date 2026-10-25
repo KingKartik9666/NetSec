@@ -1,0 +1,3658 @@
+{
+  "explanation": {
+    "all_features": [
+      {
+        "feature": "log_data-ranges_avg",
+        "shap_value": -0.00001187794805446174,
+        "value": 0
+      },
+      {
+        "feature": "log_data-ranges_max",
+        "shap_value": 0.0000030122059797577094,
+        "value": 0
+      },
+      {
+        "feature": "log_data-ranges_min",
+        "shap_value": -0.000005671005510521354,
+        "value": 0
+      },
+      {
+        "feature": "log_data-ranges_std_deviation",
+        "shap_value": 0,
+        "value": 0
+      },
+      {
+        "feature": "log_data-types_count",
+        "shap_value": 0.0022250767797231674,
+        "value": 0
+      },
+      {
+        "feature": "log_interval-messages",
+        "shap_value": 0.000003461261940174154,
+        "value": 0
+      },
+      {
+        "feature": "log_messages_count",
+        "shap_value": -0.001674600294791162,
+        "value": 0
+      },
+      {
+        "feature": "network_fragmentation-score",
+        "shap_value": 2.695970238164591e-7,
+        "value": 0
+      },
+      {
+        "feature": "network_fragmented-packets",
+        "shap_value": 5.10943948484055e-7,
+        "value": 0
+      },
+      {
+        "feature": "network_header-length_avg",
+        "shap_value": 0.032451823353767395,
+        "value": 20
+      },
+      {
+        "feature": "network_header-length_max",
+        "shap_value": -0.00043525727232918143,
+        "value": 20
+      },
+      {
+        "feature": "network_header-length_min",
+        "shap_value": 0,
+        "value": 20
+      },
+      {
+        "feature": "network_header-length_std_deviation",
+        "shap_value": -0.000026175035600317642,
+        "value": 0
+      },
+      {
+        "feature": "network_interval-packets",
+        "shap_value": 0.004538152366876602,
+        "value": 28.338279724121094
+      },
+      {
+        "feature": "network_ip-flags_avg",
+        "shap_value": 0.0009213763987645507,
+        "value": 1.5932203531265259
+      },
+      {
+        "feature": "network_ip-flags_max",
+        "shap_value": 0.0008132844232022762,
+        "value": 2
+      },
+      {
+        "feature": "network_ip-flags_min",
+        "shap_value": -0.000003566554141798406,
+        "value": 0
+      },
+      {
+        "feature": "network_ip-flags_std_deviation",
+        "shap_value": -0.03301249071955681,
+        "value": 0.8050401210784912
+      },
+      {
+        "feature": "network_ip-length_avg",
+        "shap_value": -0.003066479926928878,
+        "value": 177.86441040039062
+      },
+      {
+        "feature": "network_ip-length_max",
+        "shap_value": -0.04147396981716156,
+        "value": 2526
+      },
+      {
+        "feature": "network_ip-length_min",
+        "shap_value": -0.17225202918052673,
+        "value": 36
+      },
+      {
+        "feature": "network_ip-length_std_deviation",
+        "shap_value": -0.02034207433462143,
+        "value": 423.3018493652344
+      },
+      {
+        "feature": "network_ips_all_count",
+        "shap_value": -0.0013820216991007328,
+        "value": 55
+      },
+      {
+        "feature": "network_ips_dst_count",
+        "shap_value": -0.010228841565549374,
+        "value": 55
+      },
+      {
+        "feature": "network_ips_src_count",
+        "shap_value": 0.00147595617454499,
+        "value": 53
+      },
+      {
+        "feature": "network_macs_all_count",
+        "shap_value": 0.03648523613810539,
+        "value": 47
+      },
+      {
+        "feature": "network_macs_dst_count",
+        "shap_value": 0.07177631556987762,
+        "value": 45
+      },
+      {
+        "feature": "network_macs_src_count",
+        "shap_value": 0.03961779177188873,
+        "value": 45
+      },
+      {
+        "feature": "network_mss_avg",
+        "shap_value": 0.0167984776198864,
+        "value": 0
+      },
+      {
+        "feature": "network_mss_max",
+        "shap_value": 0.000015099271877261344,
+        "value": 0
+      },
+      {
+        "feature": "network_mss_min",
+        "shap_value": 0.0014360981294885278,
+        "value": 0
+      },
+      {
+        "feature": "network_mss_std_deviation",
+        "shap_value": -0.000027638392566586845,
+        "value": 0
+      },
+      {
+        "feature": "network_packet-size_avg",
+        "shap_value": 0.00039894547080621123,
+        "value": 152.0709991455078
+      },
+      {
+        "feature": "network_packet-size_max",
+        "shap_value": 0.03815940022468567,
+        "value": 2540
+      },
+      {
+        "feature": "network_packet-size_min",
+        "shap_value": 2.447495222091675,
+        "value": 50
+      },
+      {
+        "feature": "network_packet-size_std_deviation",
+        "shap_value": -0.0004305058973841369,
+        "value": 358.8521423339844
+      },
+      {
+        "feature": "network_packets_all_count",
+        "shap_value": -0.48848414421081543,
+        "value": 338
+      },
+      {
+        "feature": "network_packets_dst_count",
+        "shap_value": 0.003977220505475998,
+        "value": 134
+      },
+      {
+        "feature": "network_packets_src_count",
+        "shap_value": -0.003238928271457553,
+        "value": 204
+      },
+      {
+        "feature": "network_payload-length_avg",
+        "shap_value": 0.00021304647088982165,
+        "value": 153.57627868652344
+      },
+      {
+        "feature": "network_payload-length_max",
+        "shap_value": 0.3971838057041168,
+        "value": 2474
+      },
+      {
+        "feature": "network_payload-length_min",
+        "shap_value": 0.005789692047983408,
+        "value": 0
+      },
+      {
+        "feature": "network_payload-length_std_deviation",
+        "shap_value": -0.03041502833366394,
+        "value": 416.60198974609375
+      },
+      {
+        "feature": "network_ports_all_count",
+        "shap_value": -0.9198401570320129,
+        "value": 143
+      },
+      {
+        "feature": "network_ports_dst_count",
+        "shap_value": -0.0019532188307493925,
+        "value": 14
+      },
+      {
+        "feature": "network_ports_src_count",
+        "shap_value": -0.3920733630657196,
+        "value": 140
+      },
+      {
+        "feature": "network_protocols_all_count",
+        "shap_value": 0.001201123115606606,
+        "value": 9
+      },
+      {
+        "feature": "network_protocols_dst_count",
+        "shap_value": -0.0012152621056884527,
+        "value": 7
+      },
+      {
+        "feature": "network_protocols_src_count",
+        "shap_value": 0.0037599713541567326,
+        "value": 8
+      },
+      {
+        "feature": "network_tcp-flags-ack_count",
+        "shap_value": 0.011527135036885738,
+        "value": 49
+      },
+      {
+        "feature": "network_tcp-flags-fin_count",
+        "shap_value": 0.0003720492240972817,
+        "value": 0
+      },
+      {
+        "feature": "network_tcp-flags-psh_count",
+        "shap_value": 0.000005678668458131142,
+        "value": 24
+      },
+      {
+        "feature": "network_tcp-flags-rst_count",
+        "shap_value": 0.005259143654257059,
+        "value": 0
+      },
+      {
+        "feature": "network_tcp-flags-syn_count",
+        "shap_value": 0.003803560510277748,
+        "value": 0
+      },
+      {
+        "feature": "network_tcp-flags-urg_count",
+        "shap_value": 0,
+        "value": 0
+      },
+      {
+        "feature": "network_tcp-flags_avg",
+        "shap_value": 0.09185976535081863,
+        "value": 19.918367385864258
+      },
+      {
+        "feature": "network_tcp-flags_max",
+        "shap_value": -1.9184419386419904e-7,
+        "value": 24
+      },
+      {
+        "feature": "network_tcp-flags_min",
+        "shap_value": 0.001729893498122692,
+        "value": 16
+      },
+      {
+        "feature": "network_tcp-flags_std_deviation",
+        "shap_value": 0.000041611900087445974,
+        "value": 3.999166965484619
+      },
+      {
+        "feature": "network_time-delta_avg",
+        "shap_value": -0.012024234049022198,
+        "value": 0.006746801547706127
+      },
+      {
+        "feature": "network_time-delta_max",
+        "shap_value": 0.1349107176065445,
+        "value": 0.07639200240373611
+      },
+      {
+        "feature": "network_time-delta_min",
+        "shap_value": 0.8178999423980713,
+        "value": 0
+      },
+      {
+        "feature": "network_time-delta_std_deviation",
+        "shap_value": 0.03192932531237602,
+        "value": 0.013034727424383163
+      },
+      {
+        "feature": "network_ttl_avg",
+        "shap_value": -0.01435885950922966,
+        "value": 77.00847625732422
+      },
+      {
+        "feature": "network_ttl_max",
+        "shap_value": -0.006096495781093836,
+        "value": 255
+      },
+      {
+        "feature": "network_ttl_min",
+        "shap_value": 0.009995144791901112,
+        "value": 1
+      },
+      {
+        "feature": "network_ttl_std_deviation",
+        "shap_value": 0.039350420236587524,
+        "value": 82.38350677490234
+      },
+      {
+        "feature": "network_window-size_avg",
+        "shap_value": -0.0016327592311426997,
+        "value": 1933.2857666015625
+      },
+      {
+        "feature": "network_window-size_max",
+        "shap_value": 0.020644469186663628,
+        "value": 4736
+      },
+      {
+        "feature": "network_window-size_min",
+        "shap_value": -0.0618000291287899,
+        "value": 135
+      },
+      {
+        "feature": "network_window-size_std_deviation",
+        "shap_value": 0.032220467925071716,
+        "value": 1350.7042236328125
+      },
+      {
+        "feature": "network_protocols_all__present_tcp",
+        "shap_value": -2.4617867211418343e-7,
+        "value": 1
+      },
+      {
+        "feature": "network_protocols_all__present_arp",
+        "shap_value": 0.00011143306619487703,
+        "value": 1
+      },
+      {
+        "feature": "network_protocols_all__present_mqtt",
+        "shap_value": 0.0017244062619283795,
+        "value": 0
+      },
+      {
+        "feature": "network_protocols_all__present_data",
+        "shap_value": -0.0007150452001951635,
+        "value": 1
+      },
+      {
+        "feature": "network_protocols_all__present_json",
+        "shap_value": 0.0002186583587899804,
+        "value": 1
+      },
+      {
+        "feature": "network_protocols_all__present_icmp",
+        "shap_value": 0.00092654291074723,
+        "value": 1
+      },
+      {
+        "feature": "network_protocols_all__present_tls",
+        "shap_value": 0.0010312547674402595,
+        "value": 1
+      },
+      {
+        "feature": "network_protocols_all__present_dns",
+        "shap_value": 0.000037936941225780174,
+        "value": 0
+      },
+      {
+        "feature": "network_protocols_all__present_telnet",
+        "shap_value": 0.0006360371480695903,
+        "value": 0
+      },
+      {
+        "feature": "network_protocols_all__present_lldp",
+        "shap_value": 0,
+        "value": 0
+      },
+      {
+        "feature": "network_protocols_all__present_data-text-lines",
+        "shap_value": 0.0000036721708056575153,
+        "value": 0
+      },
+      {
+        "feature": "network_protocols_all__present_ntp",
+        "shap_value": 0,
+        "value": 1
+      },
+      {
+        "feature": "network_protocols_all__present_ssdp",
+        "shap_value": -0.0004605572030413896,
+        "value": 0
+      },
+      {
+        "feature": "network_protocols_all__present_http",
+        "shap_value": 0,
+        "value": 0
+      },
+      {
+        "feature": "network_protocols_all__present_dhcpv6",
+        "shap_value": 0,
+        "value": 0
+      },
+      {
+        "feature": "network_protocols_all__present_nbns",
+        "shap_value": 0.03758063539862633,
+        "value": 1
+      },
+      {
+        "feature": "network_protocols_all__present_lbtrm",
+        "shap_value": 0,
+        "value": 0
+      },
+      {
+        "feature": "network_protocols_all__present_ssh",
+        "shap_value": 0,
+        "value": 0
+      },
+      {
+        "feature": "network_protocols_all__present_rtcp",
+        "shap_value": 0,
+        "value": 0
+      },
+      {
+        "feature": "network_protocols_all__present_udp",
+        "shap_value": 0,
+        "value": 0
+      },
+      {
+        "feature": "network_protocols_all__present_daytime",
+        "shap_value": 0,
+        "value": 0
+      },
+      {
+        "feature": "network_protocols_all__present_time",
+        "shap_value": 0,
+        "value": 0
+      },
+      {
+        "feature": "network_protocols_all__present_mdns",
+        "shap_value": 0.015222101472318172,
+        "value": 1
+      },
+      {
+        "feature": "network_protocols_all__present_discard",
+        "shap_value": 0,
+        "value": 0
+      },
+      {
+        "feature": "network_protocols_all__present_snmp",
+        "shap_value": 0,
+        "value": 0
+      },
+      {
+        "feature": "network_protocols_all__present_ncp",
+        "shap_value": 0,
+        "value": 0
+      },
+      {
+        "feature": "network_protocols_all__present_chargen",
+        "shap_value": 0,
+        "value": 0
+      },
+      {
+        "feature": "network_protocols_all__present_c1222",
+        "shap_value": 0,
+        "value": 0
+      },
+      {
+        "feature": "network_protocols_all__present_rpc",
+        "shap_value": 0,
+        "value": 0
+      },
+      {
+        "feature": "network_protocols_all__present_ieee1905",
+        "shap_value": 0,
+        "value": 0
+      },
+      {
+        "feature": "network_protocols_all__present_ftp",
+        "shap_value": 0,
+        "value": 0
+      },
+      {
+        "feature": "network_protocols_all__present_gopher",
+        "shap_value": 0,
+        "value": 0
+      },
+      {
+        "feature": "network_protocols_all__present_UNSEEN",
+        "shap_value": -0.000013441261216939893,
+        "value": 0
+      },
+      {
+        "feature": "network_protocols_src__present_arp",
+        "shap_value": 0,
+        "value": 1
+      },
+      {
+        "feature": "network_protocols_src__present_tcp",
+        "shap_value": 0.00004353674012236297,
+        "value": 1
+      },
+      {
+        "feature": "network_protocols_src__present_mqtt",
+        "shap_value": 0.00014648122305516154,
+        "value": 0
+      },
+      {
+        "feature": "network_protocols_src__present_data",
+        "shap_value": -9.813479664444458e-7,
+        "value": 1
+      },
+      {
+        "feature": "network_protocols_src__present_json",
+        "shap_value": 0,
+        "value": 1
+      },
+      {
+        "feature": "network_protocols_src__present_tls",
+        "shap_value": 0.0005500732804648578,
+        "value": 1
+      },
+      {
+        "feature": "network_protocols_src__present_icmp",
+        "shap_value": 0,
+        "value": 0
+      },
+      {
+        "feature": "network_protocols_src__present_dns",
+        "shap_value": 0.0006358237587846816,
+        "value": 0
+      },
+      {
+        "feature": "network_protocols_src__present_telnet",
+        "shap_value": 0.0001355110143776983,
+        "value": 0
+      },
+      {
+        "feature": "network_protocols_src__present_lldp",
+        "shap_value": 0,
+        "value": 0
+      },
+      {
+        "feature": "network_protocols_src__present_data-text-lines",
+        "shap_value": 0.005719910375773907,
+        "value": 0
+      },
+      {
+        "feature": "network_protocols_src__present_ntp",
+        "shap_value": 0,
+        "value": 1
+      },
+      {
+        "feature": "network_protocols_src__present_ssdp",
+        "shap_value": -0.00010252545325784013,
+        "value": 0
+      },
+      {
+        "feature": "network_protocols_src__present_dhcpv6",
+        "shap_value": 0,
+        "value": 0
+      },
+      {
+        "feature": "network_protocols_src__present_http",
+        "shap_value": -0.0002507611643522978,
+        "value": 0
+      },
+      {
+        "feature": "network_protocols_src__present_mdns",
+        "shap_value": 0.05216966196894646,
+        "value": 1
+      },
+      {
+        "feature": "network_protocols_src__present_ieee1905",
+        "shap_value": 0,
+        "value": 0
+      },
+      {
+        "feature": "network_protocols_src__present_igmp",
+        "shap_value": 0,
+        "value": 0
+      },
+      {
+        "feature": "network_protocols_src__present_nbns",
+        "shap_value": 0.15815114974975586,
+        "value": 1
+      },
+      {
+        "feature": "network_protocols_src__present_rtcp",
+        "shap_value": 0,
+        "value": 0
+      },
+      {
+        "feature": "network_protocols_src__present_quic",
+        "shap_value": -0.00009879466233542189,
+        "value": 0
+      },
+      {
+        "feature": "network_protocols_src__present_dhcp",
+        "shap_value": 0,
+        "value": 0
+      },
+      {
+        "feature": "network_protocols_src__present_ssh",
+        "shap_value": 0,
+        "value": 0
+      },
+      {
+        "feature": "network_protocols_src__present_x509sat",
+        "shap_value": 0,
+        "value": 0
+      },
+      {
+        "feature": "network_protocols_src__present_icmpv6",
+        "shap_value": 0,
+        "value": 0
+      },
+      {
+        "feature": "network_protocols_src__present_xml",
+        "shap_value": 0,
+        "value": 0
+      },
+      {
+        "feature": "network_protocols_src__present_rtsp",
+        "shap_value": 0,
+        "value": 0
+      },
+      {
+        "feature": "network_protocols_src__present_stun",
+        "shap_value": 0,
+        "value": 0
+      },
+      {
+        "feature": "network_protocols_src__present_hipercontracer",
+        "shap_value": 0,
+        "value": 0
+      },
+      {
+        "feature": "network_protocols_src__present_udp",
+        "shap_value": 0,
+        "value": 0
+      },
+      {
+        "feature": "network_protocols_src__present_elasticsearch",
+        "shap_value": 0,
+        "value": 0
+      },
+      {
+        "feature": "network_protocols_src__present_ncp",
+        "shap_value": 0,
+        "value": 0
+      },
+      {
+        "feature": "network_protocols_src__present_UNSEEN",
+        "shap_value": 0,
+        "value": 0
+      },
+      {
+        "feature": "network_protocols_dst__present_tcp",
+        "shap_value": 0,
+        "value": 1
+      },
+      {
+        "feature": "network_protocols_dst__present_arp",
+        "shap_value": 0.000888486800249666,
+        "value": 1
+      },
+      {
+        "feature": "network_protocols_dst__present_mqtt",
+        "shap_value": -0.00012474440154619515,
+        "value": 0
+      },
+      {
+        "feature": "network_protocols_dst__present_data",
+        "shap_value": -0.0795711949467659,
+        "value": 1
+      },
+      {
+        "feature": "network_protocols_dst__present_json",
+        "shap_value": 0.04150190204381943,
+        "value": 1
+      },
+      {
+        "feature": "network_protocols_dst__present_tls",
+        "shap_value": 0.00030722239171154797,
+        "value": 1
+      },
+      {
+        "feature": "network_protocols_dst__present_icmp",
+        "shap_value": 0,
+        "value": 1
+      },
+      {
+        "feature": "network_protocols_dst__present_telnet",
+        "shap_value": 0,
+        "value": 0
+      },
+      {
+        "feature": "network_protocols_dst__present_dns",
+        "shap_value": -0.000023058775695972145,
+        "value": 0
+      },
+      {
+        "feature": "network_protocols_dst__present_ntp",
+        "shap_value": 0,
+        "value": 1
+      },
+      {
+        "feature": "network_protocols_dst__present_nbns",
+        "shap_value": -0.00018024983000941575,
+        "value": 0
+      },
+      {
+        "feature": "network_protocols_dst__present_http",
+        "shap_value": 0,
+        "value": 0
+      },
+      {
+        "feature": "network_protocols_dst__present_lbtrm",
+        "shap_value": 0,
+        "value": 0
+      },
+      {
+        "feature": "network_protocols_dst__present_data-text-lines",
+        "shap_value": 0,
+        "value": 0
+      },
+      {
+        "feature": "network_protocols_dst__present_udp",
+        "shap_value": 0,
+        "value": 0
+      },
+      {
+        "feature": "network_protocols_dst__present_daytime",
+        "shap_value": 0,
+        "value": 0
+      },
+      {
+        "feature": "network_protocols_dst__present_ssh",
+        "shap_value": 0,
+        "value": 0
+      },
+      {
+        "feature": "network_protocols_dst__present_time",
+        "shap_value": 0,
+        "value": 0
+      },
+      {
+        "feature": "network_protocols_dst__present_discard",
+        "shap_value": 0,
+        "value": 0
+      },
+      {
+        "feature": "network_protocols_dst__present_snmp",
+        "shap_value": 0,
+        "value": 0
+      },
+      {
+        "feature": "network_protocols_dst__present_chargen",
+        "shap_value": 0,
+        "value": 0
+      },
+      {
+        "feature": "network_protocols_dst__present_ncp",
+        "shap_value": 0,
+        "value": 0
+      },
+      {
+        "feature": "network_protocols_dst__present_c1222",
+        "shap_value": 0,
+        "value": 0
+      },
+      {
+        "feature": "network_protocols_dst__present_ftp",
+        "shap_value": 0,
+        "value": 0
+      },
+      {
+        "feature": "network_protocols_dst__present_rpc",
+        "shap_value": 0,
+        "value": 0
+      },
+      {
+        "feature": "network_protocols_dst__present_gopher",
+        "shap_value": 0,
+        "value": 0
+      },
+      {
+        "feature": "network_protocols_dst__present_nbss",
+        "shap_value": 0,
+        "value": 0
+      },
+      {
+        "feature": "network_protocols_dst__present_echo",
+        "shap_value": 0,
+        "value": 0
+      },
+      {
+        "feature": "network_protocols_dst__present_ssdp",
+        "shap_value": 0,
+        "value": 0
+      },
+      {
+        "feature": "network_protocols_dst__present_rtsp",
+        "shap_value": 0,
+        "value": 0
+      },
+      {
+        "feature": "network_protocols_dst__present_msnms",
+        "shap_value": 0,
+        "value": 0
+      },
+      {
+        "feature": "network_protocols_dst__present_hcrt",
+        "shap_value": 0,
+        "value": 0
+      },
+      {
+        "feature": "network_protocols_dst__present_UNSEEN",
+        "shap_value": 0,
+        "value": 0
+      }
+    ],
+    "bias": 4.583557605743408,
+    "class_label": "benign",
+    "contribution_sum": 2.3269846606732614,
+    "important_features": [
+      {
+        "feature": "network_packet-size_min",
+        "shap_value": 2.447495222091675,
+        "value": 50
+      },
+      {
+        "feature": "network_ports_all_count",
+        "shap_value": -0.9198401570320129,
+        "value": 143
+      },
+      {
+        "feature": "network_time-delta_min",
+        "shap_value": 0.8178999423980713,
+        "value": 0
+      },
+      {
+        "feature": "network_packets_all_count",
+        "shap_value": -0.48848414421081543,
+        "value": 338
+      },
+      {
+        "feature": "network_payload-length_max",
+        "shap_value": 0.3971838057041168,
+        "value": 2474
+      },
+      {
+        "feature": "network_ports_src_count",
+        "shap_value": -0.3920733630657196,
+        "value": 140
+      },
+      {
+        "feature": "network_ip-length_min",
+        "shap_value": -0.17225202918052673,
+        "value": 36
+      },
+      {
+        "feature": "network_protocols_src__present_nbns",
+        "shap_value": 0.15815114974975586,
+        "value": 1
+      },
+      {
+        "feature": "network_time-delta_max",
+        "shap_value": 0.1349107176065445,
+        "value": 0.07639200240373611
+      },
+      {
+        "feature": "network_tcp-flags_avg",
+        "shap_value": 0.09185976535081863,
+        "value": 19.918367385864258
+      }
+    ],
+    "limitations": "Signed local attributions use the model's training tree-cover reference (tree path dependent). Positive contributions increase this class margin; negative ones decrease it. They are not probability percentage points, comparisons against the benign class, or causal evidence. All features and the bias reconstruct the raw margin; the chart displays the top ten.",
+    "margin": 6.910542011260986,
+    "method": "Exact TreeSHAP (native XGBoost)",
+    "output_space": "raw class margin",
+    "reconstruction_error": 2.5515568324863125e-7
+  },
+  "model": {
+    "classes": 84,
+    "cpu_validation_accuracy": 0.8005333333333333,
+    "features": 170,
+    "macro_f1": 0.6964632673076573,
+    "name": "XGBoost",
+    "run_id": "xgboost_joint_1_s42_20260929T182104981183Z",
+    "saved_rounds": 76,
+    "seed": 42,
+    "selection_basis": "Highest single-run validation accuracy in the full-data study; provisional. The study's macro-F1-selected model is a separate checkpoint.",
+    "training_rows": 480405,
+    "validation_accuracy": 0.8005333333333333
+  },
+  "prediction": {
+    "display_label": "Normal network activity",
+    "is_attack": false,
+    "label": "benign",
+    "novelty": "not evaluated",
+    "score": 0.992354154586792,
+    "top_classes": [
+      {
+        "display_label": "Normal network activity",
+        "label": "benign",
+        "score": 0.992354154586792
+      },
+      {
+        "display_label": "Mirai botnet UDP flooding (Malware)",
+        "label": "malware_mirai-udp-flood",
+        "score": 0.0006389750051312149
+      },
+      {
+        "display_label": "Network ping sweep (Reconnaissance)",
+        "label": "recon_ping-sweep",
+        "score": 0.0003871259104926139
+      }
+    ]
+  },
+  "reasoning": {
+    "actions": [
+      "Continue monitoring and investigate any independent evidence of compromise."
+    ],
+    "assessment": "The trained XGBoost classifier predicts benign. Its closed-set model score is 99.2% (uncalibrated). A benign prediction does not establish that the device or network is safe. The largest displayed absolute SHAP contribution is network_packet-size_min (+2.447 raw margin units).",
+    "llm_executed": false,
+    "mode": "Offline template",
+    "uncertainty": "Validation-selected DataSense model; held-out test and unknown-attack performance remain unevaluated. Feature attributions explain model behavior, not malicious intent. No automated network actions are taken."
+  },
+  "source": {
+    "kind": "DataSense validation observation",
+    "source_row": 285252,
+    "validation_display_label": "Normal network activity",
+    "validation_label": "benign"
+  },
+  "selected_evidence_explanations": {
+    "source": {
+      "kind": "DataSense validation observation",
+      "source_row": 285252,
+      "validation_display_label": "Normal network activity",
+      "validation_label": "benign"
+    },
+    "evidence_key": "analysis:2",
+    "additional_xai": {
+      "lime": {
+        "class_label": "benign",
+        "conditions": [
+          {
+            "condition": "network_packet-size_min <= 54.00",
+            "weight": 0.5145978485015232
+          },
+          {
+            "condition": "network_protocols_all__present_gopher=0",
+            "weight": -0.18450860205681302
+          },
+          {
+            "condition": "network_protocols_all__present_nbns=1",
+            "weight": 0.1455942356042901
+          },
+          {
+            "condition": "network_time-delta_min <= 0.00",
+            "weight": 0.14171734209631942
+          },
+          {
+            "condition": "network_protocols_src__present_http=0",
+            "weight": 0.1379819432375454
+          },
+          {
+            "condition": "network_protocols_dst__present_rpc=0",
+            "weight": -0.09881127080558454
+          },
+          {
+            "condition": "network_protocols_src__present_ieee1905=0",
+            "weight": -0.09785454772736606
+          },
+          {
+            "condition": "network_tcp-flags-syn_count <= 0.00",
+            "weight": 0.09774639941218757
+          },
+          {
+            "condition": "network_protocols_dst__present_udp=0",
+            "weight": -0.0856900180368491
+          },
+          {
+            "condition": "network_protocols_dst__present_lbtrm=0",
+            "weight": -0.08035780285689309
+          },
+          {
+            "condition": "network_protocols_all__present_mdns=1",
+            "weight": 0.056336992326314596
+          },
+          {
+            "condition": "network_protocols_all__present_ssh=0",
+            "weight": 0.046099487561334564
+          }
+        ],
+        "limitations": "Approximate local surrogate on synthetic perturbations, not observed traffic or causal evidence. Correlations may be broken; inspect local fidelity. Missing input columns remain missing in every prediction. Packet perturbations are rounded and constrained to valid flag counts.",
+        "local_fidelity_r2": 0.6909376960305167,
+        "method": "LIME local linear surrogate",
+        "model_score": 0.992354154586792,
+        "perturbations": 2048,
+        "reference_rows": 512,
+        "seed": 42,
+        "surrogate_prediction": 0.9360171622604763
+      },
+      "llm_executed": false,
+      "prediction": {
+        "display_label": "Normal network activity",
+        "is_attack": false,
+        "label": "benign",
+        "novelty": "not evaluated",
+        "score": 0.992354154586792,
+        "top_classes": [
+          {
+            "display_label": "Normal network activity",
+            "label": "benign",
+            "score": 0.992354154586792
+          },
+          {
+            "display_label": "Mirai botnet UDP flooding (Malware)",
+            "label": "malware_mirai-udp-flood",
+            "score": 0.0006389750051312149
+          },
+          {
+            "display_label": "Network ping sweep (Reconnaissance)",
+            "label": "recon_ping-sweep",
+            "score": 0.0003871259104926139
+          }
+        ]
+      },
+      "reference": {
+        "categorical_indices": [
+          71,
+          72,
+          73,
+          74,
+          75,
+          76,
+          77,
+          78,
+          79,
+          80,
+          81,
+          82,
+          83,
+          84,
+          85,
+          86,
+          87,
+          88,
+          89,
+          90,
+          91,
+          92,
+          93,
+          94,
+          95,
+          96,
+          97,
+          98,
+          99,
+          100,
+          101,
+          102,
+          103,
+          104,
+          105,
+          106,
+          107,
+          108,
+          109,
+          110,
+          111,
+          112,
+          113,
+          114,
+          115,
+          116,
+          117,
+          118,
+          119,
+          120,
+          121,
+          122,
+          123,
+          124,
+          125,
+          126,
+          127,
+          128,
+          129,
+          130,
+          131,
+          132,
+          133,
+          134,
+          135,
+          136,
+          137,
+          138,
+          139,
+          140,
+          141,
+          142,
+          143,
+          144,
+          145,
+          146,
+          147,
+          148,
+          149,
+          150,
+          151,
+          152,
+          153,
+          154,
+          155,
+          156,
+          157,
+          158,
+          159,
+          160,
+          161,
+          162,
+          163,
+          164,
+          165,
+          166,
+          167,
+          168,
+          169
+        ],
+        "feature_names": [
+          "log_data-ranges_avg",
+          "log_data-ranges_max",
+          "log_data-ranges_min",
+          "log_data-ranges_std_deviation",
+          "log_data-types_count",
+          "log_interval-messages",
+          "log_messages_count",
+          "network_fragmentation-score",
+          "network_fragmented-packets",
+          "network_header-length_avg",
+          "network_header-length_max",
+          "network_header-length_min",
+          "network_header-length_std_deviation",
+          "network_interval-packets",
+          "network_ip-flags_avg",
+          "network_ip-flags_max",
+          "network_ip-flags_min",
+          "network_ip-flags_std_deviation",
+          "network_ip-length_avg",
+          "network_ip-length_max",
+          "network_ip-length_min",
+          "network_ip-length_std_deviation",
+          "network_ips_all_count",
+          "network_ips_dst_count",
+          "network_ips_src_count",
+          "network_macs_all_count",
+          "network_macs_dst_count",
+          "network_macs_src_count",
+          "network_mss_avg",
+          "network_mss_max",
+          "network_mss_min",
+          "network_mss_std_deviation",
+          "network_packet-size_avg",
+          "network_packet-size_max",
+          "network_packet-size_min",
+          "network_packet-size_std_deviation",
+          "network_packets_all_count",
+          "network_packets_dst_count",
+          "network_packets_src_count",
+          "network_payload-length_avg",
+          "network_payload-length_max",
+          "network_payload-length_min",
+          "network_payload-length_std_deviation",
+          "network_ports_all_count",
+          "network_ports_dst_count",
+          "network_ports_src_count",
+          "network_protocols_all_count",
+          "network_protocols_dst_count",
+          "network_protocols_src_count",
+          "network_tcp-flags-ack_count",
+          "network_tcp-flags-fin_count",
+          "network_tcp-flags-psh_count",
+          "network_tcp-flags-rst_count",
+          "network_tcp-flags-syn_count",
+          "network_tcp-flags-urg_count",
+          "network_tcp-flags_avg",
+          "network_tcp-flags_max",
+          "network_tcp-flags_min",
+          "network_tcp-flags_std_deviation",
+          "network_time-delta_avg",
+          "network_time-delta_max",
+          "network_time-delta_min",
+          "network_time-delta_std_deviation",
+          "network_ttl_avg",
+          "network_ttl_max",
+          "network_ttl_min",
+          "network_ttl_std_deviation",
+          "network_window-size_avg",
+          "network_window-size_max",
+          "network_window-size_min",
+          "network_window-size_std_deviation",
+          "network_protocols_all__present_tcp",
+          "network_protocols_all__present_arp",
+          "network_protocols_all__present_mqtt",
+          "network_protocols_all__present_data",
+          "network_protocols_all__present_json",
+          "network_protocols_all__present_icmp",
+          "network_protocols_all__present_tls",
+          "network_protocols_all__present_dns",
+          "network_protocols_all__present_telnet",
+          "network_protocols_all__present_lldp",
+          "network_protocols_all__present_data-text-lines",
+          "network_protocols_all__present_ntp",
+          "network_protocols_all__present_ssdp",
+          "network_protocols_all__present_http",
+          "network_protocols_all__present_dhcpv6",
+          "network_protocols_all__present_nbns",
+          "network_protocols_all__present_lbtrm",
+          "network_protocols_all__present_ssh",
+          "network_protocols_all__present_rtcp",
+          "network_protocols_all__present_udp",
+          "network_protocols_all__present_daytime",
+          "network_protocols_all__present_time",
+          "network_protocols_all__present_mdns",
+          "network_protocols_all__present_discard",
+          "network_protocols_all__present_snmp",
+          "network_protocols_all__present_ncp",
+          "network_protocols_all__present_chargen",
+          "network_protocols_all__present_c1222",
+          "network_protocols_all__present_rpc",
+          "network_protocols_all__present_ieee1905",
+          "network_protocols_all__present_ftp",
+          "network_protocols_all__present_gopher",
+          "network_protocols_all__present_UNSEEN",
+          "network_protocols_src__present_arp",
+          "network_protocols_src__present_tcp",
+          "network_protocols_src__present_mqtt",
+          "network_protocols_src__present_data",
+          "network_protocols_src__present_json",
+          "network_protocols_src__present_tls",
+          "network_protocols_src__present_icmp",
+          "network_protocols_src__present_dns",
+          "network_protocols_src__present_telnet",
+          "network_protocols_src__present_lldp",
+          "network_protocols_src__present_data-text-lines",
+          "network_protocols_src__present_ntp",
+          "network_protocols_src__present_ssdp",
+          "network_protocols_src__present_dhcpv6",
+          "network_protocols_src__present_http",
+          "network_protocols_src__present_mdns",
+          "network_protocols_src__present_ieee1905",
+          "network_protocols_src__present_igmp",
+          "network_protocols_src__present_nbns",
+          "network_protocols_src__present_rtcp",
+          "network_protocols_src__present_quic",
+          "network_protocols_src__present_dhcp",
+          "network_protocols_src__present_ssh",
+          "network_protocols_src__present_x509sat",
+          "network_protocols_src__present_icmpv6",
+          "network_protocols_src__present_xml",
+          "network_protocols_src__present_rtsp",
+          "network_protocols_src__present_stun",
+          "network_protocols_src__present_hipercontracer",
+          "network_protocols_src__present_udp",
+          "network_protocols_src__present_elasticsearch",
+          "network_protocols_src__present_ncp",
+          "network_protocols_src__present_UNSEEN",
+          "network_protocols_dst__present_tcp",
+          "network_protocols_dst__present_arp",
+          "network_protocols_dst__present_mqtt",
+          "network_protocols_dst__present_data",
+          "network_protocols_dst__present_json",
+          "network_protocols_dst__present_tls",
+          "network_protocols_dst__present_icmp",
+          "network_protocols_dst__present_telnet",
+          "network_protocols_dst__present_dns",
+          "network_protocols_dst__present_ntp",
+          "network_protocols_dst__present_nbns",
+          "network_protocols_dst__present_http",
+          "network_protocols_dst__present_lbtrm",
+          "network_protocols_dst__present_data-text-lines",
+          "network_protocols_dst__present_udp",
+          "network_protocols_dst__present_daytime",
+          "network_protocols_dst__present_ssh",
+          "network_protocols_dst__present_time",
+          "network_protocols_dst__present_discard",
+          "network_protocols_dst__present_snmp",
+          "network_protocols_dst__present_chargen",
+          "network_protocols_dst__present_ncp",
+          "network_protocols_dst__present_c1222",
+          "network_protocols_dst__present_ftp",
+          "network_protocols_dst__present_rpc",
+          "network_protocols_dst__present_gopher",
+          "network_protocols_dst__present_nbss",
+          "network_protocols_dst__present_echo",
+          "network_protocols_dst__present_ssdp",
+          "network_protocols_dst__present_rtsp",
+          "network_protocols_dst__present_msnms",
+          "network_protocols_dst__present_hcrt",
+          "network_protocols_dst__present_UNSEEN"
+        ],
+        "kind": "Training-only LIME reference; no validation or test rows",
+        "rows": 512,
+        "seed": 42,
+        "selected_row_ids_sha256": "8226225f6f9161c73044c130ee7728212b835fe7c3cf9f0cbda9bd29f4fb32cc",
+        "sha256": "0ce53579c56e5996c6ea5c8dd1f629c8b3ab8e87c59d570e2ff8c7a2f1c3ca73",
+        "source": "dataset/prepared/datasense_full_protocols"
+      },
+      "source": {
+        "kind": "DataSense validation observation",
+        "source_row": 285252,
+        "validation_display_label": "Normal network activity",
+        "validation_label": "benign"
+      },
+      "statistics": {
+        "definitions": {
+          "cover": "Mean Hessian-weighted coverage per split",
+          "gain": "Mean training loss reduction per split",
+          "total_cover": "Sum of Hessian-weighted split coverage",
+          "total_gain": "Sum of split gains",
+          "weight": "Number of splits using the feature"
+        },
+        "features": [
+          {
+            "cover": 779.1653442382812,
+            "feature": "log_data-ranges_avg",
+            "gain": 20.805877685546875,
+            "reference_median": 0,
+            "reference_missing_rows": 0,
+            "reference_p25": 0,
+            "reference_p75": 0,
+            "total_cover": 1171085.5,
+            "total_gain": 31271.234375,
+            "value": 0,
+            "weight": 1503
+          },
+          {
+            "cover": 876.7086791992188,
+            "feature": "log_data-ranges_max",
+            "gain": 38.989742279052734,
+            "reference_median": 0,
+            "reference_missing_rows": 0,
+            "reference_p25": 0,
+            "reference_p75": 0,
+            "total_cover": 777640.625,
+            "total_gain": 34583.90234375,
+            "value": 0,
+            "weight": 887
+          },
+          {
+            "cover": 784.1607055664062,
+            "feature": "log_data-ranges_min",
+            "gain": 41.331825256347656,
+            "reference_median": 0,
+            "reference_missing_rows": 0,
+            "reference_p25": 0,
+            "reference_p75": 0,
+            "total_cover": 555969.9375,
+            "total_gain": 29304.263671875,
+            "value": 0,
+            "weight": 709
+          },
+          {
+            "cover": 736.9454345703125,
+            "feature": "log_data-ranges_std_deviation",
+            "gain": 80.02266693115234,
+            "reference_median": 0,
+            "reference_missing_rows": 0,
+            "reference_p25": 0,
+            "reference_p75": 0,
+            "total_cover": 350049.09375,
+            "total_gain": 38010.765625,
+            "value": 0,
+            "weight": 475
+          },
+          {
+            "cover": 1715.76025390625,
+            "feature": "log_data-types_count",
+            "gain": 29.81907844543457,
+            "reference_median": 0,
+            "reference_missing_rows": 0,
+            "reference_p25": 0,
+            "reference_p75": 0,
+            "total_cover": 1551047.25,
+            "total_gain": 26956.447265625,
+            "value": 0,
+            "weight": 904
+          },
+          {
+            "cover": 408.0701599121094,
+            "feature": "log_interval-messages",
+            "gain": 17.044448852539062,
+            "reference_median": 0,
+            "reference_missing_rows": 0,
+            "reference_p25": 0,
+            "reference_p75": 0,
+            "total_cover": 160779.640625,
+            "total_gain": 6715.5126953125,
+            "value": 0,
+            "weight": 394
+          },
+          {
+            "cover": 953.3350830078125,
+            "feature": "log_messages_count",
+            "gain": 20.819272994995117,
+            "reference_median": 0,
+            "reference_missing_rows": 0,
+            "reference_p25": 0,
+            "reference_p75": 0,
+            "total_cover": 570094.375,
+            "total_gain": 12449.9248046875,
+            "value": 0,
+            "weight": 598
+          },
+          {
+            "cover": 1693.0853271484375,
+            "feature": "network_fragmentation-score",
+            "gain": 410.3488464355469,
+            "reference_median": 0,
+            "reference_missing_rows": 0,
+            "reference_p25": 0,
+            "reference_p75": 0,
+            "total_cover": 159150.015625,
+            "total_gain": 38572.79296875,
+            "value": 0,
+            "weight": 94
+          },
+          {
+            "cover": 1466.0408935546875,
+            "feature": "network_fragmented-packets",
+            "gain": 111.45510864257812,
+            "reference_median": 0,
+            "reference_missing_rows": 0,
+            "reference_p25": 0,
+            "reference_p75": 0,
+            "total_cover": 209643.84375,
+            "total_gain": 15938.080078125,
+            "value": 0,
+            "weight": 143
+          },
+          {
+            "cover": 1853.7225341796875,
+            "feature": "network_header-length_avg",
+            "gain": 32.011322021484375,
+            "reference_median": 20,
+            "reference_missing_rows": 0,
+            "reference_p25": 0,
+            "reference_p75": 20,
+            "total_cover": 1001010.1875,
+            "total_gain": 17286.11328125,
+            "value": 20,
+            "weight": 540
+          },
+          {
+            "cover": 1480.313720703125,
+            "feature": "network_header-length_max",
+            "gain": 5.050224304199219,
+            "reference_median": 20,
+            "reference_missing_rows": 0,
+            "reference_p25": 0,
+            "reference_p75": 20,
+            "total_cover": 235369.890625,
+            "total_gain": 802.9856567382812,
+            "value": 20,
+            "weight": 159
+          },
+          {
+            "cover": 1608.6153564453125,
+            "feature": "network_header-length_min",
+            "gain": 4.977799892425537,
+            "reference_median": 20,
+            "reference_missing_rows": 0,
+            "reference_p25": 0,
+            "reference_p75": 20,
+            "total_cover": 75604.921875,
+            "total_gain": 233.95660400390625,
+            "value": 20,
+            "weight": 47
+          },
+          {
+            "cover": 1560.8797607421875,
+            "feature": "network_header-length_std_deviation",
+            "gain": 5.893806457519531,
+            "reference_median": 0,
+            "reference_missing_rows": 0,
+            "reference_p25": 0,
+            "reference_p75": 0,
+            "total_cover": 87409.265625,
+            "total_gain": 330.05316162109375,
+            "value": 0,
+            "weight": 56
+          },
+          {
+            "cover": 682.3704223632812,
+            "feature": "network_interval-packets",
+            "gain": 38.310020446777344,
+            "reference_median": 1.5833332538604736,
+            "reference_missing_rows": 0,
+            "reference_p25": 0,
+            "reference_p75": 63.7936897277832,
+            "total_cover": 3652728.75,
+            "total_gain": 205073.53125,
+            "value": 28.338279724121094,
+            "weight": 5353
+          },
+          {
+            "cover": 1077.3580322265625,
+            "feature": "network_ip-flags_avg",
+            "gain": 90.1118392944336,
+            "reference_median": 0.4300000071525574,
+            "reference_missing_rows": 0,
+            "reference_p25": 0,
+            "reference_p75": 1.000229835510254,
+            "total_cover": 2671848,
+            "total_gain": 223477.359375,
+            "value": 1.5932203531265259,
+            "weight": 2480
+          },
+          {
+            "cover": 152.4249725341797,
+            "feature": "network_ip-flags_max",
+            "gain": 5.333755016326904,
+            "reference_median": 2,
+            "reference_missing_rows": 0,
+            "reference_p25": 0,
+            "reference_p75": 2,
+            "total_cover": 12041.5732421875,
+            "total_gain": 421.36663818359375,
+            "value": 2,
+            "weight": 79
+          },
+          {
+            "cover": 1965.45068359375,
+            "feature": "network_ip-flags_min",
+            "gain": 35.0038948059082,
+            "reference_median": 0,
+            "reference_missing_rows": 0,
+            "reference_p25": 0,
+            "reference_p75": 0,
+            "total_cover": 255508.59375,
+            "total_gain": 4550.50634765625,
+            "value": 0,
+            "weight": 130
+          },
+          {
+            "cover": 338.61383056640625,
+            "feature": "network_ip-flags_std_deviation",
+            "gain": 56.91278839111328,
+            "reference_median": 0.011157818138599396,
+            "reference_missing_rows": 0,
+            "reference_p25": 0,
+            "reference_p75": 0.9869070053100586,
+            "total_cover": 515031.65625,
+            "total_gain": 86564.3515625,
+            "value": 0.8050401210784912,
+            "weight": 1521
+          },
+          {
+            "cover": 662.669189453125,
+            "feature": "network_ip-length_avg",
+            "gain": 92.09522247314453,
+            "reference_median": 49,
+            "reference_missing_rows": 0,
+            "reference_p25": 0,
+            "reference_p75": 117.42286682128906,
+            "total_cover": 1322025,
+            "total_gain": 183729.96875,
+            "value": 177.86441040039062,
+            "weight": 1995
+          },
+          {
+            "cover": 449.7267761230469,
+            "feature": "network_ip-length_max",
+            "gain": 16.240886688232422,
+            "reference_median": 63,
+            "reference_missing_rows": 0,
+            "reference_p25": 0,
+            "reference_p75": 216,
+            "total_cover": 889559.5625,
+            "total_gain": 32124.474609375,
+            "value": 2526,
+            "weight": 1978
+          },
+          {
+            "cover": 1260.691650390625,
+            "feature": "network_ip-length_min",
+            "gain": 55.538475036621094,
+            "reference_median": 40,
+            "reference_missing_rows": 0,
+            "reference_p25": 0,
+            "reference_p75": 40,
+            "total_cover": 1347679.375,
+            "total_gain": 59370.62890625,
+            "value": 36,
+            "weight": 1069
+          },
+          {
+            "cover": 439.6388244628906,
+            "feature": "network_ip-length_std_deviation",
+            "gain": 83.03330993652344,
+            "reference_median": 2.269965171813965,
+            "reference_missing_rows": 0,
+            "reference_p25": 0,
+            "reference_p75": 23.81583595275879,
+            "total_cover": 636157.375,
+            "total_gain": 120149.1953125,
+            "value": 423.3018493652344,
+            "weight": 1447
+          },
+          {
+            "cover": 251.33966064453125,
+            "feature": "network_ips_all_count",
+            "gain": 45.23756790161133,
+            "reference_median": 2,
+            "reference_missing_rows": 0,
+            "reference_p25": 2,
+            "reference_p75": 4,
+            "total_cover": 394100.59375,
+            "total_gain": 70932.5078125,
+            "value": 55,
+            "weight": 1568
+          },
+          {
+            "cover": 427.1080322265625,
+            "feature": "network_ips_dst_count",
+            "gain": 32.139434814453125,
+            "reference_median": 2,
+            "reference_missing_rows": 0,
+            "reference_p25": 1,
+            "reference_p75": 3,
+            "total_cover": 466401.96875,
+            "total_gain": 35096.26171875,
+            "value": 55,
+            "weight": 1092
+          },
+          {
+            "cover": 530.902587890625,
+            "feature": "network_ips_src_count",
+            "gain": 17.876482009887695,
+            "reference_median": 2,
+            "reference_missing_rows": 0,
+            "reference_p25": 1,
+            "reference_p75": 3,
+            "total_cover": 474626.90625,
+            "total_gain": 15981.5751953125,
+            "value": 53,
+            "weight": 894
+          },
+          {
+            "cover": 1073.621337890625,
+            "feature": "network_macs_all_count",
+            "gain": 15.233219146728516,
+            "reference_median": 2,
+            "reference_missing_rows": 0,
+            "reference_p25": 2,
+            "reference_p75": 3.25,
+            "total_cover": 2583133,
+            "total_gain": 36651.125,
+            "value": 47,
+            "weight": 2406
+          },
+          {
+            "cover": 839.3929443359375,
+            "feature": "network_macs_dst_count",
+            "gain": 34.904685974121094,
+            "reference_median": 2,
+            "reference_missing_rows": 0,
+            "reference_p25": 1,
+            "reference_p75": 3,
+            "total_cover": 1240622.75,
+            "total_gain": 51589.125,
+            "value": 45,
+            "weight": 1478
+          },
+          {
+            "cover": 823.7908325195312,
+            "feature": "network_macs_src_count",
+            "gain": 40.490657806396484,
+            "reference_median": 2,
+            "reference_missing_rows": 0,
+            "reference_p25": 1,
+            "reference_p75": 3,
+            "total_cover": 339401.8125,
+            "total_gain": 16682.150390625,
+            "value": 45,
+            "weight": 412
+          },
+          {
+            "cover": 1474.42236328125,
+            "feature": "network_mss_avg",
+            "gain": 795.3103637695312,
+            "reference_median": 0,
+            "reference_missing_rows": 0,
+            "reference_p25": 0,
+            "reference_p75": 0,
+            "total_cover": 412838.25,
+            "total_gain": 222686.90625,
+            "value": 0,
+            "weight": 280
+          },
+          {
+            "cover": 649.0931396484375,
+            "feature": "network_mss_max",
+            "gain": 51.52362823486328,
+            "reference_median": 0,
+            "reference_missing_rows": 0,
+            "reference_p25": 0,
+            "reference_p75": 0,
+            "total_cover": 33103.75,
+            "total_gain": 2627.705078125,
+            "value": 0,
+            "weight": 51
+          },
+          {
+            "cover": 1964.4901123046875,
+            "feature": "network_mss_min",
+            "gain": 245.4228973388672,
+            "reference_median": 0,
+            "reference_missing_rows": 0,
+            "reference_p25": 0,
+            "reference_p75": 0,
+            "total_cover": 243596.78125,
+            "total_gain": 30432.439453125,
+            "value": 0,
+            "weight": 124
+          },
+          {
+            "cover": 2382.133056640625,
+            "feature": "network_mss_std_deviation",
+            "gain": 23.32950782775879,
+            "reference_median": 0,
+            "reference_missing_rows": 0,
+            "reference_p25": 0,
+            "reference_p75": 0,
+            "total_cover": 409726.875,
+            "total_gain": 4012.67529296875,
+            "value": 0,
+            "weight": 172
+          },
+          {
+            "cover": 406.73907470703125,
+            "feature": "network_packet-size_avg",
+            "gain": 92.25273895263672,
+            "reference_median": 64,
+            "reference_missing_rows": 0,
+            "reference_p25": 60,
+            "reference_p75": 126.56544494628906,
+            "total_cover": 765076.1875,
+            "total_gain": 173527.40625,
+            "value": 152.0709991455078,
+            "weight": 1881
+          },
+          {
+            "cover": 907.61279296875,
+            "feature": "network_packet-size_max",
+            "gain": 17.44135093688965,
+            "reference_median": 89,
+            "reference_missing_rows": 0,
+            "reference_p25": 60,
+            "reference_p75": 230,
+            "total_cover": 1075521.125,
+            "total_gain": 20668,
+            "value": 2540,
+            "weight": 1185
+          },
+          {
+            "cover": 2350.746826171875,
+            "feature": "network_packet-size_min",
+            "gain": 208.42758178710938,
+            "reference_median": 60,
+            "reference_missing_rows": 0,
+            "reference_p25": 54,
+            "reference_p75": 60,
+            "total_cover": 2872612.5,
+            "total_gain": 254698.5,
+            "value": 50,
+            "weight": 1222
+          },
+          {
+            "cover": 413.04974365234375,
+            "feature": "network_packet-size_std_deviation",
+            "gain": 36.77122116088867,
+            "reference_median": 7.13288688659668,
+            "reference_missing_rows": 0,
+            "reference_p25": 0,
+            "reference_p75": 53.323055267333984,
+            "total_cover": 702597.625,
+            "total_gain": 62547.84765625,
+            "value": 358.8521423339844,
+            "weight": 1701
+          },
+          {
+            "cover": 1205.5989990234375,
+            "feature": "network_packets_all_count",
+            "gain": 625.2964477539062,
+            "reference_median": 6,
+            "reference_missing_rows": 0,
+            "reference_p25": 1,
+            "reference_p75": 206.25,
+            "total_cover": 2356946,
+            "total_gain": 1222454.5,
+            "value": 338,
+            "weight": 1955
+          },
+          {
+            "cover": 2140.626708984375,
+            "feature": "network_packets_dst_count",
+            "gain": 45.472503662109375,
+            "reference_median": 2.5,
+            "reference_missing_rows": 0,
+            "reference_p25": 0,
+            "reference_p75": 96.75,
+            "total_cover": 4531707,
+            "total_gain": 96265.2890625,
+            "value": 134,
+            "weight": 2117
+          },
+          {
+            "cover": 488.33709716796875,
+            "feature": "network_packets_src_count",
+            "gain": 11.203330039978027,
+            "reference_median": 3,
+            "reference_missing_rows": 0,
+            "reference_p25": 1,
+            "reference_p75": 33,
+            "total_cover": 857519.9375,
+            "total_gain": 19673.046875,
+            "value": 204,
+            "weight": 1756
+          },
+          {
+            "cover": 1014.378173828125,
+            "feature": "network_payload-length_avg",
+            "gain": 167.8946990966797,
+            "reference_median": 9.5,
+            "reference_missing_rows": 0,
+            "reference_p25": 0,
+            "reference_p75": 81.49324035644531,
+            "total_cover": 1555041.75,
+            "total_gain": 257382.5625,
+            "value": 153.57627868652344,
+            "weight": 1533
+          },
+          {
+            "cover": 1530.1651611328125,
+            "feature": "network_payload-length_max",
+            "gain": 74.53577423095703,
+            "reference_median": 22.5,
+            "reference_missing_rows": 0,
+            "reference_p25": 0,
+            "reference_p75": 196,
+            "total_cover": 1628095.75,
+            "total_gain": 79306.0625,
+            "value": 2474,
+            "weight": 1064
+          },
+          {
+            "cover": 3180.15869140625,
+            "feature": "network_payload-length_min",
+            "gain": 15.032015800476074,
+            "reference_median": 0,
+            "reference_missing_rows": 0,
+            "reference_p25": 0,
+            "reference_p75": 0,
+            "total_cover": 912705.5625,
+            "total_gain": 4314.1884765625,
+            "value": 0,
+            "weight": 287
+          },
+          {
+            "cover": 401.1836853027344,
+            "feature": "network_payload-length_std_deviation",
+            "gain": 16.95649528503418,
+            "reference_median": 1.805837869644165,
+            "reference_missing_rows": 0,
+            "reference_p25": 0,
+            "reference_p75": 31.5445556640625,
+            "total_cover": 638283.25,
+            "total_gain": 26977.783203125,
+            "value": 416.60198974609375,
+            "weight": 1591
+          },
+          {
+            "cover": 2182.90771484375,
+            "feature": "network_ports_all_count",
+            "gain": 159.439208984375,
+            "reference_median": 2,
+            "reference_missing_rows": 0,
+            "reference_p25": 0,
+            "reference_p75": 21.25,
+            "total_cover": 3593066,
+            "total_gain": 262436.9375,
+            "value": 143,
+            "weight": 1646
+          },
+          {
+            "cover": 1196.7725830078125,
+            "feature": "network_ports_dst_count",
+            "gain": 53.748104095458984,
+            "reference_median": 2,
+            "reference_missing_rows": 0,
+            "reference_p25": 0,
+            "reference_p75": 15.25,
+            "total_cover": 1572559.25,
+            "total_gain": 70625.0078125,
+            "value": 14,
+            "weight": 1314
+          },
+          {
+            "cover": 1930.80224609375,
+            "feature": "network_ports_src_count",
+            "gain": 112.32746887207031,
+            "reference_median": 2,
+            "reference_missing_rows": 0,
+            "reference_p25": 0,
+            "reference_p75": 18,
+            "total_cover": 3066114,
+            "total_gain": 178376.015625,
+            "value": 140,
+            "weight": 1588
+          },
+          {
+            "cover": 216.71632385253906,
+            "feature": "network_protocols_all_count",
+            "gain": 56.74786376953125,
+            "reference_median": 2,
+            "reference_missing_rows": 0,
+            "reference_p25": 1,
+            "reference_p75": 3,
+            "total_cover": 108574.875,
+            "total_gain": 28430.6796875,
+            "value": 9,
+            "weight": 501
+          },
+          {
+            "cover": 615.8510131835938,
+            "feature": "network_protocols_dst_count",
+            "gain": 22.43143081665039,
+            "reference_median": 1,
+            "reference_missing_rows": 0,
+            "reference_p25": 0,
+            "reference_p75": 2,
+            "total_cover": 275285.40625,
+            "total_gain": 10026.849609375,
+            "value": 7,
+            "weight": 447
+          },
+          {
+            "cover": 304.8672790527344,
+            "feature": "network_protocols_src_count",
+            "gain": 5.924454212188721,
+            "reference_median": 1,
+            "reference_missing_rows": 0,
+            "reference_p25": 1,
+            "reference_p75": 2,
+            "total_cover": 142373.015625,
+            "total_gain": 2766.72021484375,
+            "value": 8,
+            "weight": 467
+          },
+          {
+            "cover": 486.943115234375,
+            "feature": "network_tcp-flags-ack_count",
+            "gain": 138.79193115234375,
+            "reference_median": 2,
+            "reference_missing_rows": 0,
+            "reference_p25": 0,
+            "reference_p75": 34.25,
+            "total_cover": 541967.6875,
+            "total_gain": 154475.421875,
+            "value": 49,
+            "weight": 1113
+          },
+          {
+            "cover": 1992.7513427734375,
+            "feature": "network_tcp-flags-fin_count",
+            "gain": 146.9124298095703,
+            "reference_median": 0,
+            "reference_missing_rows": 0,
+            "reference_p25": 0,
+            "reference_p75": 0,
+            "total_cover": 1984780.375,
+            "total_gain": 146324.78125,
+            "value": 0,
+            "weight": 996
+          },
+          {
+            "cover": 1061.38037109375,
+            "feature": "network_tcp-flags-psh_count",
+            "gain": 72.66463470458984,
+            "reference_median": 0,
+            "reference_missing_rows": 0,
+            "reference_p25": 0,
+            "reference_p75": 4,
+            "total_cover": 1240753.625,
+            "total_gain": 84944.9609375,
+            "value": 24,
+            "weight": 1169
+          },
+          {
+            "cover": 2083.916015625,
+            "feature": "network_tcp-flags-rst_count",
+            "gain": 101.58299255371094,
+            "reference_median": 0,
+            "reference_missing_rows": 0,
+            "reference_p25": 0,
+            "reference_p75": 0,
+            "total_cover": 2571552.25,
+            "total_gain": 125353.4140625,
+            "value": 0,
+            "weight": 1234
+          },
+          {
+            "cover": 2249.08349609375,
+            "feature": "network_tcp-flags-syn_count",
+            "gain": 123.02078247070312,
+            "reference_median": 0,
+            "reference_missing_rows": 0,
+            "reference_p25": 0,
+            "reference_p75": 0,
+            "total_cover": 3290409.25,
+            "total_gain": 179979.40625,
+            "value": 0,
+            "weight": 1463
+          },
+          {
+            "cover": 1269.6956787109375,
+            "feature": "network_tcp-flags-urg_count",
+            "gain": 15.545721054077148,
+            "reference_median": 0,
+            "reference_missing_rows": 0,
+            "reference_p25": 0,
+            "reference_p75": 0,
+            "total_cover": 31742.390625,
+            "total_gain": 388.6430358886719,
+            "value": 0,
+            "weight": 25
+          },
+          {
+            "cover": 459.2361755371094,
+            "feature": "network_tcp-flags_avg",
+            "gain": 94.05567932128906,
+            "reference_median": 10.983430862426758,
+            "reference_missing_rows": 0,
+            "reference_p25": 0,
+            "reference_p75": 19.956031799316406,
+            "total_cover": 897806.75,
+            "total_gain": 183878.859375,
+            "value": 19.918367385864258,
+            "weight": 1955
+          },
+          {
+            "cover": 965.5491333007812,
+            "feature": "network_tcp-flags_max",
+            "gain": 146.90158081054688,
+            "reference_median": 20,
+            "reference_missing_rows": 0,
+            "reference_p25": 0,
+            "reference_p75": 24,
+            "total_cover": 327321.15625,
+            "total_gain": 49799.63671875,
+            "value": 24,
+            "weight": 339
+          },
+          {
+            "cover": 682.1189575195312,
+            "feature": "network_tcp-flags_min",
+            "gain": 70.29747772216797,
+            "reference_median": 2,
+            "reference_missing_rows": 0,
+            "reference_p25": 0,
+            "reference_p75": 16,
+            "total_cover": 585258.0625,
+            "total_gain": 60315.23828125,
+            "value": 16,
+            "weight": 858
+          },
+          {
+            "cover": 1538.3994140625,
+            "feature": "network_tcp-flags_std_deviation",
+            "gain": 282.4063720703125,
+            "reference_median": 3.077472686767578,
+            "reference_missing_rows": 0,
+            "reference_p25": 0,
+            "reference_p75": 4,
+            "total_cover": 2564511.75,
+            "total_gain": 470771.40625,
+            "value": 3.999166965484619,
+            "weight": 1667
+          },
+          {
+            "cover": 658.4462280273438,
+            "feature": "network_time-delta_avg",
+            "gain": 52.34288024902344,
+            "reference_median": 0.0016327210469171405,
+            "reference_missing_rows": 0,
+            "reference_p25": 0.000012037870874337386,
+            "reference_p75": 0.012755375355482101,
+            "total_cover": 4834970.5,
+            "total_gain": 384353.78125,
+            "value": 0.006746801547706127,
+            "weight": 7343
+          },
+          {
+            "cover": 493.4602966308594,
+            "feature": "network_time-delta_max",
+            "gain": 8.100394248962402,
+            "reference_median": 0.015220772475004196,
+            "reference_missing_rows": 0,
+            "reference_p25": 0.0005420469678938389,
+            "reference_p75": 0.04244345426559448,
+            "total_cover": 4618295,
+            "total_gain": 75811.59375,
+            "value": 0.07639200240373611,
+            "weight": 9359
+          },
+          {
+            "cover": 954.4407348632812,
+            "feature": "network_time-delta_min",
+            "gain": 35.08557891845703,
+            "reference_median": 2.6000000374892807e-8,
+            "reference_missing_rows": 0,
+            "reference_p25": 0,
+            "reference_p75": 8.474999901864066e-8,
+            "total_cover": 7829277.5,
+            "total_gain": 287807,
+            "value": 0,
+            "weight": 8203
+          },
+          {
+            "cover": 314.7525939941406,
+            "feature": "network_time-delta_std_deviation",
+            "gain": 47.274173736572266,
+            "reference_median": 0.0012605381198227406,
+            "reference_missing_rows": 0,
+            "reference_p25": 0,
+            "reference_p75": 0.010820871219038963,
+            "total_cover": 1797552.125,
+            "total_gain": 269982.8125,
+            "value": 0.013034727424383163,
+            "weight": 5711
+          },
+          {
+            "cover": 817.587646484375,
+            "feature": "network_ttl_avg",
+            "gain": 38.746421813964844,
+            "reference_median": 65.24065399169922,
+            "reference_missing_rows": 0,
+            "reference_p25": 0,
+            "reference_p75": 159.5,
+            "total_cover": 1772530,
+            "total_gain": 84002.2421875,
+            "value": 77.00847625732422,
+            "weight": 2168
+          },
+          {
+            "cover": 1008.6420288085938,
+            "feature": "network_ttl_max",
+            "gain": 20.21319580078125,
+            "reference_median": 255,
+            "reference_missing_rows": 0,
+            "reference_p25": 0,
+            "reference_p75": 255,
+            "total_cover": 1042935.875,
+            "total_gain": 20900.4453125,
+            "value": 255,
+            "weight": 1034
+          },
+          {
+            "cover": 1216.0234375,
+            "feature": "network_ttl_min",
+            "gain": 74.8322525024414,
+            "reference_median": 61,
+            "reference_missing_rows": 0,
+            "reference_p25": 0,
+            "reference_p75": 64,
+            "total_cover": 1703648.875,
+            "total_gain": 104839.984375,
+            "value": 1,
+            "weight": 1401
+          },
+          {
+            "cover": 524.4724731445312,
+            "feature": "network_ttl_std_deviation",
+            "gain": 105.54164123535156,
+            "reference_median": 1.047116756439209,
+            "reference_missing_rows": 0,
+            "reference_p25": 0,
+            "reference_p75": 94.62667846679688,
+            "total_cover": 937756.75,
+            "total_gain": 188708.453125,
+            "value": 82.38350677490234,
+            "weight": 1788
+          },
+          {
+            "cover": 1049.8741455078125,
+            "feature": "network_window-size_avg",
+            "gain": 53.83274459838867,
+            "reference_median": 529.1835327148438,
+            "reference_missing_rows": 0,
+            "reference_p25": 0,
+            "reference_p75": 32042.71875,
+            "total_cover": 3833090.5,
+            "total_gain": 196543.34375,
+            "value": 1933.2857666015625,
+            "weight": 3651
+          },
+          {
+            "cover": 512.6784057617188,
+            "feature": "network_window-size_max",
+            "gain": 105.81377410888672,
+            "reference_median": 4270,
+            "reference_missing_rows": 0,
+            "reference_p25": 0,
+            "reference_p75": 64075,
+            "total_cover": 992545.375,
+            "total_gain": 204855.46875,
+            "value": 4736,
+            "weight": 1936
+          },
+          {
+            "cover": 1934.2884521484375,
+            "feature": "network_window-size_min",
+            "gain": 53.94828414916992,
+            "reference_median": 0,
+            "reference_missing_rows": 0,
+            "reference_p25": 0,
+            "reference_p75": 1024,
+            "total_cover": 11955837,
+            "total_gain": 333454.34375,
+            "value": 135,
+            "weight": 6181
+          },
+          {
+            "cover": 1067.3721923828125,
+            "feature": "network_window-size_std_deviation",
+            "gain": 82.1436538696289,
+            "reference_median": 490.25958251953125,
+            "reference_missing_rows": 0,
+            "reference_p25": 0,
+            "reference_p75": 29212,
+            "total_cover": 5371017,
+            "total_gain": 413346.875,
+            "value": 1350.7042236328125,
+            "weight": 5032
+          },
+          {
+            "cover": 32.273677825927734,
+            "feature": "network_protocols_all__present_tcp",
+            "gain": 1.5535423755645752,
+            "reference_median": 1,
+            "reference_missing_rows": 0,
+            "reference_p25": 0,
+            "reference_p75": 1,
+            "total_cover": 355.0104675292969,
+            "total_gain": 17.088966369628906,
+            "value": 1,
+            "weight": 11
+          },
+          {
+            "cover": 736.7734985351562,
+            "feature": "network_protocols_all__present_arp",
+            "gain": 6.827256202697754,
+            "reference_median": 0,
+            "reference_missing_rows": 0,
+            "reference_p25": 0,
+            "reference_p75": 1,
+            "total_cover": 243872.03125,
+            "total_gain": 2259.82177734375,
+            "value": 1,
+            "weight": 331
+          },
+          {
+            "cover": 265.7979736328125,
+            "feature": "network_protocols_all__present_mqtt",
+            "gain": 82.54594421386719,
+            "reference_median": 0,
+            "reference_missing_rows": 0,
+            "reference_p25": 0,
+            "reference_p75": 1,
+            "total_cover": 95687.2734375,
+            "total_gain": 29716.5390625,
+            "value": 0,
+            "weight": 360
+          },
+          {
+            "cover": 426.4690856933594,
+            "feature": "network_protocols_all__present_data",
+            "gain": 11.161867141723633,
+            "reference_median": 0,
+            "reference_missing_rows": 0,
+            "reference_p25": 0,
+            "reference_p75": 1,
+            "total_cover": 76764.4375,
+            "total_gain": 2009.1361083984375,
+            "value": 1,
+            "weight": 180
+          },
+          {
+            "cover": 1541.8096923828125,
+            "feature": "network_protocols_all__present_json",
+            "gain": 40.40293884277344,
+            "reference_median": 0,
+            "reference_missing_rows": 0,
+            "reference_p25": 0,
+            "reference_p75": 0,
+            "total_cover": 138762.875,
+            "total_gain": 3636.264404296875,
+            "value": 1,
+            "weight": 90
+          },
+          {
+            "cover": 2093.827392578125,
+            "feature": "network_protocols_all__present_icmp",
+            "gain": 263.7297668457031,
+            "reference_median": 0,
+            "reference_missing_rows": 0,
+            "reference_p25": 0,
+            "reference_p75": 0,
+            "total_cover": 498330.9375,
+            "total_gain": 62767.68359375,
+            "value": 1,
+            "weight": 238
+          },
+          {
+            "cover": 469.1702575683594,
+            "feature": "network_protocols_all__present_tls",
+            "gain": 23.49891471862793,
+            "reference_median": 0,
+            "reference_missing_rows": 0,
+            "reference_p25": 0,
+            "reference_p75": 0,
+            "total_cover": 128083.484375,
+            "total_gain": 6415.20361328125,
+            "value": 1,
+            "weight": 273
+          },
+          {
+            "cover": 1139.7198486328125,
+            "feature": "network_protocols_all__present_dns",
+            "gain": 104.86155700683594,
+            "reference_median": 0,
+            "reference_missing_rows": 0,
+            "reference_p25": 0,
+            "reference_p75": 0,
+            "total_cover": 153862.1875,
+            "total_gain": 14156.310546875,
+            "value": 0,
+            "weight": 135
+          },
+          {
+            "cover": 6851.48779296875,
+            "feature": "network_protocols_all__present_telnet",
+            "gain": 374.373779296875,
+            "reference_median": 0,
+            "reference_missing_rows": 0,
+            "reference_p25": 0,
+            "reference_p75": 0,
+            "total_cover": 1342891.625,
+            "total_gain": 73377.2578125,
+            "value": 0,
+            "weight": 196
+          },
+          {
+            "cover": 1288.1075439453125,
+            "feature": "network_protocols_all__present_lldp",
+            "gain": 23.347232818603516,
+            "reference_median": 0,
+            "reference_missing_rows": 0,
+            "reference_p25": 0,
+            "reference_p75": 0,
+            "total_cover": 519107.34375,
+            "total_gain": 9408.9345703125,
+            "value": 0,
+            "weight": 403
+          },
+          {
+            "cover": 1155.0784912109375,
+            "feature": "network_protocols_all__present_data-text-lines",
+            "gain": 104.17176055908203,
+            "reference_median": 0,
+            "reference_missing_rows": 0,
+            "reference_p25": 0,
+            "reference_p75": 0,
+            "total_cover": 172106.6875,
+            "total_gain": 15521.5927734375,
+            "value": 0,
+            "weight": 149
+          },
+          {
+            "cover": 1115.7841796875,
+            "feature": "network_protocols_all__present_ntp",
+            "gain": 12.932363510131836,
+            "reference_median": 0,
+            "reference_missing_rows": 0,
+            "reference_p25": 0,
+            "reference_p75": 0,
+            "total_cover": 123852.0390625,
+            "total_gain": 1435.4923095703125,
+            "value": 1,
+            "weight": 111
+          },
+          {
+            "cover": 539.3480834960938,
+            "feature": "network_protocols_all__present_ssdp",
+            "gain": 119.25257873535156,
+            "reference_median": 0,
+            "reference_missing_rows": 0,
+            "reference_p25": 0,
+            "reference_p75": 0,
+            "total_cover": 33978.9296875,
+            "total_gain": 7512.91259765625,
+            "value": 0,
+            "weight": 63
+          },
+          {
+            "cover": 1711.6883544921875,
+            "feature": "network_protocols_all__present_http",
+            "gain": 98.73750305175781,
+            "reference_median": 0,
+            "reference_missing_rows": 0,
+            "reference_p25": 0,
+            "reference_p75": 0,
+            "total_cover": 186574.03125,
+            "total_gain": 10762.3876953125,
+            "value": 0,
+            "weight": 109
+          },
+          {
+            "cover": 712.5672607421875,
+            "feature": "network_protocols_all__present_dhcpv6",
+            "gain": 4.636391639709473,
+            "reference_median": 0,
+            "reference_missing_rows": 0,
+            "reference_p25": 0,
+            "reference_p75": 0,
+            "total_cover": 37766.06640625,
+            "total_gain": 245.72874450683594,
+            "value": 0,
+            "weight": 53
+          },
+          {
+            "cover": 3384.65087890625,
+            "feature": "network_protocols_all__present_nbns",
+            "gain": 19.037015914916992,
+            "reference_median": 0,
+            "reference_missing_rows": 0,
+            "reference_p25": 0,
+            "reference_p75": 0,
+            "total_cover": 450158.5625,
+            "total_gain": 2531.923095703125,
+            "value": 1,
+            "weight": 133
+          },
+          {
+            "cover": 119.55643463134766,
+            "feature": "network_protocols_all__present_lbtrm",
+            "gain": 2.2895920276641846,
+            "reference_median": 0,
+            "reference_missing_rows": 0,
+            "reference_p25": 0,
+            "reference_p75": 0,
+            "total_cover": 358.6693115234375,
+            "total_gain": 6.868775844573975,
+            "value": 0,
+            "weight": 3
+          },
+          {
+            "cover": 1786.57177734375,
+            "feature": "network_protocols_all__present_ssh",
+            "gain": 248.64218139648438,
+            "reference_median": 0,
+            "reference_missing_rows": 0,
+            "reference_p25": 0,
+            "reference_p75": 0,
+            "total_cover": 75036.015625,
+            "total_gain": 10442.9716796875,
+            "value": 0,
+            "weight": 42
+          },
+          {
+            "cover": 1995.5968017578125,
+            "feature": "network_protocols_all__present_rtcp",
+            "gain": 1205.01416015625,
+            "reference_median": 0,
+            "reference_missing_rows": 0,
+            "reference_p25": 0,
+            "reference_p75": 0,
+            "total_cover": 35920.7421875,
+            "total_gain": 21690.255859375,
+            "value": 0,
+            "weight": 18
+          },
+          {
+            "cover": 448.5650634765625,
+            "feature": "network_protocols_all__present_udp",
+            "gain": 2.3797450065612793,
+            "reference_median": 0,
+            "reference_missing_rows": 0,
+            "reference_p25": 0,
+            "reference_p75": 0,
+            "total_cover": 7625.60595703125,
+            "total_gain": 40.455665588378906,
+            "value": 0,
+            "weight": 17
+          },
+          {
+            "cover": 0,
+            "feature": "network_protocols_all__present_daytime",
+            "gain": 0,
+            "reference_median": 0,
+            "reference_missing_rows": 0,
+            "reference_p25": 0,
+            "reference_p75": 0,
+            "total_cover": 0,
+            "total_gain": 0,
+            "value": 0,
+            "weight": 0
+          },
+          {
+            "cover": 1421.3721923828125,
+            "feature": "network_protocols_all__present_time",
+            "gain": 21.479211807250977,
+            "reference_median": 0,
+            "reference_missing_rows": 0,
+            "reference_p25": 0,
+            "reference_p75": 0,
+            "total_cover": 29848.81640625,
+            "total_gain": 451.0634460449219,
+            "value": 0,
+            "weight": 21
+          },
+          {
+            "cover": 1151.426025390625,
+            "feature": "network_protocols_all__present_mdns",
+            "gain": 4.26531982421875,
+            "reference_median": 0,
+            "reference_missing_rows": 0,
+            "reference_p25": 0,
+            "reference_p75": 0,
+            "total_cover": 37997.05859375,
+            "total_gain": 140.75555419921875,
+            "value": 1,
+            "weight": 33
+          },
+          {
+            "cover": 0,
+            "feature": "network_protocols_all__present_discard",
+            "gain": 0,
+            "reference_median": 0,
+            "reference_missing_rows": 0,
+            "reference_p25": 0,
+            "reference_p75": 0,
+            "total_cover": 0,
+            "total_gain": 0,
+            "value": 0,
+            "weight": 0
+          },
+          {
+            "cover": 0,
+            "feature": "network_protocols_all__present_snmp",
+            "gain": 0,
+            "reference_median": 0,
+            "reference_missing_rows": 0,
+            "reference_p25": 0,
+            "reference_p75": 0,
+            "total_cover": 0,
+            "total_gain": 0,
+            "value": 0,
+            "weight": 0
+          },
+          {
+            "cover": 0,
+            "feature": "network_protocols_all__present_ncp",
+            "gain": 0,
+            "reference_median": 0,
+            "reference_missing_rows": 0,
+            "reference_p25": 0,
+            "reference_p75": 0,
+            "total_cover": 0,
+            "total_gain": 0,
+            "value": 0,
+            "weight": 0
+          },
+          {
+            "cover": 6292.60986328125,
+            "feature": "network_protocols_all__present_chargen",
+            "gain": 187.96780395507812,
+            "reference_median": 0,
+            "reference_missing_rows": 0,
+            "reference_p25": 0,
+            "reference_p75": 0,
+            "total_cover": 31463.048828125,
+            "total_gain": 939.8389892578125,
+            "value": 0,
+            "weight": 5
+          },
+          {
+            "cover": 1161.8704833984375,
+            "feature": "network_protocols_all__present_c1222",
+            "gain": 8.795918464660645,
+            "reference_median": 0,
+            "reference_missing_rows": 0,
+            "reference_p25": 0,
+            "reference_p75": 0,
+            "total_cover": 6971.22265625,
+            "total_gain": 52.7755126953125,
+            "value": 0,
+            "weight": 6
+          },
+          {
+            "cover": 415.6906433105469,
+            "feature": "network_protocols_all__present_rpc",
+            "gain": 0.0198516845703125,
+            "reference_median": 0,
+            "reference_missing_rows": 0,
+            "reference_p25": 0,
+            "reference_p75": 0,
+            "total_cover": 415.6906433105469,
+            "total_gain": 0.0198516845703125,
+            "value": 0,
+            "weight": 1
+          },
+          {
+            "cover": 1170.483642578125,
+            "feature": "network_protocols_all__present_ieee1905",
+            "gain": 2.9497263431549072,
+            "reference_median": 0,
+            "reference_missing_rows": 0,
+            "reference_p25": 0,
+            "reference_p75": 0,
+            "total_cover": 73740.46875,
+            "total_gain": 185.832763671875,
+            "value": 0,
+            "weight": 63
+          },
+          {
+            "cover": 0,
+            "feature": "network_protocols_all__present_ftp",
+            "gain": 0,
+            "reference_median": 0,
+            "reference_missing_rows": 0,
+            "reference_p25": 0,
+            "reference_p75": 0,
+            "total_cover": 0,
+            "total_gain": 0,
+            "value": 0,
+            "weight": 0
+          },
+          {
+            "cover": 0,
+            "feature": "network_protocols_all__present_gopher",
+            "gain": 0,
+            "reference_median": 0,
+            "reference_missing_rows": 0,
+            "reference_p25": 0,
+            "reference_p75": 0,
+            "total_cover": 0,
+            "total_gain": 0,
+            "value": 0,
+            "weight": 0
+          },
+          {
+            "cover": 1110.3763427734375,
+            "feature": "network_protocols_all__present_UNSEEN",
+            "gain": 21.81100845336914,
+            "reference_median": 0,
+            "reference_missing_rows": 0,
+            "reference_p25": 0,
+            "reference_p75": 0,
+            "total_cover": 129914.03125,
+            "total_gain": 2551.887939453125,
+            "value": 0,
+            "weight": 117
+          },
+          {
+            "cover": 401.8136291503906,
+            "feature": "network_protocols_src__present_arp",
+            "gain": 7.389601230621338,
+            "reference_median": 0,
+            "reference_missing_rows": 0,
+            "reference_p25": 0,
+            "reference_p75": 1,
+            "total_cover": 138625.703125,
+            "total_gain": 2549.412353515625,
+            "value": 1,
+            "weight": 345
+          },
+          {
+            "cover": 131.65965270996094,
+            "feature": "network_protocols_src__present_tcp",
+            "gain": 7.17048978805542,
+            "reference_median": 0,
+            "reference_missing_rows": 0,
+            "reference_p25": 0,
+            "reference_p75": 1,
+            "total_cover": 25015.333984375,
+            "total_gain": 1362.39306640625,
+            "value": 1,
+            "weight": 190
+          },
+          {
+            "cover": 316.1072082519531,
+            "feature": "network_protocols_src__present_mqtt",
+            "gain": 7.991006374359131,
+            "reference_median": 0,
+            "reference_missing_rows": 0,
+            "reference_p25": 0,
+            "reference_p75": 1,
+            "total_cover": 69227.4765625,
+            "total_gain": 1750.0303955078125,
+            "value": 0,
+            "weight": 219
+          },
+          {
+            "cover": 326.147705078125,
+            "feature": "network_protocols_src__present_data",
+            "gain": 8.082530975341797,
+            "reference_median": 0,
+            "reference_missing_rows": 0,
+            "reference_p25": 0,
+            "reference_p75": 0,
+            "total_cover": 41746.90625,
+            "total_gain": 1034.56396484375,
+            "value": 1,
+            "weight": 128
+          },
+          {
+            "cover": 909.726806640625,
+            "feature": "network_protocols_src__present_json",
+            "gain": 25.15372657775879,
+            "reference_median": 0,
+            "reference_missing_rows": 0,
+            "reference_p25": 0,
+            "reference_p75": 0,
+            "total_cover": 120993.6640625,
+            "total_gain": 3345.445556640625,
+            "value": 1,
+            "weight": 133
+          },
+          {
+            "cover": 496.96746826171875,
+            "feature": "network_protocols_src__present_tls",
+            "gain": 9.9764986038208,
+            "reference_median": 0,
+            "reference_missing_rows": 0,
+            "reference_p25": 0,
+            "reference_p75": 0,
+            "total_cover": 61127,
+            "total_gain": 1227.109375,
+            "value": 1,
+            "weight": 123
+          },
+          {
+            "cover": 1446.9703369140625,
+            "feature": "network_protocols_src__present_icmp",
+            "gain": 323.8628234863281,
+            "reference_median": 0,
+            "reference_missing_rows": 0,
+            "reference_p25": 0,
+            "reference_p75": 0,
+            "total_cover": 238750.109375,
+            "total_gain": 53437.3671875,
+            "value": 0,
+            "weight": 165
+          },
+          {
+            "cover": 4011.75341796875,
+            "feature": "network_protocols_src__present_dns",
+            "gain": 300.6343994140625,
+            "reference_median": 0,
+            "reference_missing_rows": 0,
+            "reference_p25": 0,
+            "reference_p75": 0,
+            "total_cover": 597751.25,
+            "total_gain": 44794.52734375,
+            "value": 0,
+            "weight": 149
+          },
+          {
+            "cover": 4511.771484375,
+            "feature": "network_protocols_src__present_telnet",
+            "gain": 1532.9732666015625,
+            "reference_median": 0,
+            "reference_missing_rows": 0,
+            "reference_p25": 0,
+            "reference_p75": 0,
+            "total_cover": 487271.3125,
+            "total_gain": 165561.109375,
+            "value": 0,
+            "weight": 108
+          },
+          {
+            "cover": 1074.46826171875,
+            "feature": "network_protocols_src__present_lldp",
+            "gain": 25.315046310424805,
+            "reference_median": 0,
+            "reference_missing_rows": 0,
+            "reference_p25": 0,
+            "reference_p75": 0,
+            "total_cover": 127861.7265625,
+            "total_gain": 3012.490478515625,
+            "value": 0,
+            "weight": 119
+          },
+          {
+            "cover": 1802.7943115234375,
+            "feature": "network_protocols_src__present_data-text-lines",
+            "gain": 198.03466796875,
+            "reference_median": 0,
+            "reference_missing_rows": 0,
+            "reference_p25": 0,
+            "reference_p75": 0,
+            "total_cover": 551655.0625,
+            "total_gain": 60598.609375,
+            "value": 0,
+            "weight": 306
+          },
+          {
+            "cover": 1381.1175537109375,
+            "feature": "network_protocols_src__present_ntp",
+            "gain": 21.27877426147461,
+            "reference_median": 0,
+            "reference_missing_rows": 0,
+            "reference_p25": 0,
+            "reference_p75": 0,
+            "total_cover": 236171.09375,
+            "total_gain": 3638.67041015625,
+            "value": 1,
+            "weight": 171
+          },
+          {
+            "cover": 583.505615234375,
+            "feature": "network_protocols_src__present_ssdp",
+            "gain": 5.5044426918029785,
+            "reference_median": 0,
+            "reference_missing_rows": 0,
+            "reference_p25": 0,
+            "reference_p75": 0,
+            "total_cover": 21006.201171875,
+            "total_gain": 198.15994262695312,
+            "value": 0,
+            "weight": 36
+          },
+          {
+            "cover": 1091.83984375,
+            "feature": "network_protocols_src__present_dhcpv6",
+            "gain": 2.424823760986328,
+            "reference_median": 0,
+            "reference_missing_rows": 0,
+            "reference_p25": 0,
+            "reference_p75": 0,
+            "total_cover": 122286.0625,
+            "total_gain": 271.58026123046875,
+            "value": 0,
+            "weight": 112
+          },
+          {
+            "cover": 1887.283447265625,
+            "feature": "network_protocols_src__present_http",
+            "gain": 154.8057403564453,
+            "reference_median": 0,
+            "reference_missing_rows": 0,
+            "reference_p25": 0,
+            "reference_p75": 0,
+            "total_cover": 118898.859375,
+            "total_gain": 9752.76171875,
+            "value": 0,
+            "weight": 63
+          },
+          {
+            "cover": 1610.0748291015625,
+            "feature": "network_protocols_src__present_mdns",
+            "gain": 4.514468193054199,
+            "reference_median": 0,
+            "reference_missing_rows": 0,
+            "reference_p25": 0,
+            "reference_p75": 0,
+            "total_cover": 127195.9140625,
+            "total_gain": 356.6429748535156,
+            "value": 1,
+            "weight": 79
+          },
+          {
+            "cover": 727.7091064453125,
+            "feature": "network_protocols_src__present_ieee1905",
+            "gain": 4.024603366851807,
+            "reference_median": 0,
+            "reference_missing_rows": 0,
+            "reference_p25": 0,
+            "reference_p75": 0,
+            "total_cover": 12371.0546875,
+            "total_gain": 68.41825866699219,
+            "value": 0,
+            "weight": 17
+          },
+          {
+            "cover": 289.0494079589844,
+            "feature": "network_protocols_src__present_igmp",
+            "gain": 6.099283695220947,
+            "reference_median": 0,
+            "reference_missing_rows": 0,
+            "reference_p25": 0,
+            "reference_p75": 0,
+            "total_cover": 867.148193359375,
+            "total_gain": 18.2978515625,
+            "value": 0,
+            "weight": 3
+          },
+          {
+            "cover": 1881.7760009765625,
+            "feature": "network_protocols_src__present_nbns",
+            "gain": 6.399921417236328,
+            "reference_median": 0,
+            "reference_missing_rows": 0,
+            "reference_p25": 0,
+            "reference_p75": 0,
+            "total_cover": 208877.140625,
+            "total_gain": 710.3912963867188,
+            "value": 1,
+            "weight": 111
+          },
+          {
+            "cover": 0,
+            "feature": "network_protocols_src__present_rtcp",
+            "gain": 0,
+            "reference_median": 0,
+            "reference_missing_rows": 0,
+            "reference_p25": 0,
+            "reference_p75": 0,
+            "total_cover": 0,
+            "total_gain": 0,
+            "value": 0,
+            "weight": 0
+          },
+          {
+            "cover": 1486.3223876953125,
+            "feature": "network_protocols_src__present_quic",
+            "gain": 10.125106811523438,
+            "reference_median": 0,
+            "reference_missing_rows": 0,
+            "reference_p25": 0,
+            "reference_p75": 0,
+            "total_cover": 81747.734375,
+            "total_gain": 556.880859375,
+            "value": 0,
+            "weight": 55
+          },
+          {
+            "cover": 3221.016845703125,
+            "feature": "network_protocols_src__present_dhcp",
+            "gain": 3.8421709537506104,
+            "reference_median": 0,
+            "reference_missing_rows": 0,
+            "reference_p25": 0,
+            "reference_p75": 0,
+            "total_cover": 12884.0673828125,
+            "total_gain": 15.368683815002441,
+            "value": 0,
+            "weight": 4
+          },
+          {
+            "cover": 2644.778076171875,
+            "feature": "network_protocols_src__present_ssh",
+            "gain": 106.20845031738281,
+            "reference_median": 0,
+            "reference_missing_rows": 0,
+            "reference_p25": 0,
+            "reference_p75": 0,
+            "total_cover": 97856.7890625,
+            "total_gain": 3929.712646484375,
+            "value": 0,
+            "weight": 37
+          },
+          {
+            "cover": 1794.9725341796875,
+            "feature": "network_protocols_src__present_x509sat",
+            "gain": 29.00456428527832,
+            "reference_median": 0,
+            "reference_missing_rows": 0,
+            "reference_p25": 0,
+            "reference_p75": 0,
+            "total_cover": 82568.734375,
+            "total_gain": 1334.2099609375,
+            "value": 0,
+            "weight": 46
+          },
+          {
+            "cover": 3478.58544921875,
+            "feature": "network_protocols_src__present_icmpv6",
+            "gain": 3.382439374923706,
+            "reference_median": 0,
+            "reference_missing_rows": 0,
+            "reference_p25": 0,
+            "reference_p75": 0,
+            "total_cover": 170450.6875,
+            "total_gain": 165.73953247070312,
+            "value": 0,
+            "weight": 49
+          },
+          {
+            "cover": 3225.0146484375,
+            "feature": "network_protocols_src__present_xml",
+            "gain": 99.1970443725586,
+            "reference_median": 0,
+            "reference_missing_rows": 0,
+            "reference_p25": 0,
+            "reference_p75": 0,
+            "total_cover": 32250.146484375,
+            "total_gain": 991.970458984375,
+            "value": 0,
+            "weight": 10
+          },
+          {
+            "cover": 1745.030517578125,
+            "feature": "network_protocols_src__present_rtsp",
+            "gain": 82.58195495605469,
+            "reference_median": 0,
+            "reference_missing_rows": 0,
+            "reference_p25": 0,
+            "reference_p75": 0,
+            "total_cover": 127387.2265625,
+            "total_gain": 6028.48291015625,
+            "value": 0,
+            "weight": 73
+          },
+          {
+            "cover": 4622.98291015625,
+            "feature": "network_protocols_src__present_stun",
+            "gain": 10.228419303894043,
+            "reference_median": 0,
+            "reference_missing_rows": 0,
+            "reference_p25": 0,
+            "reference_p75": 0,
+            "total_cover": 32360.880859375,
+            "total_gain": 71.59893798828125,
+            "value": 0,
+            "weight": 7
+          },
+          {
+            "cover": 0,
+            "feature": "network_protocols_src__present_hipercontracer",
+            "gain": 0,
+            "reference_median": 0,
+            "reference_missing_rows": 0,
+            "reference_p25": 0,
+            "reference_p75": 0,
+            "total_cover": 0,
+            "total_gain": 0,
+            "value": 0,
+            "weight": 0
+          },
+          {
+            "cover": 0,
+            "feature": "network_protocols_src__present_udp",
+            "gain": 0,
+            "reference_median": 0,
+            "reference_missing_rows": 0,
+            "reference_p25": 0,
+            "reference_p75": 0,
+            "total_cover": 0,
+            "total_gain": 0,
+            "value": 0,
+            "weight": 0
+          },
+          {
+            "cover": 0,
+            "feature": "network_protocols_src__present_elasticsearch",
+            "gain": 0,
+            "reference_median": 0,
+            "reference_missing_rows": 0,
+            "reference_p25": 0,
+            "reference_p75": 0,
+            "total_cover": 0,
+            "total_gain": 0,
+            "value": 0,
+            "weight": 0
+          },
+          {
+            "cover": 0,
+            "feature": "network_protocols_src__present_ncp",
+            "gain": 0,
+            "reference_median": 0,
+            "reference_missing_rows": 0,
+            "reference_p25": 0,
+            "reference_p75": 0,
+            "total_cover": 0,
+            "total_gain": 0,
+            "value": 0,
+            "weight": 0
+          },
+          {
+            "cover": 0,
+            "feature": "network_protocols_src__present_UNSEEN",
+            "gain": 0,
+            "reference_median": 0,
+            "reference_missing_rows": 0,
+            "reference_p25": 0,
+            "reference_p75": 0,
+            "total_cover": 0,
+            "total_gain": 0,
+            "value": 0,
+            "weight": 0
+          },
+          {
+            "cover": 145.8585968017578,
+            "feature": "network_protocols_dst__present_tcp",
+            "gain": 49.82689666748047,
+            "reference_median": 1,
+            "reference_missing_rows": 0,
+            "reference_p25": 0,
+            "reference_p75": 1,
+            "total_cover": 20274.345703125,
+            "total_gain": 6925.9384765625,
+            "value": 1,
+            "weight": 139
+          },
+          {
+            "cover": 361.2467346191406,
+            "feature": "network_protocols_dst__present_arp",
+            "gain": 10.409153938293457,
+            "reference_median": 0,
+            "reference_missing_rows": 0,
+            "reference_p25": 0,
+            "reference_p75": 1,
+            "total_cover": 131493.8125,
+            "total_gain": 3788.931884765625,
+            "value": 1,
+            "weight": 364
+          },
+          {
+            "cover": 547.3162841796875,
+            "feature": "network_protocols_dst__present_mqtt",
+            "gain": 84.0440902709961,
+            "reference_median": 0,
+            "reference_missing_rows": 0,
+            "reference_p25": 0,
+            "reference_p75": 0,
+            "total_cover": 238082.59375,
+            "total_gain": 36559.1796875,
+            "value": 0,
+            "weight": 435
+          },
+          {
+            "cover": 2451.2294921875,
+            "feature": "network_protocols_dst__present_data",
+            "gain": 223.99391174316406,
+            "reference_median": 0,
+            "reference_missing_rows": 0,
+            "reference_p25": 0,
+            "reference_p75": 0,
+            "total_cover": 921662.25,
+            "total_gain": 84221.7109375,
+            "value": 1,
+            "weight": 376
+          },
+          {
+            "cover": 942.2310791015625,
+            "feature": "network_protocols_dst__present_json",
+            "gain": 60.94894027709961,
+            "reference_median": 0,
+            "reference_missing_rows": 0,
+            "reference_p25": 0,
+            "reference_p75": 0,
+            "total_cover": 142276.890625,
+            "total_gain": 9203.2900390625,
+            "value": 1,
+            "weight": 151
+          },
+          {
+            "cover": 367.7607421875,
+            "feature": "network_protocols_dst__present_tls",
+            "gain": 9.826679229736328,
+            "reference_median": 0,
+            "reference_missing_rows": 0,
+            "reference_p25": 0,
+            "reference_p75": 0,
+            "total_cover": 46705.61328125,
+            "total_gain": 1247.98828125,
+            "value": 1,
+            "weight": 127
+          },
+          {
+            "cover": 2922.510009765625,
+            "feature": "network_protocols_dst__present_icmp",
+            "gain": 1558.785888671875,
+            "reference_median": 0,
+            "reference_missing_rows": 0,
+            "reference_p25": 0,
+            "reference_p75": 0,
+            "total_cover": 511439.25,
+            "total_gain": 272787.53125,
+            "value": 1,
+            "weight": 175
+          },
+          {
+            "cover": 2508.9287109375,
+            "feature": "network_protocols_dst__present_telnet",
+            "gain": 413.1875,
+            "reference_median": 0,
+            "reference_missing_rows": 0,
+            "reference_p25": 0,
+            "reference_p75": 0,
+            "total_cover": 80285.71875,
+            "total_gain": 13222,
+            "value": 0,
+            "weight": 32
+          },
+          {
+            "cover": 1780.54541015625,
+            "feature": "network_protocols_dst__present_dns",
+            "gain": 30.012208938598633,
+            "reference_median": 0,
+            "reference_missing_rows": 0,
+            "reference_p25": 0,
+            "reference_p75": 0,
+            "total_cover": 101491.0859375,
+            "total_gain": 1710.6959228515625,
+            "value": 0,
+            "weight": 57
+          },
+          {
+            "cover": 1211.2513427734375,
+            "feature": "network_protocols_dst__present_ntp",
+            "gain": 9.0941801071167,
+            "reference_median": 0,
+            "reference_missing_rows": 0,
+            "reference_p25": 0,
+            "reference_p75": 0,
+            "total_cover": 69041.328125,
+            "total_gain": 518.3682861328125,
+            "value": 1,
+            "weight": 57
+          },
+          {
+            "cover": 2400.21923828125,
+            "feature": "network_protocols_dst__present_nbns",
+            "gain": 14.694070816040039,
+            "reference_median": 0,
+            "reference_missing_rows": 0,
+            "reference_p25": 0,
+            "reference_p75": 0,
+            "total_cover": 232821.265625,
+            "total_gain": 1425.3248291015625,
+            "value": 0,
+            "weight": 97
+          },
+          {
+            "cover": 1813.781982421875,
+            "feature": "network_protocols_dst__present_http",
+            "gain": 93.51951599121094,
+            "reference_median": 0,
+            "reference_missing_rows": 0,
+            "reference_p25": 0,
+            "reference_p75": 0,
+            "total_cover": 567713.75,
+            "total_gain": 29271.609375,
+            "value": 0,
+            "weight": 313
+          },
+          {
+            "cover": 90.24576568603516,
+            "feature": "network_protocols_dst__present_lbtrm",
+            "gain": 1.8742873668670654,
+            "reference_median": 0,
+            "reference_missing_rows": 0,
+            "reference_p25": 0,
+            "reference_p75": 0,
+            "total_cover": 360.9830627441406,
+            "total_gain": 7.497149467468262,
+            "value": 0,
+            "weight": 4
+          },
+          {
+            "cover": 164.9329833984375,
+            "feature": "network_protocols_dst__present_data-text-lines",
+            "gain": 5.822667598724365,
+            "reference_median": 0,
+            "reference_missing_rows": 0,
+            "reference_p25": 0,
+            "reference_p75": 0,
+            "total_cover": 2309.061767578125,
+            "total_gain": 81.51734924316406,
+            "value": 0,
+            "weight": 14
+          },
+          {
+            "cover": 5011.89453125,
+            "feature": "network_protocols_dst__present_udp",
+            "gain": 0.728898286819458,
+            "reference_median": 0,
+            "reference_missing_rows": 0,
+            "reference_p25": 0,
+            "reference_p75": 0,
+            "total_cover": 30071.3671875,
+            "total_gain": 4.373389720916748,
+            "value": 0,
+            "weight": 6
+          },
+          {
+            "cover": 2769.541259765625,
+            "feature": "network_protocols_dst__present_daytime",
+            "gain": 0.8952433466911316,
+            "reference_median": 0,
+            "reference_missing_rows": 0,
+            "reference_p25": 0,
+            "reference_p75": 0,
+            "total_cover": 16617.248046875,
+            "total_gain": 5.3714599609375,
+            "value": 0,
+            "weight": 6
+          },
+          {
+            "cover": 1832.622802734375,
+            "feature": "network_protocols_dst__present_ssh",
+            "gain": 62.086483001708984,
+            "reference_median": 0,
+            "reference_missing_rows": 0,
+            "reference_p25": 0,
+            "reference_p75": 0,
+            "total_cover": 71472.2890625,
+            "total_gain": 2421.372802734375,
+            "value": 0,
+            "weight": 39
+          },
+          {
+            "cover": 125.20335388183594,
+            "feature": "network_protocols_dst__present_time",
+            "gain": 2.7144408226013184,
+            "reference_median": 0,
+            "reference_missing_rows": 0,
+            "reference_p25": 0,
+            "reference_p75": 0,
+            "total_cover": 250.40670776367188,
+            "total_gain": 5.428881645202637,
+            "value": 0,
+            "weight": 2
+          },
+          {
+            "cover": 0,
+            "feature": "network_protocols_dst__present_discard",
+            "gain": 0,
+            "reference_median": 0,
+            "reference_missing_rows": 0,
+            "reference_p25": 0,
+            "reference_p75": 0,
+            "total_cover": 0,
+            "total_gain": 0,
+            "value": 0,
+            "weight": 0
+          },
+          {
+            "cover": 0,
+            "feature": "network_protocols_dst__present_snmp",
+            "gain": 0,
+            "reference_median": 0,
+            "reference_missing_rows": 0,
+            "reference_p25": 0,
+            "reference_p75": 0,
+            "total_cover": 0,
+            "total_gain": 0,
+            "value": 0,
+            "weight": 0
+          },
+          {
+            "cover": 7456.97216796875,
+            "feature": "network_protocols_dst__present_chargen",
+            "gain": 114.0458984375,
+            "reference_median": 0,
+            "reference_missing_rows": 0,
+            "reference_p25": 0,
+            "reference_p75": 0,
+            "total_cover": 7456.97216796875,
+            "total_gain": 114.0458984375,
+            "value": 0,
+            "weight": 1
+          },
+          {
+            "cover": 7.075137138366699,
+            "feature": "network_protocols_dst__present_ncp",
+            "gain": 1.467617154121399,
+            "reference_median": 0,
+            "reference_missing_rows": 0,
+            "reference_p25": 0,
+            "reference_p75": 0,
+            "total_cover": 7.075137138366699,
+            "total_gain": 1.467617154121399,
+            "value": 0,
+            "weight": 1
+          },
+          {
+            "cover": 1448.6864013671875,
+            "feature": "network_protocols_dst__present_c1222",
+            "gain": 9.9622802734375,
+            "reference_median": 0,
+            "reference_missing_rows": 0,
+            "reference_p25": 0,
+            "reference_p75": 0,
+            "total_cover": 1448.6864013671875,
+            "total_gain": 9.9622802734375,
+            "value": 0,
+            "weight": 1
+          },
+          {
+            "cover": 0,
+            "feature": "network_protocols_dst__present_ftp",
+            "gain": 0,
+            "reference_median": 0,
+            "reference_missing_rows": 0,
+            "reference_p25": 0,
+            "reference_p75": 0,
+            "total_cover": 0,
+            "total_gain": 0,
+            "value": 0,
+            "weight": 0
+          },
+          {
+            "cover": 312.7943115234375,
+            "feature": "network_protocols_dst__present_rpc",
+            "gain": 20.864152908325195,
+            "reference_median": 0,
+            "reference_missing_rows": 0,
+            "reference_p25": 0,
+            "reference_p75": 0,
+            "total_cover": 938.3829345703125,
+            "total_gain": 62.59246063232422,
+            "value": 0,
+            "weight": 3
+          },
+          {
+            "cover": 0,
+            "feature": "network_protocols_dst__present_gopher",
+            "gain": 0,
+            "reference_median": 0,
+            "reference_missing_rows": 0,
+            "reference_p25": 0,
+            "reference_p75": 0,
+            "total_cover": 0,
+            "total_gain": 0,
+            "value": 0,
+            "weight": 0
+          },
+          {
+            "cover": 0,
+            "feature": "network_protocols_dst__present_nbss",
+            "gain": 0,
+            "reference_median": 0,
+            "reference_missing_rows": 0,
+            "reference_p25": 0,
+            "reference_p75": 0,
+            "total_cover": 0,
+            "total_gain": 0,
+            "value": 0,
+            "weight": 0
+          },
+          {
+            "cover": 5641.06103515625,
+            "feature": "network_protocols_dst__present_echo",
+            "gain": 24.80419921875,
+            "reference_median": 0,
+            "reference_missing_rows": 0,
+            "reference_p25": 0,
+            "reference_p75": 0,
+            "total_cover": 16923.18359375,
+            "total_gain": 74.41259765625,
+            "value": 0,
+            "weight": 3
+          },
+          {
+            "cover": 184.67918395996094,
+            "feature": "network_protocols_dst__present_ssdp",
+            "gain": 4.852227210998535,
+            "reference_median": 0,
+            "reference_missing_rows": 0,
+            "reference_p25": 0,
+            "reference_p75": 0,
+            "total_cover": 369.3583679199219,
+            "total_gain": 9.70445442199707,
+            "value": 0,
+            "weight": 2
+          },
+          {
+            "cover": 2288.736572265625,
+            "feature": "network_protocols_dst__present_rtsp",
+            "gain": 44.33717727661133,
+            "reference_median": 0,
+            "reference_missing_rows": 0,
+            "reference_p25": 0,
+            "reference_p75": 0,
+            "total_cover": 169366.5,
+            "total_gain": 3280.951171875,
+            "value": 0,
+            "weight": 74
+          },
+          {
+            "cover": 3233.631591796875,
+            "feature": "network_protocols_dst__present_msnms",
+            "gain": 8.65522289276123,
+            "reference_median": 0,
+            "reference_missing_rows": 0,
+            "reference_p25": 0,
+            "reference_p75": 0,
+            "total_cover": 51738.10546875,
+            "total_gain": 138.4835662841797,
+            "value": 0,
+            "weight": 16
+          },
+          {
+            "cover": 139.49359130859375,
+            "feature": "network_protocols_dst__present_hcrt",
+            "gain": 1.9609572887420654,
+            "reference_median": 0,
+            "reference_missing_rows": 0,
+            "reference_p25": 0,
+            "reference_p75": 0,
+            "total_cover": 1115.94873046875,
+            "total_gain": 15.687658309936523,
+            "value": 0,
+            "weight": 8
+          },
+          {
+            "cover": 1981.07373046875,
+            "feature": "network_protocols_dst__present_UNSEEN",
+            "gain": 77.40188598632812,
+            "reference_median": 0,
+            "reference_missing_rows": 0,
+            "reference_p25": 0,
+            "reference_p75": 0,
+            "total_cover": 231785.625,
+            "total_gain": 9056.0205078125,
+            "value": 0,
+            "weight": 117
+          }
+        ],
+        "method": "Native XGBoost gain, split count and cover",
+        "model_parameters": {
+          "boosting_rounds": 76,
+          "classes": 84,
+          "device": "cpu",
+          "features": 170,
+          "objective": "multi:softprob"
+        },
+        "scope": "Global tree statistics; not local SHAP or causal effects"
+      }
+    },
+    "local_language_model": {
+      "context_tokens": 2048,
+      "cpu_threads": 2,
+      "device": "cpu",
+      "elapsed_seconds": 2.53,
+      "evidence": {
+        "lime": {
+          "class_label": "benign",
+          "conditions": [
+            {
+              "condition": "network_packet-size_min <= 54.00",
+              "weight": 0.5145978485015232
+            },
+            {
+              "condition": "network_protocols_all__present_gopher=0",
+              "weight": -0.18450860205681302
+            }
+          ],
+          "local_fidelity_r2": 0.6909376960305167,
+          "scope": "Approximate explanation from synthetic perturbations, not captured traffic",
+          "surrogate_prediction": 0.9360171622604763
+        },
+        "limitations": "Scores are uncalibrated. A prediction is not proof of an attack or safety. Unknown attacks and labelled live accuracy have not been evaluated.",
+        "prediction": {
+          "is_attack": false,
+          "label": "Normal network activity",
+          "score": 0.9924
+        },
+        "rules": null,
+        "source": {
+          "kind": "DataSense validation observation",
+          "source_row": 285252,
+          "validation_display_label": "Normal network activity",
+          "validation_label": "benign"
+        },
+        "xai": {
+          "bias": 4.5836,
+          "class_label": "benign",
+          "features": [
+            {
+              "feature": "network_packet-size_min",
+              "shap_value": 2.447495222091675,
+              "value": 50
+            },
+            {
+              "feature": "network_ports_all_count",
+              "shap_value": -0.9198401570320129,
+              "value": 143
+            }
+          ],
+          "margin": 6.9105,
+          "method": "Exact TreeSHAP (native XGBoost)"
+        }
+      },
+      "finish_reason": "stop",
+      "generation_facts": [
+        "For DataSense validation observation, the detector predicted Normal network activity.",
+        "The packet size min feature supported this prediction according to SHAP.",
+        "The ports all count feature opposed this prediction according to SHAP.",
+        "This model prediction needs human verification and does not confirm an attack or guarantee safety."
+      ],
+      "limitations": "Generated interpretation may contain errors. Verify it against the measured evidence; it is not a detector or incident confirmation.",
+      "llm_executed": true,
+      "mode": "Actual local LLM inference",
+      "model": "Qwen2.5-0.5B-Instruct · Q4_K_M",
+      "offline": true,
+      "release_after_generation": true,
+      "runtime": "llama.cpp",
+      "text": "The detector predicted a normal network activity. The packet size min feature supported this prediction according to SHAP. The ports all count feature opposed this prediction according to SHAP. This model prediction needs human verification and does not confirm an attack or guarantee safety.",
+      "usage": {
+        "completion_tokens": 50,
+        "prompt_tokens": 148,
+        "total_tokens": 198
+      }
+    },
+    "note": "These explanations belong to the selected evidence source; it may differ from a newer live observation."
+  }
+}
