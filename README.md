@@ -66,4 +66,3 @@ It runs **DemoDetector**, prototype distance-based novelty, simplified feature r
 Research and provenance: [persistent project context](docs/PROJECT_CONTEXT.md), [HEM integration](docs/HEM_INTEGRATION.md), [partial-input contract](docs/PARTIAL_INPUTS.md), [partial GPU study](docs/PARTIAL_TRAINING.md), [enhancement experiments](docs/PARTIAL_ENHANCEMENTS.md), [full-data study](docs/FULL_DATA_TRAINING.md), [GPU workflow](docs/GPU_TRAINING.md), [training verification](docs/TRAINING_VERIFICATION.md), [cleanup and recovery](docs/CLEANUP.md).
 
 Large data, model weights, environments and experiment records remain local and separate from upstream repositories under `external/`. The app observes passively and recommends human checks; it does not transmit attacks or apply network mitigations.
-

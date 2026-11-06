@@ -1,0 +1,5106 @@
+{
+ "contract": "live77_extraction",
+ "version": 2,
+ "frozen": "2026-11-03",
+ "purpose": "Frozen extraction contract for the live 77-class XGBoost model: the 252 inputs in schema order, their definitions, NaN rules and the owner decisions. Steps 2-6 (Python reference, export, Rust loader, extractor, window) implement it. Parity with this contract is not parity with the publisher.",
+ "generated_by": "experiment/build_live77_contract.py",
+ "model_id": "live77_xgboost",
+ "label": "Live XGBoost (77-class, 10 s windows)",
+ "provenance_note": "Trained on DataSense windows of 1-10 s; scored here on 10 s windows; not yet validated on real traffic on this PC. Validation results are from the dataset, the held-out test was not used.",
+ "provenance_review": {
+  "status": "accepted",
+  "ship_allowed": true,
+  "issues": [],
+  "rule": "label and provenance_note are copied verbatim from the decisions file"
+ },
+ "publisher_equivalence_verified": false,
+ "live_validation": false,
+ "held_out_test_used": false,
+ "model": {
+  "checkpoint": "artifacts/training/live77_20261031_v1/jobs/77_live_final/attempt_0/model/model.ubj",
+  "checkpoint_sha256": "2ebc7f2da863d79d65b03ed785752b6b48d1bd273f0f446fc9235d059ac272e3",
+  "schema": "artifacts/training/live77_20261031_v1/jobs/77_live_final/attempt_0/model/model_schema.json",
+  "schema_sha256": "3b7bf01504d39f851c3b9d5f907fd539b7bc0093579600c544d9c37afca4b67e",
+  "n_features": 252,
+  "n_classes": 77,
+  "benign_index": 0
+ },
+ "sources": {
+  "artifacts/training/live77_20261031_v1/selection.json": "4e814608dfadfb5ebfbf8604d3539d21063a11f0e2438d827feefe21728dbebe",
+  "artifacts/training/live77_20261031_v1/window.json": "53968625d61625a2b15e8b143d6afd0cc10a64990b0897d30e342f057e3d3e75",
+  "artifacts/app_v0_6_20261102/live77_decisions.json": "2875dd1eaf85ce3070c7bd4cba5f08d945ccfc9fdb08cdd5f28daf091d47dbfa",
+  "artifacts/app_v0_6_20261102/live77_integration_plan.json": "4df3f555c3a67d08ea2437c33ecef8ab897766631f1a5e1b3b0b90b13423997b",
+  "artifacts/app_v0_6_20261102/live77_convention_checks.json": "884e1fc06f2bc74deb30f952b244b9deaf74db70785b6015072f9c29ff7fdb85",
+  "experiment/check_live77_conventions.py": "80c50b3b62bf342a5723e1c4dc590701cc575e3bd333bd549c03de204b09897e",
+  "experiment/build_live77_contract.py": "0d8ebea1964712bee800826d91c64ae505834e24837e6e69867547cfab3c8e60",
+  "artifacts/training/upgrades2_live_20261101_v1/live_output_rules.json": {
+   "file_sha256": "1c0d63dc24ef5aa4092116f4df88583d2c5a363363327a6d22bcc1aa6813942f",
+   "value_sha256": "b29e6a19fb6e1dad478358ea92cedd850746467ef72d37b3454ca734de2c4e46",
+   "value_sha256_rule": "sha256(json.dumps(value, sort_keys=True)), the file's own 'sha256' field (arms._sha); the integration plan quotes this one"
+  }
+ },
+ "feature_names_sha256": "d8c7b629b08393ef79db5bb9ea42cae1cff155f3cc81b8a5c211e41fc3c67bfd",
+ "feature_names_sha256_rule": "sha256 of the names joined by '\\n' (same as selection.json)",
+ "feature_names": [
+  "network_fragmented-packets",
+  "network_header-length_avg",
+  "network_header-length_max",
+  "network_header-length_min",
+  "network_header-length_std_deviation",
+  "network_ip-flags_avg",
+  "network_ip-flags_max",
+  "network_ip-flags_min",
+  "network_ip-flags_std_deviation",
+  "network_ip-length_avg",
+  "network_ip-length_max",
+  "network_ip-length_min",
+  "network_ip-length_std_deviation",
+  "network_ips_all_count",
+  "network_ips_dst_count",
+  "network_ips_src_count",
+  "network_macs_all_count",
+  "network_macs_dst__observed_distinct_count",
+  "network_macs_src_count",
+  "network_mss_avg",
+  "network_mss_max",
+  "network_mss_min",
+  "network_mss_std_deviation",
+  "network_packets_all_count",
+  "network_packets_dst_count",
+  "network_packets_src_count",
+  "network_tcp-flags-ack_count",
+  "network_tcp-flags-fin_count",
+  "network_tcp-flags-psh_count",
+  "network_tcp-flags-rst_count",
+  "network_tcp-flags-syn_count",
+  "network_tcp-flags-urg_count",
+  "network_tcp-flags_avg",
+  "network_tcp-flags_max",
+  "network_tcp-flags_min",
+  "network_tcp-flags_std_deviation",
+  "network_ttl_avg",
+  "network_ttl_max",
+  "network_ttl_min",
+  "network_ttl_std_deviation",
+  "network_window-size_avg",
+  "network_window-size_max",
+  "network_window-size_min",
+  "network_window-size_std_deviation",
+  "network_ports_src__present_1883",
+  "network_ports_src__present_49153",
+  "network_ports_src__present_9200",
+  "network_ports_src__present_49154",
+  "network_ports_src__present_23",
+  "network_ports_src__present_80",
+  "network_ports_src__present_53",
+  "network_ports_src__present_3659",
+  "network_ports_src__present_3689",
+  "network_ports_src__present_12345",
+  "network_ports_src__present_3737",
+  "network_ports_src__present_3690",
+  "network_ports_src__present_3784",
+  "network_ports_src__present_3703",
+  "network_ports_src__present_3766",
+  "network_ports_src__present_22",
+  "network_ports_src__present_1",
+  "network_ports_src__present_4",
+  "network_ports_src__present_6",
+  "network_ports_src__present_3",
+  "network_ports_src__present_9",
+  "network_ports_src__present_7",
+  "network_ports_src__present_2323",
+  "network_ports_src__present_25",
+  "network_ports_src__present_21",
+  "network_ports_src__present_3800",
+  "network_ports_src__present_3801",
+  "network_ports_src__present_33",
+  "network_ports_src__present_13",
+  "network_ports_src__present_49",
+  "network_ports_src__present_17",
+  "network_ports_src__present_3809",
+  "network_ports_src__present_UNSEEN",
+  "network_ports_dst__present_1883",
+  "network_ports_dst__present_6667",
+  "network_ports_dst__present_9200",
+  "network_ports_dst__present_80",
+  "network_ports_dst__present_23",
+  "network_ports_dst__present_53",
+  "network_ports_dst__present_2323",
+  "network_ports_dst__present_1900",
+  "network_ports_dst__present_443",
+  "network_ports_dst__present_58645",
+  "network_ports_dst__present_59453",
+  "network_ports_dst__present_57688",
+  "network_ports_dst__present_52392",
+  "network_ports_dst__present_63207",
+  "network_ports_dst__present_63796",
+  "network_ports_dst__present_52279",
+  "network_ports_dst__present_64724",
+  "network_ports_dst__present_52822",
+  "network_ports_dst__present_22",
+  "network_ports_dst__present_62577",
+  "network_ports_dst__present_12345",
+  "network_ports_dst__present_52789",
+  "network_ports_dst__present_3659",
+  "network_ports_dst__present_3689",
+  "network_ports_dst__present_3784",
+  "network_ports_dst__present_3737",
+  "network_ports_dst__present_3690",
+  "network_ports_dst__present_1",
+  "network_ports_dst__present_3766",
+  "network_ports_dst__present_3703",
+  "network_ports_dst__present_4",
+  "network_ports_dst__present_21",
+  "network_ports_dst__present_UNSEEN",
+  "window_duration_seconds",
+  "network_packets_all_count__per_second",
+  "network_packets_src_count__per_second",
+  "network_packets_dst_count__per_second",
+  "quality_no_packets_observed",
+  "network_tcp-flags-ack__fraction_of_packets",
+  "network_tcp-flags-fin__fraction_of_packets",
+  "network_tcp-flags-psh__fraction_of_packets",
+  "network_tcp-flags-rst__fraction_of_packets",
+  "network_tcp-flags-syn__fraction_of_packets",
+  "network_tcp-flags-urg__fraction_of_packets",
+  "network_src_packet_fraction",
+  "network_dst_packet_fraction",
+  "network_packets_per_reported_ip",
+  "network_ports_src__present_51977",
+  "network_ports_src__present_3634",
+  "network_ports_src__present_3635",
+  "network_ports_src__present_3636",
+  "network_ports_src__present_3633",
+  "network_ports_src__present_3640",
+  "network_ports_src__present_3657",
+  "network_ports_src__present_3653",
+  "network_ports_src__present_3678",
+  "network_ports_src__present_3647",
+  "network_ports_src__present_3631",
+  "network_ports_src__present_3651",
+  "network_ports_src__present_3667",
+  "network_ports_src__present_3674",
+  "network_ports_src__present_3696",
+  "network_ports_src__present_3646",
+  "network_ports_src__present_3649",
+  "network_ports_src__present_3668",
+  "network_ports_src__present_3681",
+  "network_ports_src__present_3693",
+  "network_ports_src__present_3641",
+  "network_ports_src__present_3658",
+  "network_ports_src__present_3698",
+  "network_ports_src__present_3662",
+  "network_ports_src__present_3632",
+  "network_ports_src__present_3654",
+  "network_ports_src__present_3697",
+  "network_ports_src__present_3645",
+  "network_ports_src__present_3679",
+  "network_ports_src__present_3673",
+  "network_ports_src__present_3665",
+  "network_ports_src__present_3630",
+  "network_ports_src__present_3643",
+  "network_ports_src__present_3670",
+  "network_ports_src__present_3694",
+  "network_ports_src__present_3687",
+  "network_ports_src__present_3663",
+  "network_ports_src__present_3638",
+  "network_ports_src__present_3644",
+  "network_ports_src__present_3637",
+  "network_ports_src__present_3642",
+  "network_ports_src__present_3655",
+  "network_ports_src__present_3666",
+  "network_ports_src__present_3682",
+  "network_ports_src__present_3664",
+  "network_ports_src__present_3650",
+  "network_ports_src__present_3680",
+  "network_ports_src__present_3683",
+  "network_ports_src__present_3686",
+  "network_ports_src__present_3669",
+  "network_ports_src__present_3688",
+  "network_ports_src__present_3639",
+  "network_ports_src__present_3675",
+  "network_ports_src__present_3692",
+  "network_ports_src__present_3676",
+  "network_ports_src__present_3652",
+  "network_ports_src__present_3691",
+  "network_ports_src__present_3656",
+  "network_ports_src__present_3699",
+  "network_ports_src__present_3661",
+  "network_ports_src__present_3695",
+  "network_ports_src__present_3660",
+  "network_ports_src__present_12449",
+  "network_ports_src__present_3671",
+  "network_ports_dst__present_554",
+  "network_ports_dst__present_4280",
+  "network_ports_dst__present_49548",
+  "network_ports_dst__present_25",
+  "network_ports_dst__present_42062",
+  "network_ports_dst__present_53193",
+  "network_ports_dst__present_47003",
+  "network_ports_dst__present_56151",
+  "network_ports_dst__present_52053",
+  "network_ports_dst__present_33",
+  "network_ports_dst__present_64017",
+  "network_ports_dst__present_49",
+  "network_ports_dst__present_55446",
+  "network_ports_dst__present_62728",
+  "network_ports_dst__present_6",
+  "network_ports_dst__present_3",
+  "network_ports_dst__present_7",
+  "network_ports_dst__present_53256",
+  "network_ports_dst__present_54008",
+  "network_ports_dst__present_88",
+  "network_ports_dst__present_13",
+  "network_ports_dst__present_6668",
+  "network_ports_dst__present_63247",
+  "network_ports_dst__present_9",
+  "network_ports_dst__present_995",
+  "network_ports_dst__present_143",
+  "network_ports_dst__present_43000",
+  "network_ports_dst__present_37",
+  "network_ports_dst__present_587",
+  "network_ports_dst__present_30",
+  "network_ports_dst__present_17",
+  "network_ports_dst__present_199",
+  "network_ports_dst__present_81",
+  "network_ports_dst__present_7019",
+  "network_ports_dst__present_135",
+  "network_ports_dst__present_43",
+  "network_ports_dst__present_26",
+  "network_ports_dst__present_113",
+  "network_ports_dst__present_3801",
+  "network_ports_dst__present_111",
+  "network_ports_dst__present_139",
+  "network_ports_dst__present_8888",
+  "network_ports_dst__present_993",
+  "network_ports_dst__present_667",
+  "network_ports_dst__present_1723",
+  "network_ports_dst__present_8200",
+  "network_ports_dst__present_1025",
+  "network_ports_dst__present_3389",
+  "network_ports_dst__present_3306",
+  "network_ports_dst__present_445",
+  "network_ports_dst__present_110",
+  "network_ports_dst__present_27353",
+  "network_ports_dst__present_50240",
+  "network_ports_dst__present_32",
+  "network_ports_dst__present_19",
+  "network_ports_dst__present_82",
+  "network_ports_dst__present_8300",
+  "network_ports_dst__present_1720",
+  "network_ports_dst__present_15742",
+  "network_ports_dst__present_3800",
+  "network_ports_dst__present_7496",
+  "network_ports_dst__present_24",
+  "network_ports_dst__present_5900",
+  "network_ports_dst__present_256"
+ ],
+ "group_counts": {
+  "core": 58,
+  "port_presence": 194
+ },
+ "window": {
+  "kind": "tumbling",
+  "length_seconds": 10,
+  "nominal_duration_seconds": 10.0,
+  "display": "show each 10 s verdict as it completes",
+  "gate": {
+   "nominal_seconds": 10.0,
+   "tolerance_seconds": 1.0,
+   "rule": "a window is scored only when its measured duration is within 10 +/- 1 s (the existing Window::counts gate, packet.rs:470); plan step 6 keeps it"
+  },
+  "decision": "owner, 3 Nov 2026 (changed from 1 s): use 10 s windows, which match the app's existing capture window and are a length the dataset contains and the model was trained on",
+  "supersedes": "integration plan text for a 1 s window (window_seconds 1, nominal 1.0, 1 s period, 1.0 s gate)",
+  "training_lengths": {
+   "fit77_rows_by_length_seconds": {
+    "1": 103836,
+    "2": 59067,
+    "3": 43321,
+    "4": 34646,
+    "5": 29106,
+    "6": 24815,
+    "7": 21195,
+    "8": 25850,
+    "9": 21690,
+    "10": 20688
+   },
+   "source": "artifacts/app_v0_6_20261102/live77_convention_checks.json"
+  },
+  "validation_by_length": {
+   "1": {
+    "rows": 3844,
+    "accuracy": 0.9555150884495317,
+    "macro_f1_common": 0.9091977859053131
+   },
+   "10": {
+    "rows": 703,
+    "accuracy": 0.9601706970128022,
+    "macro_f1_common": 0.8840498472019178
+   }
+  },
+  "note": "10 s rows are 20,688 of 384,214 fit rows. validation_by_length is copied from window.json: the final model on the validation tuning role (used for tuning, so optimistic), restricted to the 40 classes present at every length, before the class merge; the held-out test was not used."
+ },
+ "admission": {
+  "device_match": "ethernet_mac",
+  "frames": "all_frames_for_device_mac",
+  "ipv6": "excluded",
+  "capture_filter": "ether host <device MAC> (IPv6 removed in software); snaplen 192; no payload saved"
+ },
+ "zero_packet_window": {
+  "score": true,
+  "quality_no_packets_observed": 1
+ },
+ "damaged_window": {
+  "rule": "keep the current rule: features that cannot be measured reliably (capture drops, unreadable headers) are blank (missing)",
+  "capture_drop": "all_missing_not_scored",
+  "family_damage": {
+   "ipv4_header": "an unreadable or truncated IPv4 header, or an incomplete link layer, makes the IPv4 statistics and fragmented-packets missing",
+   "ipv4_or_arp_header": "as ipv4_header, or an unreadable ARP body, makes the ips counts missing",
+   "tcp_header": "a truncated TCP header makes the tcp-flags/window-size statistics and flag counts missing",
+   "tcp_options": "a truncated TCP header or malformed TCP options makes the mss statistics missing",
+   "ports": "a TCP/UDP header whose ports cannot be read makes absent port presence missing"
+  },
+  "not_damage": "non-initial IPv4 fragments, non-IP frames, IPv6 frames (excluded) and options-free TCP",
+  "status": {
+   "rule": "owner_decision",
+   "capture_drop": "owner_decision",
+   "family_damage": "implementer_default_pending_owner"
+  },
+  "status_note": "capture drop: the current rule nulls every feature and skips the window (features.rs:567-587, packet.rs:478). family_damage maps the current per-family voiding onto the 252 inputs; the owner has not reviewed that mapping."
+ },
+ "shap_after_merge": "when the merged decision is recon_scan, show exact TreeSHAP for BOTH recon_scan and recon_ping-sweep side by side, with a note that ping-sweep probability was merged into recon scan; otherwise explain the decided class",
+ "pending_owner_signoff": {
+  "conventions": [
+   "arp_ip_direction",
+   "broadcast_not_admitted",
+   "device_mac_packet_direction",
+   "fragments_keep_stats",
+   "header_direction"
+  ],
+  "other": [
+   "damaged_window.family_damage"
+  ],
+  "blocks": "plan step 5 (extractor) is not frozen until the owner signs these off"
+ },
+ "port_vocabulary": {
+  "src": [
+   1883,
+   49153,
+   9200,
+   49154,
+   23,
+   80,
+   53,
+   3659,
+   3689,
+   12345,
+   3737,
+   3690,
+   3784,
+   3703,
+   3766,
+   22,
+   1,
+   4,
+   6,
+   3,
+   9,
+   7,
+   2323,
+   25,
+   21,
+   3800,
+   3801,
+   33,
+   13,
+   49,
+   17,
+   3809,
+   51977,
+   3634,
+   3635,
+   3636,
+   3633,
+   3640,
+   3657,
+   3653,
+   3678,
+   3647,
+   3631,
+   3651,
+   3667,
+   3674,
+   3696,
+   3646,
+   3649,
+   3668,
+   3681,
+   3693,
+   3641,
+   3658,
+   3698,
+   3662,
+   3632,
+   3654,
+   3697,
+   3645,
+   3679,
+   3673,
+   3665,
+   3630,
+   3643,
+   3670,
+   3694,
+   3687,
+   3663,
+   3638,
+   3644,
+   3637,
+   3642,
+   3655,
+   3666,
+   3682,
+   3664,
+   3650,
+   3680,
+   3683,
+   3686,
+   3669,
+   3688,
+   3639,
+   3675,
+   3692,
+   3676,
+   3652,
+   3691,
+   3656,
+   3699,
+   3661,
+   3695,
+   3660,
+   12449,
+   3671
+  ],
+  "dst": [
+   1883,
+   6667,
+   9200,
+   80,
+   23,
+   53,
+   2323,
+   1900,
+   443,
+   58645,
+   59453,
+   57688,
+   52392,
+   63207,
+   63796,
+   52279,
+   64724,
+   52822,
+   22,
+   62577,
+   12345,
+   52789,
+   3659,
+   3689,
+   3784,
+   3737,
+   3690,
+   1,
+   3766,
+   3703,
+   4,
+   21,
+   554,
+   4280,
+   49548,
+   25,
+   42062,
+   53193,
+   47003,
+   56151,
+   52053,
+   33,
+   64017,
+   49,
+   55446,
+   62728,
+   6,
+   3,
+   7,
+   53256,
+   54008,
+   88,
+   13,
+   6668,
+   63247,
+   9,
+   995,
+   143,
+   43000,
+   37,
+   587,
+   30,
+   17,
+   199,
+   81,
+   7019,
+   135,
+   43,
+   26,
+   113,
+   3801,
+   111,
+   139,
+   8888,
+   993,
+   667,
+   1723,
+   8200,
+   1025,
+   3389,
+   3306,
+   445,
+   110,
+   27353,
+   50240,
+   32,
+   19,
+   82,
+   8300,
+   1720,
+   15742,
+   3800,
+   7496,
+   24,
+   5900,
+   256
+  ]
+ },
+ "definitions": {
+  "count.frames": "number of admitted frames (all) / sent by the device MAC (src) / the rest (dst)",
+  "count.ipv4_mf": "admitted IPv4 packets with (frag field & 0x2000) != 0",
+  "count.tcp_flag": "admitted TCP segments (IPv4, readable TCP header) with (flags & mask) != 0",
+  "distinct.ipv4_with_arp": "distinct IPv4 addresses from IPv4 headers plus ARP sender/target protocol addresses",
+  "distinct.mac": "distinct Ethernet MAC addresses of admitted frames",
+  "stat.ipv4.ihl_bytes": "IPv4 IHL * 4 in bytes (dataset values 0/20/24)",
+  "stat.ipv4.flags3": "IPv4 flags, frag field >> 13 (dataset values 0..2)",
+  "stat.ipv4.total_length": "IPv4 total length field",
+  "stat.ipv4.ttl": "IPv4 TTL",
+  "stat.tcp.flags12": "12-bit TCP flags ((tcp[12] & 0x0f) << 8) | tcp[13]",
+  "stat.tcp.window_raw": "TCP window field, unscaled",
+  "stat.tcp.mss_option": "MSS option value (kind 2, length 4) of TCP segments that carry it",
+  "window.nominal_seconds": "nominal window length (10 s)",
+  "rate.per_nominal_second": "count / nominal window length (count / 10)",
+  "ratio.of_packets_all": "numerator / packets_all",
+  "ratio.packets_per_ip": "packets_all / ips_all",
+  "quality.no_packets": "1 when packets_all == 0, else 0",
+  "presence.port": "TCP/UDP header port of that direction among the kept ports",
+  "presence.port_unseen": "a kept port of that direction outside the 96-port vocabulary"
+ },
+ "nan_rules": {
+  "global_only": "never NaN except in a capture-drop window (all 252 missing, not scored)",
+  "family_count": "count (0 in a zero-packet window); NaN when its damage_family is damaged in the window",
+  "family_stat": "NaN when packets_all == 0; 0 when packets_all > 0 and the family has no values; NaN when its damage_family is damaged; otherwise the statistic",
+  "ratio": "NaN when the denominator is 0 or missing, or the numerator is missing",
+  "port_presence": "1 when kept; else NaN when that direction is capped (> 1000 distinct) or ports are damaged; else 0",
+  "port_unseen": "1 when a kept port is outside the vocabulary (always so in a capped direction); else NaN when ports are damaged; else 0"
+ },
+ "conventions": {
+  "empty_family_zero": {
+   "status": "dataset_verified",
+   "rule": "tcp-flags/window-size/mss and ttl/ip-length/header-length/ip-flags statistics are 0 (not NaN) when the window has packets but none of that family; NaN only when packets_all == 0",
+   "evidence_source": "artifacts/app_v0_6_20261102/live77_convention_checks.json",
+   "evidence": "30,000 validation-partition rows of csv_v3_cascade_20261030_v1 (held-out test not opened): with packets_all > 0 (29,965 rows) none of the 7 summary families is NaN; all-zero rows: header-length 3,026, ip-flags 10,141, ip-length 3,026, mss 22,039, tcp-flags 9,581, ttl 3,026, window-size 9,501."
+  },
+  "mss_bearing_only": {
+   "status": "dataset_verified_and_owner_decision",
+   "rule": "mss statistics use MSS-bearing TCP packets only; a packet without the option adds nothing; 0 when no packet carries the option and packets_all > 0 (empty_family_zero)",
+   "replaces": "mss_absent_zero ('a TCP packet without an MSS option contributes mss 0'), contradicted by the data",
+   "evidence_source": "artifacts/app_v0_6_20261102/live77_convention_checks.json",
+   "evidence": "the 384,214 fit77 training rows the final model was fit on: 0 of 84,493 rows with mss_max > 0 have mss_min == 0 (0 found), and 0 have syn == 0 with mss_max > 0. 30,000 validation-partition rows of csv_v3_cascade_20261030_v1 (held-out test not opened): 0 of 7,926; 1 row has syn == 0 with mss_max > 0 (an MSS option outside a SYN; the rule keys on the option, not on SYN).",
+   "decision": "MSS statistics over MSS-bearing packets only; 0 when none carry the option and packets > 0 (correct the EMULATION note mss_absent_zero)"
+  },
+  "fragment_mf_only": {
+   "status": "owner_decision",
+   "rule": "fragmented-packets counts packets with the IP MF bit set (not offset-only last fragments)",
+   "params": {
+    "ipv4_frag_mask": 8192
+   },
+   "decision": "more-fragments (MF) bit only",
+   "unknown": "publisher definition (MF-only vs MF-or-offset) cannot be settled from CSV rows"
+  },
+  "fragments_keep_stats": {
+   "status": "plan_default_pending_owner",
+   "rule": "non-initial fragments must not void TCP statistics or port presence for the window; a non-initial fragment adds its IPv4 header statistics and no transport values",
+   "source": "live77.EMULATION (2026-10-31 review) and integration plan steps 2 and 5; not in the decisions file"
+  },
+  "arp_ips": {
+   "status": "dataset_verified",
+   "rule": "ARP sender/target IPv4 addresses count in ips_* sets and packets_per_reported_ip",
+   "evidence_source": "artifacts/app_v0_6_20261102/live77_convention_checks.json",
+   "evidence": "30,000 validation-partition rows of csv_v3_cascade_20261030_v1 (held-out test not opened): all 2,347 of 2,347 windows whose only protocol is ARP report IPv4 addresses (ips_all_count > 0), so ARP addresses are counted."
+  },
+  "arp_ip_direction": {
+   "status": "implementer_default_pending_owner",
+   "rule": "the ARP sender protocol address counts as src and the target protocol address as dst; 0.0.0.0 (ARP probe sender) is counted literally",
+   "evidence_note": "30,000 validation-partition rows of csv_v3_cascade_20261030_v1 (held-out test not opened): in 317 ARP-only windows the device only sent, ips src/dst counts are 1/1 in 312, 1/2 in 5 windows, consistent with a directional sender/target mapping but not proof of which side is src; 0.0.0.0 appears in 0 ARP-only windows and in 17 windows overall",
+   "unknown": "publisher ARP direction and its handling of 0.0.0.0 probes"
+  },
+  "port_cap_1000": {
+   "status": "dataset_verified_and_owner_decision",
+   "rule": "per direction, the first 1000 distinct ports in arrival order are kept; once more than 1000 are seen, port presence is 1 for kept vocabulary ports and NaN otherwise (dataset lists are capped at 1000); later ports set nothing; listed_distinct is clamped at 1000 per direction; descriptors on capped lists stay approximate",
+   "params": {
+    "limit": 1000,
+    "order": "arrival"
+   },
+   "evidence_source": "artifacts/app_v0_6_20261102/live77_convention_checks.json",
+   "evidence": "30,000 validation-partition rows of csv_v3_cascade_20261030_v1 (held-out test not opened): presence is NaN exactly when the reported port count differs from the listed count (3,712 src / 2,447 dst rows), then 1 for listed vocabulary ports and NaN otherwise (0 + 0 mismatches); lists never exceed 1000 ports.",
+   "decision": "keep the first 1000 distinct ports per direction in arrival order; later ports do not set port features",
+   "unknown": "which 1000 ports the publisher exporter keeps"
+  },
+  "port_unseen": {
+   "status": "dataset_verified",
+   "rule": "UNSEEN is 1 when a kept port of that direction is outside the 96-port vocabulary of that direction (port_vocabulary below); a capped direction keeps 1000 ports, at most 96 of them in the vocabulary, so UNSEEN is 1 there",
+   "evidence_source": "artifacts/app_v0_6_20261102/live77_convention_checks.json",
+   "evidence": "30,000 validation-partition rows of csv_v3_cascade_20261030_v1 (held-out test not opened): UNSEEN recomputed from the raw lists against the 96-port vocabularies: 0 + 0 mismatches, 0 + 0 NaN; UNSEEN is 1 in all 3,712 src and 2,447 dst capped rows."
+  },
+  "tcp_flags_12bit": {
+   "status": "dataset_verified_and_owner_decision",
+   "rule": "tcp-flags statistics use the 12-bit field including the reserved bits ((tcp[12] & 0x0f) << 8 | tcp[13]); training rows reach 2242",
+   "params": {
+    "bits": 12,
+    "expression": "((tcp[12] & 0x0f) << 8) | tcp[13]"
+   },
+   "evidence_source": "artifacts/app_v0_6_20261102/live77_convention_checks.json",
+   "evidence": "the 384,214 fit77 training rows the final model was fit on: tcp-flags_max > 511 in 705 rows, max 2242. 30,000 validation-partition rows of csv_v3_cascade_20261030_v1 (held-out test not opened): max 152 (0 rows above 511).",
+   "decision": "12-bit field including the 3 reserved bits (data max 2242)",
+   "unknown": "semantics of the reserved bits in the publisher exporter"
+  },
+  "population_std": {
+   "status": "dataset_verified",
+   "rule": "std_deviation is the population standard deviation (ddof=0)",
+   "evidence_source": "artifacts/app_v0_6_20261102/live77_convention_checks.json",
+   "evidence": "30,000 validation-partition rows of csv_v3_cascade_20261030_v1 (held-out test not opened): in rows with 2 packets, distinct min/max and avg at the midpoint, std/(max-min) is exactly 0.5 (population), never 0.7071 (sample): ttl 1,185/1,185, ip-length 1,193/1,193, window-size 1,176/1,176, tcp-flags 1,158/1,158, ip-flags 1,122/1,122."
+  },
+  "header_direction": {
+   "status": "implementer_default_pending_owner",
+   "rule": "src/dst of ips, macs and ports are the header source/destination fields of each admitted frame, independent of the device's packet direction; all is the union of src and dst",
+   "evidence_note": "30,000 validation-partition rows of csv_v3_cascade_20261030_v1 (held-out test not opened): macs_src holds a MAC other than the device MAC in 26,741 rows, so the MAC sets are header fields of all admitted frames; ips and ports are assumed to follow the same rule"
+  },
+  "device_mac_admission": {
+   "status": "owner_decision",
+   "rule": "a frame is admitted when its Ethernet source or destination MAC equals the device MAC",
+   "decision": "device MAC address only (as the dataset)"
+  },
+  "device_mac_packet_direction": {
+   "status": "implementer_default_pending_owner",
+   "rule": "packets_src counts admitted frames whose source MAC is the device MAC, packets_dst the rest, so packets_all = packets_src + packets_dst",
+   "evidence_note": "30,000 validation-partition rows of csv_v3_cascade_20261030_v1 (held-out test not opened): packets_all == packets_src + packets_dst in 30,000 rows; which side is the device's own frames is inferred, not verified"
+  },
+  "broadcast_not_admitted": {
+   "status": "implementer_default_pending_owner",
+   "rule": "received broadcast/multicast frames that do not carry the device MAC are not admitted (literal reading of 'device MAC address only')",
+   "unknown": "whether the publisher also counted received broadcast/multicast frames"
+  },
+  "all_frames_counted": {
+   "status": "owner_decision",
+   "rule": "every admitted frame counts in packets and macs, including non-IP frames such as LLDP; the capture filter is widened to the device MAC accordingly; payloads are never saved",
+   "decision": "count all frames for that MAC, including non-IP frames such as LLDP; widen the capture filter accordingly"
+  },
+  "ipv6_excluded": {
+   "status": "owner_decision",
+   "rule": "IPv6 frames are left out of the model window entirely (no packets, macs, ports or statistics)",
+   "decision": "leave IPv6 frames out of the model window",
+   "evidence_note": "the training lists contain no IPv6 addresses (integration plan)"
+  },
+  "nominal_duration": {
+   "status": "dataset_verified_and_owner_decision",
+   "rule": "window_duration_seconds = 10; per_second = count / 10 (the nominal duration); the measured duration only gates the window (10 +/- 1 s)",
+   "evidence_source": "artifacts/app_v0_6_20261102/live77_convention_checks.json",
+   "evidence": "30,000 validation-partition rows of csv_v3_cascade_20261030_v1 (held-out test not opened): window_duration_seconds is always an integer in 1..10 (1,571 rows of length 10) and per_second == count / window_duration_seconds exactly in float32 (30,000 rows).",
+   "decision": "every 10 s tumbling window is scored; window_duration_seconds = 10 and per_second features = count / 10 (the nominal duration), as in the dataset rows of length 10"
+  },
+  "zero_packet_window_scored": {
+   "status": "dataset_verified_and_owner_decision",
+   "rule": "a window with no admitted frame is scored: counts 0, per_second 0, quality_no_packets_observed 1, statistics and ratios NaN, port presence and UNSEEN 0",
+   "evidence_source": "artifacts/app_v0_6_20261102/live77_convention_checks.json",
+   "evidence": "30,000 validation-partition rows of csv_v3_cascade_20261030_v1 (held-out test not opened): all 35 zero-packet rows follow exactly this pattern, and the quality flag is 0 in every other row.",
+   "decision": "owner, 4 Nov 2026 (changed): a window with no packets from the device is NOT scored. Show 'No traffic in this window' with no verdict and model_executed false (option A). Reason: an empty 10 s window scored as mitm_impersonation 0.559, a false alert every 10 s on an idle PC."
+  }
+ },
+ "features": [
+  {
+   "index": 0,
+   "name": "network_fragmented-packets",
+   "group": "core",
+   "definition": "count.ipv4_mf",
+   "params": {
+    "ipv4_frag_mask": 8192
+   },
+   "nan_rule": "family_count",
+   "damage_family": "ipv4_header",
+   "conventions": [
+    "fragment_mf_only"
+   ]
+  },
+  {
+   "index": 1,
+   "name": "network_header-length_avg",
+   "group": "core",
+   "definition": "stat.ipv4.ihl_bytes",
+   "params": {
+    "stat": "mean"
+   },
+   "nan_rule": "family_stat",
+   "damage_family": "ipv4_header",
+   "conventions": [
+    "empty_family_zero",
+    "population_std",
+    "fragments_keep_stats"
+   ]
+  },
+  {
+   "index": 2,
+   "name": "network_header-length_max",
+   "group": "core",
+   "definition": "stat.ipv4.ihl_bytes",
+   "params": {
+    "stat": "max"
+   },
+   "nan_rule": "family_stat",
+   "damage_family": "ipv4_header",
+   "conventions": [
+    "empty_family_zero",
+    "population_std",
+    "fragments_keep_stats"
+   ]
+  },
+  {
+   "index": 3,
+   "name": "network_header-length_min",
+   "group": "core",
+   "definition": "stat.ipv4.ihl_bytes",
+   "params": {
+    "stat": "min"
+   },
+   "nan_rule": "family_stat",
+   "damage_family": "ipv4_header",
+   "conventions": [
+    "empty_family_zero",
+    "population_std",
+    "fragments_keep_stats"
+   ]
+  },
+  {
+   "index": 4,
+   "name": "network_header-length_std_deviation",
+   "group": "core",
+   "definition": "stat.ipv4.ihl_bytes",
+   "params": {
+    "stat": "std_population"
+   },
+   "nan_rule": "family_stat",
+   "damage_family": "ipv4_header",
+   "conventions": [
+    "empty_family_zero",
+    "population_std",
+    "fragments_keep_stats"
+   ]
+  },
+  {
+   "index": 5,
+   "name": "network_ip-flags_avg",
+   "group": "core",
+   "definition": "stat.ipv4.flags3",
+   "params": {
+    "stat": "mean"
+   },
+   "nan_rule": "family_stat",
+   "damage_family": "ipv4_header",
+   "conventions": [
+    "empty_family_zero",
+    "population_std",
+    "fragments_keep_stats"
+   ]
+  },
+  {
+   "index": 6,
+   "name": "network_ip-flags_max",
+   "group": "core",
+   "definition": "stat.ipv4.flags3",
+   "params": {
+    "stat": "max"
+   },
+   "nan_rule": "family_stat",
+   "damage_family": "ipv4_header",
+   "conventions": [
+    "empty_family_zero",
+    "population_std",
+    "fragments_keep_stats"
+   ]
+  },
+  {
+   "index": 7,
+   "name": "network_ip-flags_min",
+   "group": "core",
+   "definition": "stat.ipv4.flags3",
+   "params": {
+    "stat": "min"
+   },
+   "nan_rule": "family_stat",
+   "damage_family": "ipv4_header",
+   "conventions": [
+    "empty_family_zero",
+    "population_std",
+    "fragments_keep_stats"
+   ]
+  },
+  {
+   "index": 8,
+   "name": "network_ip-flags_std_deviation",
+   "group": "core",
+   "definition": "stat.ipv4.flags3",
+   "params": {
+    "stat": "std_population"
+   },
+   "nan_rule": "family_stat",
+   "damage_family": "ipv4_header",
+   "conventions": [
+    "empty_family_zero",
+    "population_std",
+    "fragments_keep_stats"
+   ]
+  },
+  {
+   "index": 9,
+   "name": "network_ip-length_avg",
+   "group": "core",
+   "definition": "stat.ipv4.total_length",
+   "params": {
+    "stat": "mean"
+   },
+   "nan_rule": "family_stat",
+   "damage_family": "ipv4_header",
+   "conventions": [
+    "empty_family_zero",
+    "population_std",
+    "fragments_keep_stats"
+   ]
+  },
+  {
+   "index": 10,
+   "name": "network_ip-length_max",
+   "group": "core",
+   "definition": "stat.ipv4.total_length",
+   "params": {
+    "stat": "max"
+   },
+   "nan_rule": "family_stat",
+   "damage_family": "ipv4_header",
+   "conventions": [
+    "empty_family_zero",
+    "population_std",
+    "fragments_keep_stats"
+   ]
+  },
+  {
+   "index": 11,
+   "name": "network_ip-length_min",
+   "group": "core",
+   "definition": "stat.ipv4.total_length",
+   "params": {
+    "stat": "min"
+   },
+   "nan_rule": "family_stat",
+   "damage_family": "ipv4_header",
+   "conventions": [
+    "empty_family_zero",
+    "population_std",
+    "fragments_keep_stats"
+   ]
+  },
+  {
+   "index": 12,
+   "name": "network_ip-length_std_deviation",
+   "group": "core",
+   "definition": "stat.ipv4.total_length",
+   "params": {
+    "stat": "std_population"
+   },
+   "nan_rule": "family_stat",
+   "damage_family": "ipv4_header",
+   "conventions": [
+    "empty_family_zero",
+    "population_std",
+    "fragments_keep_stats"
+   ]
+  },
+  {
+   "index": 13,
+   "name": "network_ips_all_count",
+   "group": "core",
+   "definition": "distinct.ipv4_with_arp",
+   "params": {
+    "direction": "all"
+   },
+   "nan_rule": "family_count",
+   "damage_family": "ipv4_or_arp_header",
+   "conventions": [
+    "arp_ips",
+    "arp_ip_direction",
+    "ipv6_excluded",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 14,
+   "name": "network_ips_dst_count",
+   "group": "core",
+   "definition": "distinct.ipv4_with_arp",
+   "params": {
+    "direction": "dst"
+   },
+   "nan_rule": "family_count",
+   "damage_family": "ipv4_or_arp_header",
+   "conventions": [
+    "arp_ips",
+    "arp_ip_direction",
+    "ipv6_excluded",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 15,
+   "name": "network_ips_src_count",
+   "group": "core",
+   "definition": "distinct.ipv4_with_arp",
+   "params": {
+    "direction": "src"
+   },
+   "nan_rule": "family_count",
+   "damage_family": "ipv4_or_arp_header",
+   "conventions": [
+    "arp_ips",
+    "arp_ip_direction",
+    "ipv6_excluded",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 16,
+   "name": "network_macs_all_count",
+   "group": "core",
+   "definition": "distinct.mac",
+   "params": {
+    "direction": "all"
+   },
+   "nan_rule": "global_only",
+   "conventions": [
+    "device_mac_admission",
+    "broadcast_not_admitted",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 17,
+   "name": "network_macs_dst__observed_distinct_count",
+   "group": "core",
+   "definition": "distinct.mac",
+   "params": {
+    "direction": "dst"
+   },
+   "nan_rule": "global_only",
+   "conventions": [
+    "device_mac_admission",
+    "broadcast_not_admitted",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 18,
+   "name": "network_macs_src_count",
+   "group": "core",
+   "definition": "distinct.mac",
+   "params": {
+    "direction": "src"
+   },
+   "nan_rule": "global_only",
+   "conventions": [
+    "device_mac_admission",
+    "broadcast_not_admitted",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 19,
+   "name": "network_mss_avg",
+   "group": "core",
+   "definition": "stat.tcp.mss_option",
+   "params": {
+    "stat": "mean"
+   },
+   "nan_rule": "family_stat",
+   "damage_family": "tcp_options",
+   "conventions": [
+    "empty_family_zero",
+    "population_std",
+    "fragments_keep_stats",
+    "mss_bearing_only"
+   ]
+  },
+  {
+   "index": 20,
+   "name": "network_mss_max",
+   "group": "core",
+   "definition": "stat.tcp.mss_option",
+   "params": {
+    "stat": "max"
+   },
+   "nan_rule": "family_stat",
+   "damage_family": "tcp_options",
+   "conventions": [
+    "empty_family_zero",
+    "population_std",
+    "fragments_keep_stats",
+    "mss_bearing_only"
+   ]
+  },
+  {
+   "index": 21,
+   "name": "network_mss_min",
+   "group": "core",
+   "definition": "stat.tcp.mss_option",
+   "params": {
+    "stat": "min"
+   },
+   "nan_rule": "family_stat",
+   "damage_family": "tcp_options",
+   "conventions": [
+    "empty_family_zero",
+    "population_std",
+    "fragments_keep_stats",
+    "mss_bearing_only"
+   ]
+  },
+  {
+   "index": 22,
+   "name": "network_mss_std_deviation",
+   "group": "core",
+   "definition": "stat.tcp.mss_option",
+   "params": {
+    "stat": "std_population"
+   },
+   "nan_rule": "family_stat",
+   "damage_family": "tcp_options",
+   "conventions": [
+    "empty_family_zero",
+    "population_std",
+    "fragments_keep_stats",
+    "mss_bearing_only"
+   ]
+  },
+  {
+   "index": 23,
+   "name": "network_packets_all_count",
+   "group": "core",
+   "definition": "count.frames",
+   "params": {
+    "direction": "all"
+   },
+   "nan_rule": "global_only",
+   "conventions": [
+    "device_mac_admission",
+    "device_mac_packet_direction",
+    "broadcast_not_admitted",
+    "all_frames_counted",
+    "ipv6_excluded"
+   ]
+  },
+  {
+   "index": 24,
+   "name": "network_packets_dst_count",
+   "group": "core",
+   "definition": "count.frames",
+   "params": {
+    "direction": "dst"
+   },
+   "nan_rule": "global_only",
+   "conventions": [
+    "device_mac_admission",
+    "device_mac_packet_direction",
+    "broadcast_not_admitted",
+    "all_frames_counted",
+    "ipv6_excluded"
+   ]
+  },
+  {
+   "index": 25,
+   "name": "network_packets_src_count",
+   "group": "core",
+   "definition": "count.frames",
+   "params": {
+    "direction": "src"
+   },
+   "nan_rule": "global_only",
+   "conventions": [
+    "device_mac_admission",
+    "device_mac_packet_direction",
+    "broadcast_not_admitted",
+    "all_frames_counted",
+    "ipv6_excluded"
+   ]
+  },
+  {
+   "index": 26,
+   "name": "network_tcp-flags-ack_count",
+   "group": "core",
+   "definition": "count.tcp_flag",
+   "params": {
+    "flag": "ack",
+    "mask": 16
+   },
+   "nan_rule": "family_count",
+   "damage_family": "tcp_header",
+   "conventions": [
+    "fragments_keep_stats"
+   ]
+  },
+  {
+   "index": 27,
+   "name": "network_tcp-flags-fin_count",
+   "group": "core",
+   "definition": "count.tcp_flag",
+   "params": {
+    "flag": "fin",
+    "mask": 1
+   },
+   "nan_rule": "family_count",
+   "damage_family": "tcp_header",
+   "conventions": [
+    "fragments_keep_stats"
+   ]
+  },
+  {
+   "index": 28,
+   "name": "network_tcp-flags-psh_count",
+   "group": "core",
+   "definition": "count.tcp_flag",
+   "params": {
+    "flag": "psh",
+    "mask": 8
+   },
+   "nan_rule": "family_count",
+   "damage_family": "tcp_header",
+   "conventions": [
+    "fragments_keep_stats"
+   ]
+  },
+  {
+   "index": 29,
+   "name": "network_tcp-flags-rst_count",
+   "group": "core",
+   "definition": "count.tcp_flag",
+   "params": {
+    "flag": "rst",
+    "mask": 4
+   },
+   "nan_rule": "family_count",
+   "damage_family": "tcp_header",
+   "conventions": [
+    "fragments_keep_stats"
+   ]
+  },
+  {
+   "index": 30,
+   "name": "network_tcp-flags-syn_count",
+   "group": "core",
+   "definition": "count.tcp_flag",
+   "params": {
+    "flag": "syn",
+    "mask": 2
+   },
+   "nan_rule": "family_count",
+   "damage_family": "tcp_header",
+   "conventions": [
+    "fragments_keep_stats"
+   ]
+  },
+  {
+   "index": 31,
+   "name": "network_tcp-flags-urg_count",
+   "group": "core",
+   "definition": "count.tcp_flag",
+   "params": {
+    "flag": "urg",
+    "mask": 32
+   },
+   "nan_rule": "family_count",
+   "damage_family": "tcp_header",
+   "conventions": [
+    "fragments_keep_stats"
+   ]
+  },
+  {
+   "index": 32,
+   "name": "network_tcp-flags_avg",
+   "group": "core",
+   "definition": "stat.tcp.flags12",
+   "params": {
+    "stat": "mean",
+    "bits": 12
+   },
+   "nan_rule": "family_stat",
+   "damage_family": "tcp_header",
+   "conventions": [
+    "empty_family_zero",
+    "population_std",
+    "fragments_keep_stats",
+    "tcp_flags_12bit"
+   ]
+  },
+  {
+   "index": 33,
+   "name": "network_tcp-flags_max",
+   "group": "core",
+   "definition": "stat.tcp.flags12",
+   "params": {
+    "stat": "max",
+    "bits": 12
+   },
+   "nan_rule": "family_stat",
+   "damage_family": "tcp_header",
+   "conventions": [
+    "empty_family_zero",
+    "population_std",
+    "fragments_keep_stats",
+    "tcp_flags_12bit"
+   ]
+  },
+  {
+   "index": 34,
+   "name": "network_tcp-flags_min",
+   "group": "core",
+   "definition": "stat.tcp.flags12",
+   "params": {
+    "stat": "min",
+    "bits": 12
+   },
+   "nan_rule": "family_stat",
+   "damage_family": "tcp_header",
+   "conventions": [
+    "empty_family_zero",
+    "population_std",
+    "fragments_keep_stats",
+    "tcp_flags_12bit"
+   ]
+  },
+  {
+   "index": 35,
+   "name": "network_tcp-flags_std_deviation",
+   "group": "core",
+   "definition": "stat.tcp.flags12",
+   "params": {
+    "stat": "std_population",
+    "bits": 12
+   },
+   "nan_rule": "family_stat",
+   "damage_family": "tcp_header",
+   "conventions": [
+    "empty_family_zero",
+    "population_std",
+    "fragments_keep_stats",
+    "tcp_flags_12bit"
+   ]
+  },
+  {
+   "index": 36,
+   "name": "network_ttl_avg",
+   "group": "core",
+   "definition": "stat.ipv4.ttl",
+   "params": {
+    "stat": "mean"
+   },
+   "nan_rule": "family_stat",
+   "damage_family": "ipv4_header",
+   "conventions": [
+    "empty_family_zero",
+    "population_std",
+    "fragments_keep_stats"
+   ]
+  },
+  {
+   "index": 37,
+   "name": "network_ttl_max",
+   "group": "core",
+   "definition": "stat.ipv4.ttl",
+   "params": {
+    "stat": "max"
+   },
+   "nan_rule": "family_stat",
+   "damage_family": "ipv4_header",
+   "conventions": [
+    "empty_family_zero",
+    "population_std",
+    "fragments_keep_stats"
+   ]
+  },
+  {
+   "index": 38,
+   "name": "network_ttl_min",
+   "group": "core",
+   "definition": "stat.ipv4.ttl",
+   "params": {
+    "stat": "min"
+   },
+   "nan_rule": "family_stat",
+   "damage_family": "ipv4_header",
+   "conventions": [
+    "empty_family_zero",
+    "population_std",
+    "fragments_keep_stats"
+   ]
+  },
+  {
+   "index": 39,
+   "name": "network_ttl_std_deviation",
+   "group": "core",
+   "definition": "stat.ipv4.ttl",
+   "params": {
+    "stat": "std_population"
+   },
+   "nan_rule": "family_stat",
+   "damage_family": "ipv4_header",
+   "conventions": [
+    "empty_family_zero",
+    "population_std",
+    "fragments_keep_stats"
+   ]
+  },
+  {
+   "index": 40,
+   "name": "network_window-size_avg",
+   "group": "core",
+   "definition": "stat.tcp.window_raw",
+   "params": {
+    "stat": "mean"
+   },
+   "nan_rule": "family_stat",
+   "damage_family": "tcp_header",
+   "conventions": [
+    "empty_family_zero",
+    "population_std",
+    "fragments_keep_stats"
+   ]
+  },
+  {
+   "index": 41,
+   "name": "network_window-size_max",
+   "group": "core",
+   "definition": "stat.tcp.window_raw",
+   "params": {
+    "stat": "max"
+   },
+   "nan_rule": "family_stat",
+   "damage_family": "tcp_header",
+   "conventions": [
+    "empty_family_zero",
+    "population_std",
+    "fragments_keep_stats"
+   ]
+  },
+  {
+   "index": 42,
+   "name": "network_window-size_min",
+   "group": "core",
+   "definition": "stat.tcp.window_raw",
+   "params": {
+    "stat": "min"
+   },
+   "nan_rule": "family_stat",
+   "damage_family": "tcp_header",
+   "conventions": [
+    "empty_family_zero",
+    "population_std",
+    "fragments_keep_stats"
+   ]
+  },
+  {
+   "index": 43,
+   "name": "network_window-size_std_deviation",
+   "group": "core",
+   "definition": "stat.tcp.window_raw",
+   "params": {
+    "stat": "std_population"
+   },
+   "nan_rule": "family_stat",
+   "damage_family": "tcp_header",
+   "conventions": [
+    "empty_family_zero",
+    "population_std",
+    "fragments_keep_stats"
+   ]
+  },
+  {
+   "index": 44,
+   "name": "network_ports_src__present_1883",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "src",
+    "port": 1883
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 45,
+   "name": "network_ports_src__present_49153",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "src",
+    "port": 49153
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 46,
+   "name": "network_ports_src__present_9200",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "src",
+    "port": 9200
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 47,
+   "name": "network_ports_src__present_49154",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "src",
+    "port": 49154
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 48,
+   "name": "network_ports_src__present_23",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "src",
+    "port": 23
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 49,
+   "name": "network_ports_src__present_80",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "src",
+    "port": 80
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 50,
+   "name": "network_ports_src__present_53",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "src",
+    "port": 53
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 51,
+   "name": "network_ports_src__present_3659",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "src",
+    "port": 3659
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 52,
+   "name": "network_ports_src__present_3689",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "src",
+    "port": 3689
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 53,
+   "name": "network_ports_src__present_12345",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "src",
+    "port": 12345
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 54,
+   "name": "network_ports_src__present_3737",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "src",
+    "port": 3737
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 55,
+   "name": "network_ports_src__present_3690",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "src",
+    "port": 3690
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 56,
+   "name": "network_ports_src__present_3784",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "src",
+    "port": 3784
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 57,
+   "name": "network_ports_src__present_3703",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "src",
+    "port": 3703
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 58,
+   "name": "network_ports_src__present_3766",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "src",
+    "port": 3766
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 59,
+   "name": "network_ports_src__present_22",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "src",
+    "port": 22
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 60,
+   "name": "network_ports_src__present_1",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "src",
+    "port": 1
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 61,
+   "name": "network_ports_src__present_4",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "src",
+    "port": 4
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 62,
+   "name": "network_ports_src__present_6",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "src",
+    "port": 6
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 63,
+   "name": "network_ports_src__present_3",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "src",
+    "port": 3
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 64,
+   "name": "network_ports_src__present_9",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "src",
+    "port": 9
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 65,
+   "name": "network_ports_src__present_7",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "src",
+    "port": 7
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 66,
+   "name": "network_ports_src__present_2323",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "src",
+    "port": 2323
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 67,
+   "name": "network_ports_src__present_25",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "src",
+    "port": 25
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 68,
+   "name": "network_ports_src__present_21",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "src",
+    "port": 21
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 69,
+   "name": "network_ports_src__present_3800",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "src",
+    "port": 3800
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 70,
+   "name": "network_ports_src__present_3801",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "src",
+    "port": 3801
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 71,
+   "name": "network_ports_src__present_33",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "src",
+    "port": 33
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 72,
+   "name": "network_ports_src__present_13",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "src",
+    "port": 13
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 73,
+   "name": "network_ports_src__present_49",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "src",
+    "port": 49
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 74,
+   "name": "network_ports_src__present_17",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "src",
+    "port": 17
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 75,
+   "name": "network_ports_src__present_3809",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "src",
+    "port": 3809
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 76,
+   "name": "network_ports_src__present_UNSEEN",
+   "group": "port_presence",
+   "definition": "presence.port_unseen",
+   "params": {
+    "direction": "src"
+   },
+   "nan_rule": "port_unseen",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 77,
+   "name": "network_ports_dst__present_1883",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "dst",
+    "port": 1883
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 78,
+   "name": "network_ports_dst__present_6667",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "dst",
+    "port": 6667
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 79,
+   "name": "network_ports_dst__present_9200",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "dst",
+    "port": 9200
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 80,
+   "name": "network_ports_dst__present_80",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "dst",
+    "port": 80
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 81,
+   "name": "network_ports_dst__present_23",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "dst",
+    "port": 23
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 82,
+   "name": "network_ports_dst__present_53",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "dst",
+    "port": 53
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 83,
+   "name": "network_ports_dst__present_2323",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "dst",
+    "port": 2323
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 84,
+   "name": "network_ports_dst__present_1900",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "dst",
+    "port": 1900
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 85,
+   "name": "network_ports_dst__present_443",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "dst",
+    "port": 443
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 86,
+   "name": "network_ports_dst__present_58645",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "dst",
+    "port": 58645
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 87,
+   "name": "network_ports_dst__present_59453",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "dst",
+    "port": 59453
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 88,
+   "name": "network_ports_dst__present_57688",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "dst",
+    "port": 57688
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 89,
+   "name": "network_ports_dst__present_52392",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "dst",
+    "port": 52392
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 90,
+   "name": "network_ports_dst__present_63207",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "dst",
+    "port": 63207
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 91,
+   "name": "network_ports_dst__present_63796",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "dst",
+    "port": 63796
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 92,
+   "name": "network_ports_dst__present_52279",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "dst",
+    "port": 52279
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 93,
+   "name": "network_ports_dst__present_64724",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "dst",
+    "port": 64724
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 94,
+   "name": "network_ports_dst__present_52822",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "dst",
+    "port": 52822
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 95,
+   "name": "network_ports_dst__present_22",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "dst",
+    "port": 22
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 96,
+   "name": "network_ports_dst__present_62577",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "dst",
+    "port": 62577
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 97,
+   "name": "network_ports_dst__present_12345",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "dst",
+    "port": 12345
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 98,
+   "name": "network_ports_dst__present_52789",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "dst",
+    "port": 52789
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 99,
+   "name": "network_ports_dst__present_3659",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "dst",
+    "port": 3659
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 100,
+   "name": "network_ports_dst__present_3689",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "dst",
+    "port": 3689
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 101,
+   "name": "network_ports_dst__present_3784",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "dst",
+    "port": 3784
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 102,
+   "name": "network_ports_dst__present_3737",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "dst",
+    "port": 3737
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 103,
+   "name": "network_ports_dst__present_3690",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "dst",
+    "port": 3690
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 104,
+   "name": "network_ports_dst__present_1",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "dst",
+    "port": 1
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 105,
+   "name": "network_ports_dst__present_3766",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "dst",
+    "port": 3766
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 106,
+   "name": "network_ports_dst__present_3703",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "dst",
+    "port": 3703
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 107,
+   "name": "network_ports_dst__present_4",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "dst",
+    "port": 4
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 108,
+   "name": "network_ports_dst__present_21",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "dst",
+    "port": 21
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 109,
+   "name": "network_ports_dst__present_UNSEEN",
+   "group": "port_presence",
+   "definition": "presence.port_unseen",
+   "params": {
+    "direction": "dst"
+   },
+   "nan_rule": "port_unseen",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 110,
+   "name": "window_duration_seconds",
+   "group": "core",
+   "definition": "window.nominal_seconds",
+   "params": {
+    "seconds": 10.0
+   },
+   "nan_rule": "global_only",
+   "conventions": [
+    "nominal_duration"
+   ]
+  },
+  {
+   "index": 111,
+   "name": "network_packets_all_count__per_second",
+   "group": "core",
+   "definition": "rate.per_nominal_second",
+   "params": {
+    "numerator": "network_packets_all_count"
+   },
+   "nan_rule": "ratio",
+   "conventions": [
+    "nominal_duration"
+   ]
+  },
+  {
+   "index": 112,
+   "name": "network_packets_src_count__per_second",
+   "group": "core",
+   "definition": "rate.per_nominal_second",
+   "params": {
+    "numerator": "network_packets_src_count"
+   },
+   "nan_rule": "ratio",
+   "conventions": [
+    "nominal_duration"
+   ]
+  },
+  {
+   "index": 113,
+   "name": "network_packets_dst_count__per_second",
+   "group": "core",
+   "definition": "rate.per_nominal_second",
+   "params": {
+    "numerator": "network_packets_dst_count"
+   },
+   "nan_rule": "ratio",
+   "conventions": [
+    "nominal_duration"
+   ]
+  },
+  {
+   "index": 114,
+   "name": "quality_no_packets_observed",
+   "group": "core",
+   "definition": "quality.no_packets",
+   "nan_rule": "global_only",
+   "conventions": [
+    "zero_packet_window_scored"
+   ]
+  },
+  {
+   "index": 115,
+   "name": "network_tcp-flags-ack__fraction_of_packets",
+   "group": "core",
+   "definition": "ratio.of_packets_all",
+   "params": {
+    "numerator": "network_tcp-flags-ack_count"
+   },
+   "nan_rule": "ratio",
+   "conventions": []
+  },
+  {
+   "index": 116,
+   "name": "network_tcp-flags-fin__fraction_of_packets",
+   "group": "core",
+   "definition": "ratio.of_packets_all",
+   "params": {
+    "numerator": "network_tcp-flags-fin_count"
+   },
+   "nan_rule": "ratio",
+   "conventions": []
+  },
+  {
+   "index": 117,
+   "name": "network_tcp-flags-psh__fraction_of_packets",
+   "group": "core",
+   "definition": "ratio.of_packets_all",
+   "params": {
+    "numerator": "network_tcp-flags-psh_count"
+   },
+   "nan_rule": "ratio",
+   "conventions": []
+  },
+  {
+   "index": 118,
+   "name": "network_tcp-flags-rst__fraction_of_packets",
+   "group": "core",
+   "definition": "ratio.of_packets_all",
+   "params": {
+    "numerator": "network_tcp-flags-rst_count"
+   },
+   "nan_rule": "ratio",
+   "conventions": []
+  },
+  {
+   "index": 119,
+   "name": "network_tcp-flags-syn__fraction_of_packets",
+   "group": "core",
+   "definition": "ratio.of_packets_all",
+   "params": {
+    "numerator": "network_tcp-flags-syn_count"
+   },
+   "nan_rule": "ratio",
+   "conventions": []
+  },
+  {
+   "index": 120,
+   "name": "network_tcp-flags-urg__fraction_of_packets",
+   "group": "core",
+   "definition": "ratio.of_packets_all",
+   "params": {
+    "numerator": "network_tcp-flags-urg_count"
+   },
+   "nan_rule": "ratio",
+   "conventions": []
+  },
+  {
+   "index": 121,
+   "name": "network_src_packet_fraction",
+   "group": "core",
+   "definition": "ratio.of_packets_all",
+   "params": {
+    "numerator": "network_packets_src_count"
+   },
+   "nan_rule": "ratio",
+   "conventions": [
+    "device_mac_packet_direction"
+   ]
+  },
+  {
+   "index": 122,
+   "name": "network_dst_packet_fraction",
+   "group": "core",
+   "definition": "ratio.of_packets_all",
+   "params": {
+    "numerator": "network_packets_dst_count"
+   },
+   "nan_rule": "ratio",
+   "conventions": [
+    "device_mac_packet_direction"
+   ]
+  },
+  {
+   "index": 123,
+   "name": "network_packets_per_reported_ip",
+   "group": "core",
+   "definition": "ratio.packets_per_ip",
+   "params": {
+    "numerator": "network_packets_all_count",
+    "denominator": "network_ips_all_count"
+   },
+   "nan_rule": "ratio",
+   "conventions": [
+    "arp_ips"
+   ]
+  },
+  {
+   "index": 124,
+   "name": "network_ports_src__present_51977",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "src",
+    "port": 51977
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 125,
+   "name": "network_ports_src__present_3634",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "src",
+    "port": 3634
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 126,
+   "name": "network_ports_src__present_3635",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "src",
+    "port": 3635
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 127,
+   "name": "network_ports_src__present_3636",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "src",
+    "port": 3636
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 128,
+   "name": "network_ports_src__present_3633",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "src",
+    "port": 3633
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 129,
+   "name": "network_ports_src__present_3640",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "src",
+    "port": 3640
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 130,
+   "name": "network_ports_src__present_3657",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "src",
+    "port": 3657
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 131,
+   "name": "network_ports_src__present_3653",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "src",
+    "port": 3653
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 132,
+   "name": "network_ports_src__present_3678",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "src",
+    "port": 3678
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 133,
+   "name": "network_ports_src__present_3647",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "src",
+    "port": 3647
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 134,
+   "name": "network_ports_src__present_3631",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "src",
+    "port": 3631
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 135,
+   "name": "network_ports_src__present_3651",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "src",
+    "port": 3651
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 136,
+   "name": "network_ports_src__present_3667",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "src",
+    "port": 3667
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 137,
+   "name": "network_ports_src__present_3674",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "src",
+    "port": 3674
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 138,
+   "name": "network_ports_src__present_3696",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "src",
+    "port": 3696
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 139,
+   "name": "network_ports_src__present_3646",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "src",
+    "port": 3646
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 140,
+   "name": "network_ports_src__present_3649",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "src",
+    "port": 3649
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 141,
+   "name": "network_ports_src__present_3668",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "src",
+    "port": 3668
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 142,
+   "name": "network_ports_src__present_3681",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "src",
+    "port": 3681
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 143,
+   "name": "network_ports_src__present_3693",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "src",
+    "port": 3693
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 144,
+   "name": "network_ports_src__present_3641",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "src",
+    "port": 3641
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 145,
+   "name": "network_ports_src__present_3658",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "src",
+    "port": 3658
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 146,
+   "name": "network_ports_src__present_3698",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "src",
+    "port": 3698
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 147,
+   "name": "network_ports_src__present_3662",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "src",
+    "port": 3662
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 148,
+   "name": "network_ports_src__present_3632",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "src",
+    "port": 3632
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 149,
+   "name": "network_ports_src__present_3654",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "src",
+    "port": 3654
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 150,
+   "name": "network_ports_src__present_3697",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "src",
+    "port": 3697
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 151,
+   "name": "network_ports_src__present_3645",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "src",
+    "port": 3645
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 152,
+   "name": "network_ports_src__present_3679",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "src",
+    "port": 3679
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 153,
+   "name": "network_ports_src__present_3673",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "src",
+    "port": 3673
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 154,
+   "name": "network_ports_src__present_3665",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "src",
+    "port": 3665
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 155,
+   "name": "network_ports_src__present_3630",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "src",
+    "port": 3630
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 156,
+   "name": "network_ports_src__present_3643",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "src",
+    "port": 3643
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 157,
+   "name": "network_ports_src__present_3670",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "src",
+    "port": 3670
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 158,
+   "name": "network_ports_src__present_3694",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "src",
+    "port": 3694
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 159,
+   "name": "network_ports_src__present_3687",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "src",
+    "port": 3687
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 160,
+   "name": "network_ports_src__present_3663",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "src",
+    "port": 3663
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 161,
+   "name": "network_ports_src__present_3638",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "src",
+    "port": 3638
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 162,
+   "name": "network_ports_src__present_3644",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "src",
+    "port": 3644
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 163,
+   "name": "network_ports_src__present_3637",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "src",
+    "port": 3637
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 164,
+   "name": "network_ports_src__present_3642",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "src",
+    "port": 3642
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 165,
+   "name": "network_ports_src__present_3655",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "src",
+    "port": 3655
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 166,
+   "name": "network_ports_src__present_3666",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "src",
+    "port": 3666
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 167,
+   "name": "network_ports_src__present_3682",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "src",
+    "port": 3682
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 168,
+   "name": "network_ports_src__present_3664",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "src",
+    "port": 3664
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 169,
+   "name": "network_ports_src__present_3650",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "src",
+    "port": 3650
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 170,
+   "name": "network_ports_src__present_3680",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "src",
+    "port": 3680
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 171,
+   "name": "network_ports_src__present_3683",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "src",
+    "port": 3683
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 172,
+   "name": "network_ports_src__present_3686",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "src",
+    "port": 3686
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 173,
+   "name": "network_ports_src__present_3669",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "src",
+    "port": 3669
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 174,
+   "name": "network_ports_src__present_3688",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "src",
+    "port": 3688
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 175,
+   "name": "network_ports_src__present_3639",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "src",
+    "port": 3639
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 176,
+   "name": "network_ports_src__present_3675",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "src",
+    "port": 3675
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 177,
+   "name": "network_ports_src__present_3692",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "src",
+    "port": 3692
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 178,
+   "name": "network_ports_src__present_3676",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "src",
+    "port": 3676
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 179,
+   "name": "network_ports_src__present_3652",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "src",
+    "port": 3652
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 180,
+   "name": "network_ports_src__present_3691",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "src",
+    "port": 3691
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 181,
+   "name": "network_ports_src__present_3656",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "src",
+    "port": 3656
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 182,
+   "name": "network_ports_src__present_3699",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "src",
+    "port": 3699
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 183,
+   "name": "network_ports_src__present_3661",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "src",
+    "port": 3661
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 184,
+   "name": "network_ports_src__present_3695",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "src",
+    "port": 3695
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 185,
+   "name": "network_ports_src__present_3660",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "src",
+    "port": 3660
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 186,
+   "name": "network_ports_src__present_12449",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "src",
+    "port": 12449
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 187,
+   "name": "network_ports_src__present_3671",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "src",
+    "port": 3671
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 188,
+   "name": "network_ports_dst__present_554",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "dst",
+    "port": 554
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 189,
+   "name": "network_ports_dst__present_4280",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "dst",
+    "port": 4280
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 190,
+   "name": "network_ports_dst__present_49548",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "dst",
+    "port": 49548
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 191,
+   "name": "network_ports_dst__present_25",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "dst",
+    "port": 25
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 192,
+   "name": "network_ports_dst__present_42062",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "dst",
+    "port": 42062
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 193,
+   "name": "network_ports_dst__present_53193",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "dst",
+    "port": 53193
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 194,
+   "name": "network_ports_dst__present_47003",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "dst",
+    "port": 47003
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 195,
+   "name": "network_ports_dst__present_56151",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "dst",
+    "port": 56151
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 196,
+   "name": "network_ports_dst__present_52053",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "dst",
+    "port": 52053
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 197,
+   "name": "network_ports_dst__present_33",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "dst",
+    "port": 33
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 198,
+   "name": "network_ports_dst__present_64017",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "dst",
+    "port": 64017
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 199,
+   "name": "network_ports_dst__present_49",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "dst",
+    "port": 49
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 200,
+   "name": "network_ports_dst__present_55446",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "dst",
+    "port": 55446
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 201,
+   "name": "network_ports_dst__present_62728",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "dst",
+    "port": 62728
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 202,
+   "name": "network_ports_dst__present_6",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "dst",
+    "port": 6
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 203,
+   "name": "network_ports_dst__present_3",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "dst",
+    "port": 3
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 204,
+   "name": "network_ports_dst__present_7",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "dst",
+    "port": 7
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 205,
+   "name": "network_ports_dst__present_53256",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "dst",
+    "port": 53256
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 206,
+   "name": "network_ports_dst__present_54008",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "dst",
+    "port": 54008
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 207,
+   "name": "network_ports_dst__present_88",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "dst",
+    "port": 88
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 208,
+   "name": "network_ports_dst__present_13",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "dst",
+    "port": 13
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 209,
+   "name": "network_ports_dst__present_6668",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "dst",
+    "port": 6668
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 210,
+   "name": "network_ports_dst__present_63247",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "dst",
+    "port": 63247
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 211,
+   "name": "network_ports_dst__present_9",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "dst",
+    "port": 9
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 212,
+   "name": "network_ports_dst__present_995",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "dst",
+    "port": 995
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 213,
+   "name": "network_ports_dst__present_143",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "dst",
+    "port": 143
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 214,
+   "name": "network_ports_dst__present_43000",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "dst",
+    "port": 43000
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 215,
+   "name": "network_ports_dst__present_37",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "dst",
+    "port": 37
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 216,
+   "name": "network_ports_dst__present_587",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "dst",
+    "port": 587
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 217,
+   "name": "network_ports_dst__present_30",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "dst",
+    "port": 30
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 218,
+   "name": "network_ports_dst__present_17",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "dst",
+    "port": 17
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 219,
+   "name": "network_ports_dst__present_199",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "dst",
+    "port": 199
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 220,
+   "name": "network_ports_dst__present_81",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "dst",
+    "port": 81
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 221,
+   "name": "network_ports_dst__present_7019",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "dst",
+    "port": 7019
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 222,
+   "name": "network_ports_dst__present_135",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "dst",
+    "port": 135
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 223,
+   "name": "network_ports_dst__present_43",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "dst",
+    "port": 43
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 224,
+   "name": "network_ports_dst__present_26",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "dst",
+    "port": 26
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 225,
+   "name": "network_ports_dst__present_113",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "dst",
+    "port": 113
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 226,
+   "name": "network_ports_dst__present_3801",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "dst",
+    "port": 3801
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 227,
+   "name": "network_ports_dst__present_111",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "dst",
+    "port": 111
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 228,
+   "name": "network_ports_dst__present_139",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "dst",
+    "port": 139
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 229,
+   "name": "network_ports_dst__present_8888",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "dst",
+    "port": 8888
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 230,
+   "name": "network_ports_dst__present_993",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "dst",
+    "port": 993
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 231,
+   "name": "network_ports_dst__present_667",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "dst",
+    "port": 667
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 232,
+   "name": "network_ports_dst__present_1723",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "dst",
+    "port": 1723
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 233,
+   "name": "network_ports_dst__present_8200",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "dst",
+    "port": 8200
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 234,
+   "name": "network_ports_dst__present_1025",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "dst",
+    "port": 1025
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 235,
+   "name": "network_ports_dst__present_3389",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "dst",
+    "port": 3389
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 236,
+   "name": "network_ports_dst__present_3306",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "dst",
+    "port": 3306
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 237,
+   "name": "network_ports_dst__present_445",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "dst",
+    "port": 445
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 238,
+   "name": "network_ports_dst__present_110",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "dst",
+    "port": 110
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 239,
+   "name": "network_ports_dst__present_27353",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "dst",
+    "port": 27353
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 240,
+   "name": "network_ports_dst__present_50240",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "dst",
+    "port": 50240
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 241,
+   "name": "network_ports_dst__present_32",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "dst",
+    "port": 32
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 242,
+   "name": "network_ports_dst__present_19",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "dst",
+    "port": 19
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 243,
+   "name": "network_ports_dst__present_82",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "dst",
+    "port": 82
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 244,
+   "name": "network_ports_dst__present_8300",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "dst",
+    "port": 8300
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 245,
+   "name": "network_ports_dst__present_1720",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "dst",
+    "port": 1720
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 246,
+   "name": "network_ports_dst__present_15742",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "dst",
+    "port": 15742
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 247,
+   "name": "network_ports_dst__present_3800",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "dst",
+    "port": 3800
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 248,
+   "name": "network_ports_dst__present_7496",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "dst",
+    "port": 7496
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 249,
+   "name": "network_ports_dst__present_24",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "dst",
+    "port": 24
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 250,
+   "name": "network_ports_dst__present_5900",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "dst",
+    "port": 5900
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  },
+  {
+   "index": 251,
+   "name": "network_ports_dst__present_256",
+   "group": "port_presence",
+   "definition": "presence.port",
+   "params": {
+    "direction": "dst",
+    "port": 256
+   },
+   "nan_rule": "port_presence",
+   "damage_family": "ports",
+   "conventions": [
+    "port_cap_1000",
+    "port_unseen",
+    "fragments_keep_stats",
+    "header_direction"
+   ]
+  }
+ ]
+}

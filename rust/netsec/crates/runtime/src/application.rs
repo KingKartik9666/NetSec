@@ -11,12 +11,18 @@ pub struct Application {
     pub reference:Reference, pub explanations:Mutex<BTreeMap<String,Value>>,
     pub inference_slots:Arc<Semaphore>, pub explanation_slots:Arc<Semaphore>,pub language_slots:Arc<Semaphore>,
     pub stopping:AtomicBool, pub shutdown:Notify,pub live:crate::live::Live,
-    pub window:Mutex<Value>,
+    pub window:Mutex<Value>,pub chat:crate::chat::ChatStore,
+    /// The one loopback llama-server child; its background hash pass starts here, the child itself lazily.
+    pub llm:crate::language::server::LlamaServer,
 }
 impl Application {
     pub fn load(root:PathBuf)->Result<Arc<Self>,String>{
         let root=root.canonicalize().map_err(|e|e.to_string())?;
         crate::assets::verify(&root)?;
+        let llm=crate::language::server::LlamaServer::new(root.clone());Self::open(root,llm)
+    }
+    /// `load` after the asset seal check, with the given language server (tests pass one that never starts).
+    pub(crate) fn open(root:PathBuf,llm:crate::language::server::LlamaServer)->Result<Arc<Self>,String>{
         let exported=root.join("artifacts/application/native_models_v1");
         let catalog=Arc::new(ModelCatalog::load(&exported).map_err(|e|e.to_string())?);
         let samples=read_json(&exported.join("samples.json"),4*1024*1024)?;
@@ -39,7 +45,7 @@ impl Application {
             explanations:Mutex::new(BTreeMap::new()),inference_slots:Arc::new(Semaphore::new(1)),
             explanation_slots:Arc::new(Semaphore::new(1)),language_slots:Arc::new(Semaphore::new(1)),
             stopping:AtomicBool::new(false),shutdown:Notify::new(),live:crate::live::Live::with_root(root.clone()),
-            window:Mutex::new(json!({"desktop":std::env::var_os("NETSEC_DESKTOP").is_some(),"maximized":false,"exitRequested":false,"closing":false}))}))
+            window:Mutex::new(json!({"desktop":std::env::var_os("NETSEC_DESKTOP").is_some(),"maximized":false,"exitRequested":false,"closing":false})),chat:crate::chat::ChatStore::default(),llm}))
     }
     pub fn catalog_view(&self)->Value {
         let models=self.catalog.summaries();let schema=models.first().map(|v|json!({"feature_names":v.feature_names,"classes":v.classes})).unwrap_or(Value::Null);
@@ -49,7 +55,7 @@ impl Application {
             "explanations":["shap","lime","anchors","counterfactual","permutation","ale"],"english":true},
             "limitations":["Exploratory source-validation results; live inputs are incompatible with this full schema","Calibration can regress; inspect method-specific evidence"]})}).collect::<Vec<_>>(),
             "schema":schema,"runtime":{"backend":"rust","cpu_only":true,"offline":true,"python_inference":false},
-            "language":crate::language::status(&self.root)})
+            "language":self.llm.status(&self.root)})
     }
     pub fn samples_view(&self)->Value {
         json!({"samples":self.samples["rows"].as_array().into_iter().flatten().map(|v|json!({"id":v["id"],

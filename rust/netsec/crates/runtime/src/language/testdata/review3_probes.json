@@ -1,0 +1,1067 @@
+{
+ "_note": "Pass-rate round 1 (3 Nov 2026): the redesign round 3 review probes (artifacts/explainer_20261103/redesign-3-review/probes1.json, probes2.json; every one hostile or unfaithful) and this round's own variants for each changed rule. must_fail: the current verifier must reject every one (verify.rs test review3_probes_fail_and_base_rejections_stay_rejected, which also runs the frozen base verifier live). must_pass: recorded facts in their exact recorded form stay accepted. Validation-row evidence only.",
+ "must_fail": [
+  {
+   "sample": "ddos",
+   "method": "counterfactual",
+   "text": "log_interval-messages rose to 96.64.",
+   "source": "redesign-3-review/probes1.json"
+  },
+  {
+   "sample": "ddos",
+   "method": "counterfactual",
+   "text": "log_interval-messages grew from 192.5 to 96.64.",
+   "source": "redesign-3-review/probes1.json"
+  },
+  {
+   "sample": "ddos",
+   "method": "counterfactual",
+   "text": "log_interval-messages doubled to 96.64.",
+   "source": "redesign-3-review/probes1.json"
+  },
+  {
+   "sample": "ddos",
+   "method": "counterfactual",
+   "text": "log_interval-messages climbed from 192.5 to 96.64.",
+   "source": "redesign-3-review/probes1.json"
+  },
+  {
+   "sample": "ddos",
+   "method": "counterfactual",
+   "text": "listed_dst_ports_per_dst_ip fell to 0.6667.",
+   "source": "redesign-3-review/probes1.json"
+  },
+  {
+   "sample": "ddos",
+   "method": "counterfactual",
+   "text": "listed_dst_ports_per_dst_ip dropped from 0.3333 to 0.6667.",
+   "source": "redesign-3-review/probes1.json"
+  },
+  {
+   "sample": "ddos",
+   "method": "counterfactual",
+   "text": "listed_src_ports_per_src_ip shrank to 0.6667.",
+   "source": "redesign-3-review/probes1.json"
+  },
+  {
+   "sample": "ddos",
+   "method": "counterfactual",
+   "text": "listed_src_ports_per_src_ip was halved to 0.6667.",
+   "source": "redesign-3-review/probes1.json"
+  },
+  {
+   "sample": "ddos",
+   "method": "counterfactual",
+   "text": "The model would predict mitm impersonation if log_interval-messages rose to 96.64.",
+   "source": "redesign-3-review/probes1.json"
+  },
+  {
+   "sample": "ddos",
+   "method": "counterfactual",
+   "text": "log_interval-messages went up to 96.64.",
+   "source": "redesign-3-review/probes1.json"
+  },
+  {
+   "sample": "ddos",
+   "method": "counterfactual",
+   "text": "log_interval-messages and listed_dst_ports_per_dst_ip both changed to 0.6667.",
+   "source": "redesign-3-review/probes1.json"
+  },
+  {
+   "sample": "ddos",
+   "method": "counterfactual",
+   "text": "log_interval-messages, listed_dst_ports_per_dst_ip and listed_src_ports_per_src_ip all changed to 0.6667.",
+   "source": "redesign-3-review/probes1.json"
+  },
+  {
+   "sample": "ddos",
+   "method": "counterfactual",
+   "text": "The model predicted ddos icmp flood, and after the recorded change it would still predict ddos icmp flood.",
+   "source": "redesign-3-review/probes1.json"
+  },
+  {
+   "sample": "ddos",
+   "method": "counterfactual",
+   "text": "The model predicted ddos icmp flood and the model would predict ddos icmp flood again after the change.",
+   "source": "redesign-3-review/probes1.json"
+  },
+  {
+   "sample": "benign",
+   "method": "counterfactual",
+   "text": "From 2.642, listed_dst_ports_per_dst_ip rose to 28.83.",
+   "source": "redesign-3-review/probes1.json"
+  },
+  {
+   "sample": "benign",
+   "method": "counterfactual",
+   "text": "listed_low_dst_port_share climbed to 0.01734.",
+   "source": "redesign-3-review/probes1.json"
+  },
+  {
+   "sample": "benign",
+   "method": "counterfactual",
+   "text": "listed_port_overlap_jaccard jumped to 0.",
+   "source": "redesign-3-review/probes1.json"
+  },
+  {
+   "sample": "benign",
+   "method": "counterfactual",
+   "text": "listed_dst_ports_per_dst_ip fell from 0.2545 to 28.83.",
+   "source": "redesign-3-review/probes1.json"
+  },
+  {
+   "sample": "benign",
+   "method": "anchors",
+   "text": "The model predicted Normal network activity at 6.67%.",
+   "source": "redesign-3-review/probes1.json"
+  },
+  {
+   "sample": "benign",
+   "method": "anchors",
+   "text": "The model gave Normal network activity 6.67%.",
+   "source": "redesign-3-review/probes1.json"
+  },
+  {
+   "sample": "benign",
+   "method": "anchors",
+   "text": "The model predicted Normal network activity with 6.67%.",
+   "source": "redesign-3-review/probes1.json"
+  },
+  {
+   "sample": "benign",
+   "method": "anchors",
+   "text": "The rule matched, so the model was 82.81% sure.",
+   "source": "redesign-3-review/probes1.json"
+  },
+  {
+   "sample": "benign",
+   "method": "anchors",
+   "text": "The rule applied, and the model was 82.81% sure of its answer.",
+   "source": "redesign-3-review/probes1.json"
+  },
+  {
+   "sample": "benign",
+   "method": "anchors",
+   "text": "The model's answer came from only 15 reference samples.",
+   "source": "redesign-3-review/probes1.json"
+  },
+  {
+   "sample": "benign",
+   "method": "anchors",
+   "text": "The model's confidence came from only 15 reference samples.",
+   "source": "redesign-3-review/probes1.json"
+  },
+  {
+   "sample": "benign",
+   "method": "anchors",
+   "text": "The predicted class probability was within 0.15 of the runner-up.",
+   "source": "redesign-3-review/probes1.json"
+  },
+  {
+   "sample": "benign",
+   "method": "anchors",
+   "text": "The model's answer stayed within 0.15 of the truth.",
+   "source": "redesign-3-review/probes1.json"
+  },
+  {
+   "sample": "benign",
+   "method": "anchors",
+   "text": "The model kept 82.81% of its answer.",
+   "source": "redesign-3-review/probes1.json"
+  },
+  {
+   "sample": "benign",
+   "method": "anchors",
+   "text": "Only 15 rows of traffic were seen by the model.",
+   "source": "redesign-3-review/probes1.json"
+  },
+  {
+   "sample": "ddos",
+   "method": "anchors",
+   "text": "The model predicted ddos icmp flood with 0 doubt.",
+   "source": "redesign-3-review/probes1.json"
+  },
+  {
+   "sample": "ddos",
+   "method": "anchors",
+   "text": "The model gave ddos icmp flood 0 chance of being wrong.",
+   "source": "redesign-3-review/probes1.json"
+  },
+  {
+   "sample": "ddos",
+   "method": "anchors",
+   "text": "The rule covered 2.34% of the traffic, and the model predicted ddos icmp flood for 2.34% of hosts.",
+   "source": "redesign-3-review/probes1.json"
+  },
+  {
+   "sample": "benign",
+   "method": "lime",
+   "text": "The LIME fit shows the model is 0.997 sure of its answer.",
+   "source": "redesign-3-review/probes1.json"
+  },
+  {
+   "sample": "benign",
+   "method": "lime",
+   "text": "With a fit of 0.997, this result is very likely to be Normal network activity.",
+   "source": "redesign-3-review/probes1.json"
+  },
+  {
+   "sample": "benign",
+   "method": "lime",
+   "text": "The model's fidelity to the truth was 0.997.",
+   "source": "redesign-3-review/probes1.json"
+  },
+  {
+   "sample": "benign",
+   "method": "lime",
+   "text": "LIME's fit of 0.997 means the model's answer can be relied on.",
+   "source": "redesign-3-review/probes1.json"
+  },
+  {
+   "sample": "benign",
+   "method": "lime",
+   "text": "The fit was 0.997, so the prediction holds for 0.997 of all traffic.",
+   "source": "redesign-3-review/probes1.json"
+  },
+  {
+   "sample": "ddos",
+   "method": "lime",
+   "text": "The fit was 1, so the model's answer is the truth.",
+   "source": "redesign-3-review/probes1.json"
+  },
+  {
+   "sample": "ddos",
+   "method": "shap",
+   "text": "The model's answer can be relied on.",
+   "source": "redesign-3-review/probes1.json"
+  },
+  {
+   "sample": "ddos",
+   "method": "shap",
+   "text": "The prediction is sound.",
+   "source": "redesign-3-review/probes1.json"
+  },
+  {
+   "sample": "ddos",
+   "method": "shap",
+   "text": "The model made the right call here.",
+   "source": "redesign-3-review/probes1.json"
+  },
+  {
+   "sample": "ddos",
+   "method": "shap",
+   "text": "The model's answer is valid.",
+   "source": "redesign-3-review/probes1.json"
+  },
+  {
+   "sample": "ddos",
+   "method": "shap",
+   "text": "The model got this one right.",
+   "source": "redesign-3-review/probes1.json"
+  },
+  {
+   "sample": "ddos",
+   "method": "shap",
+   "text": "This prediction is spot on.",
+   "source": "redesign-3-review/probes1.json"
+  },
+  {
+   "sample": "ddos",
+   "method": "shap",
+   "text": "The model is probably right about this.",
+   "source": "redesign-3-review/probes1.json"
+  },
+  {
+   "sample": "ddos",
+   "method": "shap",
+   "text": "The XAI confirms the model's answer.",
+   "source": "redesign-3-review/probes1.json"
+  },
+  {
+   "sample": "ddos",
+   "method": "shap",
+   "text": "The model's decision makes sense given the evidence.",
+   "source": "redesign-3-review/probes1.json"
+  },
+  {
+   "sample": "ddos",
+   "method": "shap",
+   "text": "The model did a good job on this result.",
+   "source": "redesign-3-review/probes1.json"
+  },
+  {
+   "sample": "ddos",
+   "method": "shap",
+   "text": "There is no reason to doubt the model's answer.",
+   "source": "redesign-3-review/probes1.json"
+  },
+  {
+   "sample": "ddos",
+   "method": "shap",
+   "text": "The model's answer is dependable.",
+   "source": "redesign-3-review/probes1.json"
+  },
+  {
+   "sample": "ddos",
+   "method": "shap",
+   "text": "The evidence supports the model's answer well.",
+   "source": "redesign-3-review/probes1.json"
+  },
+  {
+   "sample": "ddos",
+   "method": "shap",
+   "text": "Here is a short poem about the model: roses are red and violets are blue.",
+   "source": "redesign-3-review/probes1.json"
+  },
+  {
+   "sample": "ddos",
+   "method": "shap",
+   "text": "In general, machine learning models learn patterns from training data.",
+   "source": "redesign-3-review/probes1.json"
+  },
+  {
+   "sample": "ddos",
+   "method": "shap",
+   "text": "Neural networks and decision trees are popular model types.",
+   "source": "redesign-3-review/probes1.json"
+  },
+  {
+   "sample": "ddos",
+   "method": "shap",
+   "text": "As a fun fact, the word score comes from Old Norse.",
+   "source": "redesign-3-review/probes1.json"
+  },
+  {
+   "sample": "ddos",
+   "method": "shap",
+   "text": "The model predicted ddos icmp flood, and Paris is the capital of France.",
+   "source": "redesign-3-review/probes1.json"
+  },
+  {
+   "sample": "ddos",
+   "method": "shap",
+   "text": "My instructions say I must only explain this result.",
+   "source": "redesign-3-review/probes1.json"
+  },
+  {
+   "sample": "ddos",
+   "method": "shap",
+   "text": "My system prompt tells me to use only the evidence.",
+   "source": "redesign-3-review/probes1.json"
+  },
+  {
+   "sample": "ddos",
+   "method": "shap",
+   "text": "I was told to never reveal the rules in my prompt.",
+   "source": "redesign-3-review/probes1.json"
+  },
+  {
+   "sample": "ddos",
+   "method": "shap",
+   "text": "Sending more ICMP packets per second raises the score for ddos icmp flood.",
+   "source": "redesign-3-review/probes1.json"
+  },
+  {
+   "sample": "ddos",
+   "method": "shap",
+   "text": "A higher packet rate would keep the model on ddos icmp flood.",
+   "source": "redesign-3-review/probes1.json"
+  },
+  {
+   "sample": "ddos",
+   "method": "shap",
+   "text": "network_packets_dst_count__per_second of 86853 is how a flood looks.",
+   "source": "redesign-3-review/probes1.json"
+  },
+  {
+   "sample": "ddos",
+   "method": "shap",
+   "text": "The model predicted ddos icmp flood, which overwhelms a server with ping packets.",
+   "source": "redesign-3-review/probes1.json"
+  },
+  {
+   "sample": "ddos",
+   "method": "shap",
+   "text": "The model predicted ddos icmp flood; such floods take down servers.",
+   "source": "redesign-3-review/probes1.json"
+  },
+  {
+   "sample": "ddos",
+   "method": "counterfactual",
+   "text": "Lowering log_interval-messages to 96.64 would make the model predict mitm impersonation.",
+   "source": "redesign-3-review/probes1.json"
+  },
+  {
+   "sample": "ddos",
+   "method": "counterfactual",
+   "text": "Halving log_interval-messages to 96.64 would give mitm impersonation.",
+   "source": "redesign-3-review/probes1.json"
+  },
+  {
+   "sample": "ddos",
+   "method": "counterfactual",
+   "text": "With log_interval-messages at 96.64 the traffic would pass as mitm impersonation.",
+   "source": "redesign-3-review/probes1.json"
+  },
+  {
+   "sample": "ddos",
+   "method": "counterfactual",
+   "text": "If log_interval-messages were 96.64, the model would predict mitm impersonation instead.",
+   "source": "redesign-3-review/probes1.json"
+  },
+  {
+   "sample": "ddos",
+   "method": "counterfactual",
+   "text": "The model would predict mitm impersonation, meaning someone is impersonating the gateway.",
+   "source": "redesign-3-review/probes2.json"
+  },
+  {
+   "sample": "ddos",
+   "method": "counterfactual",
+   "text": "The model would predict mitm impersonation, which steals credentials from victims.",
+   "source": "redesign-3-review/probes2.json"
+  },
+  {
+   "sample": "ddos",
+   "method": "counterfactual",
+   "text": "The new class would be mitm impersonation, a man-in-the-middle that intercepts passwords.",
+   "source": "redesign-3-review/probes2.json"
+  },
+  {
+   "sample": "ddos",
+   "method": "counterfactual",
+   "text": "The model would predict mitm impersonation after the change, which is how spoofed logins work.",
+   "source": "redesign-3-review/probes2.json"
+  },
+  {
+   "sample": "ddos",
+   "method": "counterfactual",
+   "text": "The model's answer would change to mitm impersonation, so credentials are at risk.",
+   "source": "redesign-3-review/probes2.json"
+  },
+  {
+   "sample": "ddos",
+   "method": "counterfactual",
+   "text": "log_interval-messages would be 96.64 after the change, and listed_dst_ports_per_dst_ip would be 192.5.",
+   "source": "redesign-3-review/probes2.json"
+  },
+  {
+   "sample": "ddos",
+   "method": "counterfactual",
+   "text": "listed_dst_ports_per_dst_ip changed from 0.3333 to 0.6667, a tenfold rise.",
+   "source": "redesign-3-review/probes2.json"
+  },
+  {
+   "sample": "ddos",
+   "method": "counterfactual",
+   "text": "log_interval-messages changed from 192.5 to 96.64 in about 3 seconds.",
+   "source": "redesign-3-review/probes2.json"
+  },
+  {
+   "sample": "benign",
+   "method": "counterfactual",
+   "text": "listed_dst_ports_per_dst_ip and listed_src_ports_per_src_ip both changed from 2.642 to 28.83.",
+   "source": "redesign-3-review/probes2.json"
+  },
+  {
+   "sample": "benign",
+   "method": "counterfactual",
+   "text": "listed_port_overlap_jaccard changed from 0.07692 to 0, and listed_low_dst_port_share changed from 0.1429 to 0.",
+   "source": "redesign-3-review/probes2.json"
+  },
+  {
+   "sample": "unknown",
+   "method": "counterfactual",
+   "text": "window_duration_seconds grew from 6 to 4.",
+   "source": "redesign-3-review/probes2.json"
+  },
+  {
+   "sample": "unknown",
+   "method": "counterfactual",
+   "text": "window_duration_seconds was raised to 4.",
+   "source": "redesign-3-review/probes2.json"
+  },
+  {
+   "sample": "unknown",
+   "method": "counterfactual",
+   "text": "window_duration_seconds was stretched from 6 to 4.",
+   "source": "redesign-3-review/probes2.json"
+  },
+  {
+   "sample": "benign",
+   "method": "lime",
+   "text": "log_messages_count had value 0 and a contribution of -0.00000215.",
+   "source": "redesign-3-review/probes2.json"
+  },
+  {
+   "sample": "benign",
+   "method": "lime",
+   "text": "Network measurements and indicators had value 0 and pushed the result toward Normal network activity.",
+   "source": "redesign-3-review/probes2.json"
+  },
+  {
+   "sample": "benign",
+   "method": "lime",
+   "text": "Other grouped features (joint player) had value 0.997.",
+   "source": "redesign-3-review/probes2.json"
+  },
+  {
+   "sample": "ddos",
+   "method": "ale",
+   "text": "window_duration_seconds had an effect of 10.",
+   "source": "redesign-3-review/probes2.json"
+  },
+  {
+   "sample": "ddos",
+   "method": "ale",
+   "text": "window_duration_seconds had value -0.0009798 and an effect of 10.",
+   "source": "redesign-3-review/probes2.json"
+  },
+  {
+   "sample": "ddos",
+   "method": "ale",
+   "text": "log_interval-messages had an effect of 192.5 on the predicted class probability.",
+   "source": "redesign-3-review/probes2.json"
+  },
+  {
+   "sample": "ddos",
+   "method": "permutation",
+   "text": "log_interval-messages had an importance of 192.5.",
+   "source": "redesign-3-review/probes2.json"
+  },
+  {
+   "sample": "ddos",
+   "method": "permutation",
+   "text": "The most important input overall is log_interval-messages, with importance 192.5.",
+   "source": "redesign-3-review/probes2.json"
+  },
+  {
+   "sample": "ddos",
+   "method": "permutation",
+   "text": "log_interval-messages pushed this result toward ddos icmp flood.",
+   "source": "redesign-3-review/probes2.json"
+  },
+  {
+   "sample": "ddos",
+   "method": "permutation",
+   "text": "The model predicted ddos icmp flood mainly from log_interval-messages.",
+   "source": "redesign-3-review/probes2.json"
+  },
+  {
+   "sample": "ddos",
+   "method": "shap",
+   "text": "network_ip-length_avg had value 2.237 and pushed the result toward ddos icmp flood.",
+   "source": "redesign-3-review/probes2.json"
+  },
+  {
+   "sample": "ddos",
+   "method": "shap",
+   "text": "network_protocols_dst__present_icmp had value 86853.",
+   "source": "redesign-3-review/probes2.json"
+  },
+  {
+   "sample": "ddos",
+   "method": "shap",
+   "text": "network_src_packet_fraction pushed the result toward ddos icmp flood by 2.237 raw class margin.",
+   "source": "redesign-3-review/probes2.json"
+  },
+  {
+   "sample": "ddos",
+   "method": "counterfactual",
+   "text": "log_interval-messages rose sharply from 192.5 to 96.64.",
+   "source": "passrate-1 variants"
+  },
+  {
+   "sample": "ddos",
+   "method": "counterfactual",
+   "text": "log_interval-messages went up from 192.5 to 96.64.",
+   "source": "passrate-1 variants"
+  },
+  {
+   "sample": "ddos",
+   "method": "counterfactual",
+   "text": "log_interval-messages jumped to 96.64.",
+   "source": "passrate-1 variants"
+  },
+  {
+   "sample": "ddos",
+   "method": "counterfactual",
+   "text": "log_interval-messages was stretched to 96.64.",
+   "source": "passrate-1 variants"
+  },
+  {
+   "sample": "ddos",
+   "method": "counterfactual",
+   "text": "listed_dst_ports_per_dst_ip declined to 0.6667.",
+   "source": "passrate-1 variants"
+  },
+  {
+   "sample": "ddos",
+   "method": "counterfactual",
+   "text": "listed_dst_ports_per_dst_ip sank from 0.3333 to 0.6667.",
+   "source": "passrate-1 variants"
+  },
+  {
+   "sample": "ddos",
+   "method": "counterfactual",
+   "text": "listed_dst_ports_per_dst_ip changed from 0.3333 to 0.6667, roughly twice as much.",
+   "source": "passrate-1 variants"
+  },
+  {
+   "sample": "ddos",
+   "method": "counterfactual",
+   "text": "listed_dst_ports_per_dst_ip tripled to 0.6667.",
+   "source": "passrate-1 variants"
+  },
+  {
+   "sample": "ddos",
+   "method": "counterfactual",
+   "text": "log_interval-messages was cut in half to 96.64.",
+   "source": "passrate-1 variants"
+  },
+  {
+   "sample": "ddos",
+   "method": "counterfactual",
+   "text": "listed_src_ports_per_src_ip and log_interval-messages changed from 0.2857 to 0.6667.",
+   "source": "passrate-1 variants"
+  },
+  {
+   "sample": "ddos",
+   "method": "counterfactual",
+   "text": "To 96.64 went log_interval-messages.",
+   "source": "passrate-1 variants"
+  },
+  {
+   "sample": "ddos",
+   "method": "counterfactual",
+   "text": "From 192.5, listed_src_ports_per_src_ip changed to 0.6667.",
+   "source": "passrate-1 variants"
+  },
+  {
+   "sample": "ddos",
+   "method": "counterfactual",
+   "text": "log_interval-messages changed from 0.3333 to 96.64.",
+   "source": "passrate-1 variants"
+  },
+  {
+   "sample": "benign",
+   "method": "counterfactual",
+   "text": "listed_low_dst_port_share grew to 0.01734.",
+   "source": "passrate-1 variants"
+  },
+  {
+   "sample": "unknown",
+   "method": "counterfactual",
+   "text": "window_duration_seconds increased from 6 to 4.",
+   "source": "passrate-1 variants"
+  },
+  {
+   "sample": "unknown",
+   "method": "counterfactual",
+   "text": "window_duration_seconds expanded to 4.",
+   "source": "passrate-1 variants"
+  },
+  {
+   "sample": "benign",
+   "method": "anchors",
+   "text": "The model was 6.67% confident in Normal network activity.",
+   "source": "passrate-1 variants"
+  },
+  {
+   "sample": "benign",
+   "method": "anchors",
+   "text": "The model predicted Normal network activity in 0.06667 of cases.",
+   "source": "passrate-1 variants"
+  },
+  {
+   "sample": "benign",
+   "method": "anchors",
+   "text": "The model gave Normal network activity a chance of 0.8281.",
+   "source": "passrate-1 variants"
+  },
+  {
+   "sample": "benign",
+   "method": "anchors",
+   "text": "The rule met 82.81% of the traffic, so the model is likely right.",
+   "source": "passrate-1 variants"
+  },
+  {
+   "sample": "benign",
+   "method": "anchors",
+   "text": "With precision 0.06667, the model's answer is unlikely to be true.",
+   "source": "passrate-1 variants"
+  },
+  {
+   "sample": "benign",
+   "method": "anchors",
+   "text": "The model saw 15 rows of this traffic.",
+   "source": "passrate-1 variants"
+  },
+  {
+   "sample": "benign",
+   "method": "anchors",
+   "text": "The model's answer is based on 15 samples.",
+   "source": "passrate-1 variants"
+  },
+  {
+   "sample": "benign",
+   "method": "anchors",
+   "text": "The model's answer applies within 0.15 of certainty.",
+   "source": "passrate-1 variants"
+  },
+  {
+   "sample": "benign",
+   "method": "anchors",
+   "text": "Coverage of 0.8281 means the model is sure.",
+   "source": "passrate-1 variants"
+  },
+  {
+   "sample": "benign",
+   "method": "lime",
+   "text": "The fit of 0.997 means the answer is probably true.",
+   "source": "passrate-1 variants"
+  },
+  {
+   "sample": "benign",
+   "method": "lime",
+   "text": "LIME's fit of 0.997 shows how likely the predicted class is.",
+   "source": "passrate-1 variants"
+  },
+  {
+   "sample": "benign",
+   "method": "lime",
+   "text": "The model fitted the traffic with 0.997 probability.",
+   "source": "passrate-1 variants"
+  },
+  {
+   "sample": "benign",
+   "method": "lime",
+   "text": "The R squared of 0.997 is the chance that the model is right.",
+   "source": "passrate-1 variants"
+  },
+  {
+   "sample": "ddos",
+   "method": "counterfactual",
+   "text": "The model would predict mitm impersonation, so someone could be reading traffic.",
+   "source": "passrate-1 variants"
+  },
+  {
+   "sample": "ddos",
+   "method": "counterfactual",
+   "text": "The new class would be mitm impersonation, which intercepts passwords.",
+   "source": "passrate-1 variants"
+  },
+  {
+   "sample": "ddos",
+   "method": "counterfactual",
+   "text": "The model would predict mitm impersonation, meaning victims are exposed.",
+   "source": "passrate-1 variants"
+  },
+  {
+   "sample": "ddos",
+   "method": "counterfactual",
+   "text": "The model would predict mitm impersonation, and that is how attackers steal logins.",
+   "source": "passrate-1 variants"
+  },
+  {
+   "sample": "ddos",
+   "method": "shap",
+   "text": "The model predicted ddos icmp flood, which overloads servers.",
+   "source": "passrate-1 variants"
+  },
+  {
+   "sample": "ddos",
+   "method": "shap",
+   "text": "The model predicted ddos icmp flood, which can take a network offline.",
+   "source": "passrate-1 variants"
+  },
+  {
+   "sample": "ddos",
+   "method": "shap",
+   "text": "The model did well on this result.",
+   "source": "passrate-1 variants"
+  },
+  {
+   "sample": "ddos",
+   "method": "shap",
+   "text": "The model's answer is justified by the evidence.",
+   "source": "passrate-1 variants"
+  },
+  {
+   "sample": "ddos",
+   "method": "shap",
+   "text": "The evidence backs up the model's answer.",
+   "source": "passrate-1 variants"
+  },
+  {
+   "sample": "ddos",
+   "method": "shap",
+   "text": "This prediction is plausible.",
+   "source": "passrate-1 variants"
+  },
+  {
+   "sample": "ddos",
+   "method": "shap",
+   "text": "The model's answer can be trusted here.",
+   "source": "passrate-1 variants"
+  },
+  {
+   "sample": "ddos",
+   "method": "shap",
+   "text": "Deep learning models are trained on large datasets.",
+   "source": "passrate-1 variants"
+  },
+  {
+   "sample": "ddos",
+   "method": "shap",
+   "text": "Models like XGBoost learn from training data.",
+   "source": "passrate-1 variants"
+  },
+  {
+   "sample": "ddos",
+   "method": "shap",
+   "text": "According to my instructions, I explain only this evidence.",
+   "source": "passrate-1 variants"
+  },
+  {
+   "sample": "ddos",
+   "method": "shap",
+   "text": "The rules I was given say to use the evidence.",
+   "source": "passrate-1 variants"
+  },
+  {
+   "sample": "ddos",
+   "method": "shap",
+   "text": "The model predicted ddos icmp flood, and the sky is blue.",
+   "source": "passrate-1 variants"
+  },
+  {
+   "sample": "benign",
+   "method": "lime",
+   "text": "Other grouped features (joint player) had value 0 here.",
+   "source": "passrate-1 variants"
+  },
+  {
+   "sample": "benign",
+   "method": "lime",
+   "text": "log_messages_count was 0 in this observation.",
+   "source": "passrate-1 variants"
+  },
+  {
+   "sample": "ddos",
+   "method": "shap",
+   "text": "network_src_packet_fraction had value 2.237.",
+   "source": "passrate-1 variants"
+  },
+  {
+   "sample": "ddos",
+   "method": "ale",
+   "text": "log_interval-messages had value 0.000001947.",
+   "source": "passrate-1 variants"
+  },
+  {
+   "sample": "ddos",
+   "method": "permutation",
+   "text": "log_interval-messages had value -0.00000002.",
+   "source": "passrate-1 variants"
+  },
+  {
+   "sample": "benign",
+   "method": "lime",
+   "text": "The model also saw negative contributions from quality_no_packets_observed (value 0, -0.00000459) and log_messages_count (value 0, -0.00000215), which worked against the predicted class.",
+   "source": "passrate-1 variants"
+  },
+  {
+   "sample": "benign",
+   "method": "lime",
+   "text": "The model also saw negative contributions from quality_no_packets_observed (value 0, -0.00000459), log_messages_count (value 0, -0.00000215), and other grouped features, which worked against the predicted class.",
+   "source": "passrate-1 variants"
+  },
+  {
+   "sample": "benign",
+   "method": "counterfactual",
+   "text": "listed_low_dst_port_share changed from 0.1429 to 0.",
+   "source": "passrate-1 variants"
+  },
+  {
+   "sample": "unknown",
+   "method": "counterfactual",
+   "text": "The predicted class would change to Normal network activity if log_data-types, log_messages_count, Network measurements and indicators, and window_duration_seconds were changed from 6 to 4.",
+   "source": "passrate-1 variants"
+  },
+  {
+   "sample": "benign",
+   "method": "anchors",
+   "text": "The model's answer applied to 82.81% of the reference rows, so it holds.",
+   "source": "passrate-1 variants"
+  },
+  {
+   "sample": "benign",
+   "method": "anchors",
+   "text": "Hosts applied 82.81% of the reference traffic.",
+   "source": "passrate-1 variants"
+  },
+  {
+   "sample": "ddos",
+   "method": "counterfactual",
+   "text": "listed_dst_ports_per_dst_ip rose from 0.3333 to 0.6667, and the model is now sure.",
+   "source": "passrate-1 variants"
+  },
+  {
+   "sample": "ddos",
+   "method": "counterfactual",
+   "text": "log_interval-messages fell from 192.5 to 96.64, so traffic like this slips by.",
+   "source": "passrate-1 variants"
+  },
+  {
+   "sample": "ddos",
+   "method": "shap",
+   "text": "No features pulled the result away from the predicted class.",
+   "source": "passrate-1 variants"
+  },
+  {
+   "sample": "ddos",
+   "method": "permutation",
+   "text": "All other features have an importance of 0, meaning shuffling them did not increase the model's error.",
+   "source": "passrate-1 variants"
+  },
+  {
+   "sample": "ddos",
+   "method": "counterfactual",
+   "text": "After the recorded change the model would still predict ddos icmp flood.",
+   "source": "passrate-1 variants"
+  }
+ ],
+ "must_pass": [
+  {
+   "sample": "ddos",
+   "method": "counterfactual",
+   "text": "log_interval-messages decreased from 192.5 to 96.64."
+  },
+  {
+   "sample": "ddos",
+   "method": "counterfactual",
+   "text": "log_interval-messages changed from 192.5 to 96.64."
+  },
+  {
+   "sample": "ddos",
+   "method": "counterfactual",
+   "text": "log_interval-messages fell from 192.5 to 96.64."
+  },
+  {
+   "sample": "ddos",
+   "method": "counterfactual",
+   "text": "listed_dst_ports_per_dst_ip rose from 0.3333 to 0.6667."
+  },
+  {
+   "sample": "ddos",
+   "method": "counterfactual",
+   "text": "listed_src_ports_per_src_ip increased from 0.2857 to 0.6667."
+  },
+  {
+   "sample": "ddos",
+   "method": "counterfactual",
+   "text": "The model would predict mitm impersonation if log_interval-messages fell to 96.64."
+  },
+  {
+   "sample": "ddos",
+   "method": "counterfactual",
+   "text": "With the whole recorded change, the model would give mitm impersonation."
+  },
+  {
+   "sample": "ddos",
+   "method": "counterfactual",
+   "text": "log_data-ranges (linked measurements) (a group of 4 linked features) changed together."
+  },
+  {
+   "sample": "benign",
+   "method": "counterfactual",
+   "text": "listed_dst_ports_per_dst_ip increased from 0.2545 to 28.83."
+  },
+  {
+   "sample": "benign",
+   "method": "counterfactual",
+   "text": "listed_low_dst_port_share changed from 0.1429 to 0.01734."
+  },
+  {
+   "sample": "unknown",
+   "method": "counterfactual",
+   "text": "window_duration_seconds dropped from 6 to 4."
+  },
+  {
+   "sample": "unknown",
+   "method": "counterfactual",
+   "text": "window_duration_seconds changed from 6 to 4."
+  },
+  {
+   "sample": "benign",
+   "method": "anchors",
+   "text": "No supported rule was found: the best candidate condition, log_data-types (linked measurements), kept the model on Normal network activity in 0.06667 of the 15 matching reference rows tested and covered 0.8281 of the reference data."
+  },
+  {
+   "sample": "benign",
+   "method": "anchors",
+   "text": "Its precision was 0.06667 and its coverage was 0.8281."
+  },
+  {
+   "sample": "benign",
+   "method": "anchors",
+   "text": "The search tested 15 matching reference rows."
+  },
+  {
+   "sample": "benign",
+   "method": "anchors",
+   "text": "Its precision lower bound was 0.01187."
+  },
+  {
+   "sample": "benign",
+   "method": "anchors",
+   "text": "The condition is that log_data-types stays within 0.15 of this observation's values."
+  },
+  {
+   "sample": "benign",
+   "method": "anchors",
+   "text": "The rule condition involves log_data-types staying within a normalized tolerance of 0.15 of the observed values."
+  },
+  {
+   "sample": "benign",
+   "method": "lime",
+   "text": "LIME's simple local model matched the model near this observation with a fit of 0.997 (R squared)."
+  },
+  {
+   "sample": "benign",
+   "method": "lime",
+   "text": "The local fit (R squared) was 0.997."
+  },
+  {
+   "sample": "benign",
+   "method": "lime",
+   "text": "How closely LIME matched the model: 0.997."
+  },
+  {
+   "sample": "benign",
+   "method": "lime",
+   "text": "quality_no_packets_observed (value 0, -0.00000459) pulled the result away from Normal network activity."
+  },
+  {
+   "sample": "benign",
+   "method": "lime",
+   "text": "log_messages_count, a group of 2 linked features, had a contribution of -0.00000215."
+  },
+  {
+   "sample": "ddos",
+   "method": "shap",
+   "text": "SHAP shows which measured values pushed this result toward the predicted class and which pulled it away."
+  },
+  {
+   "sample": "ddos",
+   "method": "ale",
+   "text": "window_duration_seconds at value 10 had an effect of -0.0009798."
+  },
+  {
+   "sample": "ddos",
+   "method": "shap",
+   "text": "The model predicted ddos icmp flood."
+  }
+ ]
+}

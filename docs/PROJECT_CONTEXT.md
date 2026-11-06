@@ -1928,3 +1928,170 @@ Python inference process. React artifacts are compiled and sealed before staging
 No training, held-out testing, research data mutation or packet capture occurs in
 this migration's regression checks. Clean-machine/signing/Store qualification is
 separate from a successful local package and installation check.
+
+## 42. Independent live-model training loop (26 October 2026)
+
+The owner explicitly authorized new live-screening adaptations and an unattended
+training loop that continues without chat tokens. This is a separate study under
+`artifacts/training/live_models_20261025_v1`, not a reopening of the completed
+full-schema study. Its directory retains the original preparation date. The CLI
+is `experiment/train_live_models.py`; the modular implementation is under
+`framework/training/live_study`. Read `docs/LIVE_TRAINING_LOOP.md` for commands,
+recovery behavior, model scope and statistical limitations.
+
+Seven measured packet-header counts from nonempty exact ten-second source
+windows produce fit/tune/blend/calibration roles with interval-boundary and
+cross-role duplicate purging. Sparse classes remain in fitting and unsupported
+evaluation classes are reported. There are 11,716 / 954 / 945 / 1,637 rows, all
+84 classes occur in fitting, and original validation is reserved for frozen
+selection assessment. No held-out test arrays are read. Historical captured
+windows and twelve original CSV examples are compared in `reference_review`;
+that evidence supplies no live attack labels or detection-accuracy claim.
+
+The queue plans sixteen TPE proposals for each of eight branches and twenty-four
+for each of three hybrids, then branch repeats and frozen-hybrid replays at seeds
+43 and 44. Calibration and CPU replay follow each evaluated trial. The 24-hour
+wall-clock cap, bounded retries, exclusive OS locks, atomic state, persisted
+Optuna proposals, nested owned Windows jobs, STOP/resume and current-user logon
+restart are implemented. Code, schema, library and checkpoint changes fail closed.
+App changes outside training sources do not invalidate the running study.
+
+Final smoke evidence is `live_loop_smoke_20261026_v3`: eight branch trials, six
+hybrid trials, eleven repeats/replays and final CSV assessment completed with no
+failed trials. Earlier v2 records actual controller crash recovery and STOP/resume.
+All five demos and 621 evaluation tests pass. These short-fit scores are software
+verification, not tuned model results. Check live process identity, heartbeat,
+Optuna counts and `completion.json` before reporting the full study finished.
+
+Default application operation remains offline CPU inference without credentials.
+GPU fitting is explicit research work. Live-feature CPU checkpoints are research
+candidates; native Rust export, Npcap semantic validation and deployment promotion
+remain separate. Existing installed models are not automatically replaced.
+
+## 43. Broad Npcap feature research and selection (28 October 2026)
+
+The owner requested broad useful packet features, the latest other-chat 655-feature
+audit findings, matched retraining comparisons, and a new unattended adaptation
+loop. The feature study is `artifacts/training/live_features_20261027_v1`.
+The numeric core has 54 raw header/window summaries plus 14 derivatives; 60 survive
+fitting-only redundancy and purged-fold group selection. Six raw definitions remain
+withheld; four payload summaries and their ratio are extended-only research.
+The defective reported destination-MAC count is not silently repaired as equivalent.
+
+Twenty-one matched XGBoost fits (seven arms, seeds 42/43/44) completed using the
+preserved fitting/tuning roles. Mean tuning accuracy/macro F1: seven counts
+69.95%/35.41%, numeric60 84.91%/45.34%, numeric60 plus port192 90.43%/54.09%.
+The 252-feature candidate improves both at all three seeds. Single removals give
+mixed tradeoffs and their untested combination is not adopted. The final
+`training_profile.json` freezes 252 ordered fields; the earlier selected60
+artifact remains historical. Port vocabulary is broader-training-derived and the
+tuning role is historically reused: these are exploratory CSV comparisons.
+Neither original validation nor held-out test participated in this comparison.
+
+Native Rust header extraction reports additive numeric/port observations with
+explicit missing/support/capture-quality states. It preserves signed timing,
+IPv4-specific dataset summaries, real zeros, and header-only transient parsing.
+Window closure and closing drop-statistics sampling now belong to the capture
+thread; a bounded request/reply hands the completed window to inference. Drop
+counter regression or unavailable telemetry fails closed. This removes the prior
+shared-window rotation/statistics-poll race; it does not prove driver telemetry
+or timestamp accuracy. Legacy live model inputs remain separate and unchanged.
+
+Independent Python/native replay passes fifteen fixtures and one bounded external
+PCAP window, comparing 79 numeric/derived fields and 192 port indicators. Original
+CSV review covers fifteen fitting rows from all eight families and 3,900 cells.
+Neither synthetic fixtures nor unrelated PCAP replay establishes publisher
+extractor equivalence or labelled live accuracy. See
+`docs/NPCAP_DATASET_FEATURE_AUDIT.md`, `docs/LIVE_ACCURACY_RESEARCH_20261027.md`
+and the study's verification artifacts for definitions, sources and limitations.
+
+## 44. Broad-model Optuna adaptation queue (28 October 2026)
+
+`experiment/train_broad_live.py` and `framework/training/broad_live` introduce a
+new 252-input study using the existing fit/calibration/CPU worker implementations.
+The prior `live_study` source and legacy native models remain byte-identical to
+the feature-work snapshot. Data joins require exact IDs, labels and window bounds;
+zero, signed/fractional values and NaN remain distinct. All 84 classes have fitting
+support. Original validation is assembled only after all branch/hybrid selections
+and repeats are frozen. No held-out test loading route is added.
+
+The current main revision is `artifacts/training/broad_live_models_20261028_v2`.
+Version1 was stopped after its first two completed trials to fix stale running
+counts in the heartbeat. Its results and old pinned sources are retained; its
+Startup entry was removed. Version2 records a newly asked trial as running before
+worker monitoring. Default commands and launcher target version2. Always inspect
+current state, process creation times and SQLite before reporting liveness.
+
+The queue targets 32 multivariate/group TPE proposals for each of eight branches
+and 48 for each of three hybrids: 400 proposals total, then 22 seeded repeats and
+frozen-hybrid replays. Class weights, neural parameters and regularization, broad
+HEM-derived PCA dimensions, TabPack member weights and global/classwise hybrid
+weights are included. Selected branch configurations are refitted at seeds 43/44.
+Calibration, confidence/false-alarm metrics, CPU checkpoint reload and cold
+single-window latency follow each evaluated trial. Pruning uses available
+XGBoost/KAN/HEM-derived telemetry; other trainers use early stopping/runtime caps.
+
+Completed smoke revision `broad_live_smoke_20261028_v1` proves all eight branch fits,
+six hybrid trials, eleven seed43 repeats/replays and final CPU assessment with no
+failed trials. STOP/resume preserved the pending request and deadline. This smoke
+precedes the status-count-only correction; its old controller/CLI bytes are saved
+under source_snapshot. A separate regression proves that reporting correction.
+Short smoke scores are software checks, not final tuned model results.
+
+Read `docs/BROAD_LIVE_TRAINING.md` for scope, search spaces, commands and recovery.
+The hidden supervisor, persistent SQLite, source/version pins, owned process jobs,
+bounded retries and current-user logon entry make training independent of chat
+tokens. The wall-clock budget is 24 hours from launch; power-off time still counts.
+Actual reboot recovery and a complete day of operation are not yet verified.
+CPU Python checkpoints are research candidates; native export, application
+promotion, paired publisher-PCAP parity and labelled live evaluation remain open.
+
+## 31 October 2026: Qwen language model removed
+
+The owner asked to remove Qwen from the folder and the app. The runtime no longer
+hard-codes a model: `language.rs` reads an optional `artifacts/llm/model.json`
+(name, GGUF file, SHA-256, prompt template) and reports `unavailable` with no
+substitute text when it is absent. The llama.cpp b11564 runtime is retained for a
+replacement. All Qwen GGUF copies (live folder, staged package, old releases and
+backups; about 5.9 GB) were deleted with owner approval; hashes are recorded in
+`artifacts/llm_removal_20261031/deletion_manifest.json`. Replacement candidates
+(unmeasured here): LFM2.5-1.2B-Instruct, Granite 4.0 1B, Granite 4.1 3B,
+Qwen3-4B-Instruct-2507, SmolLM3-3B, MiniCPM5-1B.
+
+## 2 November 2026: locked XAI explainer staged and measured (Task 7)
+
+Plan `docs/superpowers/plans/2026-10-31-locked-xai-explainer.md` Task 7. Qwen3-4B-Instruct-2507
+Q4_K_M (pinned in `artifacts/llm/model.json`) now runs through one loopback llama.cpp b11564
+`llama-server`, CUDA build first and CPU build as fallback; detectors stay on the CPU.
+`tools/stage_native_app.py` stages and seals exactly the files `language/server.rs` `closure()` pins
+in both llama folders (the CUDA closure as "background", the CPU `llama-server` closure as
+"startup"); `llama-completion` is no longer staged. The dev reseal and the restaged package both pin
+GPU and CPU launches (`real_tree_pins`: `Ok([Gpu, Cpu])`).
+
+Measured on 2 Nov 2026 with no other GPU job running (uncontended; the RTX 4050 had 1360 MiB in use
+before each run). First token is measured from the start of the turn:
+
+- GPU, 4 validation samples x initial/simpler/summary/detail: first token p50 0.08 s, p95 0.16 s;
+  total p95 2.3 s. The 60-case evaluation (240 GPU turns): first token p50 0.08 s, p95 0.20 s;
+  total p50 1.27 s, p95 2.45 s.
+- CPU fallback (`NETSEC_LLM_DEVICE=cpu`), the same 16 turns: first token p50 2.07 s, p95 4.43 s;
+  total p95 11.1 s.
+- llama.cpp b11564 keeps a host-memory prompt cache (`--cache-ram`, default 8192 MiB) that restores
+  a context's earlier prompt. Interleaving two contexts therefore never produces the full cache miss
+  the plan modelled, and the plan's partial-hit rule flags every interleaved turn. Instead, the
+  full re-evaluation was estimated from the measured CPU prompt rate (about 78-83 tokens/s). With two
+  prior answers that estimate was p95 20.7 s; with one prior it was 15.0 s; with one prior cut to whole
+  sentences within 600 characters it is 11.9 s. The CPU prompt now carries one bounded prior
+  (`explain.rs` `CPU_PRIORS`/`CPU_PRIOR_CHARS`), keyed on the device the generator will use. GPU keeps
+  two priors.
+- Evaluation (`tools/eval_explainer.py`, 60 fixed validation cases, 10 where XGBoost is wrong, never
+  the locked test partition): of 862 model sentences attempted, the verifier stopped 8.9% for an
+  invented number, 4.5% for a wrong attack name and 0% for an invented feature; 18 turns stopped on a
+  banned pattern. 55.8% of turns used some template fallback (53.5% of displayed sentences are
+  template text). The independent re-check flagged no displayed model sentence. A manual review of
+  the first run found paraphrases the verifier cannot check, for example "features related to port
+  1883 ... reduced their influence" against a positive contribution (the spec's known paraphrase
+  risk). Readability ratings are pending a human rater (`eval/blind_readability.csv`).
+
+Evidence: `artifacts/locked_explainer_20261031/verification/{app,chat,remedy-step1,app-baseline-two-priors}`,
+`artifacts/locked_explainer_20261031/eval/`, report `artifacts/locked_explainer_20261031/sdd/task-7-report.md`.

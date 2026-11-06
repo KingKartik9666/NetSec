@@ -49,4 +49,3 @@ No unrelated cache, research artifact or model was deleted.
 
 See [the file audit](../FILE_AUDIT_20261025.md) for exact keep/cleanup categories
 and [the update notes](../UPDATES_0.4.0.md) for the short user-facing summary.
-

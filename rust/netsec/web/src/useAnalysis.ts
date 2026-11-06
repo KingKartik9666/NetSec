@@ -7,8 +7,8 @@ interface AnalysisState {
   csvStatus: string; rowsText: string; job: Job | null; inputSnapshot: unknown; rowIndex: number; evidenceModel: string;
   records: EvidenceRecord[]; starting: boolean; cancelling: boolean; pollingPaused: boolean; inputError: string; jobError: string;
 }
-export function useAnalysis(catalog: Catalog, samples: Sample[], route: string, failed: boolean) {
-  const [state,setState]=useState<AnalysisState>({selected:new Set(),mode:'selected',inputKind:route==='/csv'?'csv':'sample',sampleId:'',csv:'',csvLoading:false,csvStatus:'Files stay in this request. Labels never become model inputs.',rowsText:'',job:null,inputSnapshot:null,rowIndex:0,evidenceModel:'',records:[],starting:false,cancelling:false,pollingPaused:false,inputError:'',jobError:''});
+export function useAnalysis(catalog: Catalog, samples: Sample[], initialInput: InputKind, failed: boolean) {
+  const [state,setState]=useState<AnalysisState>({selected:new Set(),mode:'selected',inputKind:initialInput,sampleId:'',csv:'',csvLoading:false,csvStatus:'Files stay in this request. Labels never become model inputs.',rowsText:'',job:null,inputSnapshot:null,rowIndex:0,evidenceModel:'',records:[],starting:false,cancelling:false,pollingPaused:false,inputError:'',jobError:''});
   const current=useRef(state), generation=useRef(new Generation()), mounted=useRef(true), failedRef=useRef(failed);
   failedRef.current=failed;
   const update=(patch: Partial<AnalysisState>) => {if(mounted.current){current.current={...current.current,...patch};setState(current.current);}};
@@ -23,14 +23,15 @@ export function useAnalysis(catalog: Catalog, samples: Sample[], route: string, 
   useEffect(()=>{
     const allowed=eligibleModels(catalog.models,catalog.schema);
     const selected=new Set([...current.current.selected].filter(id=>allowed.some(model=>model.id===id)));
-    if(!selected.size&&allowed.length) selected.add(allowed.find(model=>model.id==='xgboost')?.id||allowed[0].id);
+    if(!selected.size&&allowed.length) selected.add(allowed.find(model=>model.id==='tabm_xgboost_kan')?.id||allowed.find(model=>model.id==='xgboost')?.id||allowed[0].id);
     update({selected});
   },[catalog]);
   useEffect(()=>{if(!samples.some(sample=>sample.id===current.current.sampleId)) update({sampleId:samples[0]?.id||''});},[samples]);
   useEffect(()=>{
     if(failed){generation.current.invalidate();update({starting:false,cancelling:false,csvLoading:false,pollingPaused:false,jobError:active()?'Remaining operations could not be confirmed after the service stopped. Completed predictions are retained with their last recorded status.':current.current.jobError});}
   },[failed]);
-  useEffect(()=>()=>{mounted.current=false;generation.current.invalidate();},[]);
+  // Leaving the workspace detaches its input, so server work for it is cancelled like any other detach.
+  useEffect(()=>()=>{const old=active()?current.current.job?.id:null;mounted.current=false;generation.current.invalidate();if(old)post(`/api/v1/jobs/${encodeURIComponent(old)}/cancel`,{}).catch(()=>{});},[]);
   function publish(job: Job) {
     if(!job?.id||!Array.isArray(job.models)) throw new Error('The runtime returned an incomplete analysis job.');
     const rowIndex=current.current.rowIndex<(job.input?.row_count||1)?current.current.rowIndex:0;

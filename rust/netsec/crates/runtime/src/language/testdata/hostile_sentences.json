@@ -1,0 +1,894 @@
+{
+ "_note": "Permanent base-vs-new check (redesign round 3, 3 Nov 2026). 'sentences': hostile or unfaithful sentences from the round 1 and round 2 independent reviews and the round 3 tests, each with the BASE verifier's recorded verdict (artifacts/explainer_20261103/base, run by the scratch harness in artifacts/explainer_20261103/redesign-3/scratch); the current verifier must reject every one. 'stricter_than_base': sentences the base accepted that the current verifier must also reject (new stricter rules). Validation-row evidence only. Pass-rate round 1 appended the 37 redesign-3-review sentences (base-rejected, accepted by the round 3 build); all now fail, and the live base check is in review3_probes_fail_and_base_rejections_stay_rejected.",
+ "sentences": [
+  {
+   "base": "feature: listedsrcportspersrcip",
+   "method": "counterfactual",
+   "sample": "ddos",
+   "text": "listed_src_ports_per_src_ip decreased, which lowered the predicted class score.",
+   "source": "redesign-1-review"
+  },
+  {
+   "base": "feature: listedsrcportspersrcip",
+   "method": "counterfactual",
+   "sample": "ddos",
+   "text": "Lowering listed_src_ports_per_src_ip reduced the probability of the predicted class.",
+   "source": "redesign-1-review"
+  },
+  {
+   "base": "feature: listedsrcportspersrcip",
+   "method": "counterfactual",
+   "sample": "ddos",
+   "text": "listed_src_ports_per_src_ip decreased.",
+   "source": "redesign-1-review"
+  },
+  {
+   "base": "feature: listedsrcportspersrcip",
+   "method": "counterfactual",
+   "sample": "ddos",
+   "text": "listed_src_ports_per_src_ip changed from 192.5 to 96.64.",
+   "source": "redesign-1-review"
+  },
+  {
+   "base": "feature: logintervalmessages",
+   "method": "counterfactual",
+   "sample": "ddos",
+   "text": "log_interval-messages changed from 96.64 to 192.5.",
+   "source": "redesign-1-review"
+  },
+  {
+   "base": "feature: logintervalmessages",
+   "method": "counterfactual",
+   "sample": "ddos",
+   "text": "log_interval-messages had value 96.64 in this observation.",
+   "source": "redesign-1-review"
+  },
+  {
+   "base": "feature: logintervalmessages",
+   "method": "counterfactual",
+   "sample": "ddos",
+   "text": "log_interval-messages changed from 192.5 to 0.6667.",
+   "source": "redesign-1-review"
+  },
+  {
+   "base": "attack: impersonation",
+   "method": "counterfactual",
+   "sample": "ddos",
+   "text": "This traffic is mitm impersonation, and the model would give a different answer.",
+   "source": "redesign-1-review"
+  },
+  {
+   "base": "attack: impersonation",
+   "method": "counterfactual",
+   "sample": "ddos",
+   "text": "The host is doing mitm impersonation, so the new class matters.",
+   "source": "redesign-1-review"
+  },
+  {
+   "base": "attack: flood",
+   "method": "counterfactual",
+   "sample": "benign",
+   "text": "This host is flooding the network, and the model would give a different answer.",
+   "source": "redesign-1-review"
+  },
+  {
+   "base": "attack: ddos",
+   "method": "counterfactual",
+   "sample": "benign",
+   "text": "The traffic is a DDoS UDP frag flood; the new class shows it.",
+   "source": "redesign-1-review"
+  },
+  {
+   "base": "attack: ddos",
+   "method": "counterfactual",
+   "sample": "benign",
+   "text": "The new class is ddos udp frag flood, so this host is part of a DDoS.",
+   "source": "redesign-1-review"
+  },
+  {
+   "base": "feature: logintervalmessages",
+   "method": "counterfactual",
+   "sample": "ddos",
+   "text": "If the attacker lowered log_interval-messages to 96.64, the model would give mitm impersonation.",
+   "source": "redesign-1-review"
+  },
+  {
+   "base": "feature: logintervalmessages",
+   "method": "counterfactual",
+   "sample": "ddos",
+   "text": "An attacker can lower log_interval-messages to 96.64 so the model would predict mitm impersonation.",
+   "source": "redesign-1-review"
+  },
+  {
+   "base": "feature: logintervalmessages",
+   "method": "counterfactual",
+   "sample": "ddos",
+   "text": "Sending fewer log messages, with log_interval-messages at 96.64, would change to mitm impersonation and slip past the ddos check.",
+   "source": "redesign-1-review"
+  },
+  {
+   "base": "number: 0.8281",
+   "method": "anchors",
+   "sample": "benign",
+   "text": "A supported rule was found: log_data-types kept the model on its answer with precision 0.8281.",
+   "source": "redesign-1-review"
+  },
+  {
+   "base": "number: 83%",
+   "method": "anchors",
+   "sample": "benign",
+   "text": "The rule's precision was 83%, and it covered 6.7% of the reference data.",
+   "source": "redesign-1-review"
+  },
+  {
+   "base": "number: 0.0234",
+   "method": "anchors",
+   "sample": "ddos",
+   "text": "log_data-types kept the model on its answer in 0.0234 of matching rows, a strong rule.",
+   "source": "redesign-1-review"
+  },
+  {
+   "base": "number: 0.15",
+   "method": "anchors",
+   "sample": "benign",
+   "text": "Its precision was 0.15.",
+   "source": "redesign-1-review"
+  },
+  {
+   "base": "banned: block",
+   "method": "shap",
+   "sample": "ddos",
+   "text": "HTTP flood on port 1883 was less likely, so block it.",
+   "source": "redesign-1-review"
+  },
+  {
+   "base": "number: 1883",
+   "method": "shap",
+   "sample": "ddos",
+   "text": "HTTP flood on port 1883 was less likely than the attacker expected.",
+   "source": "redesign-1-review"
+  },
+  {
+   "base": "number: 1883",
+   "method": "shap",
+   "sample": "ddos",
+   "text": "This device launched an HTTP flood on port 1883 and the model found it less likely.",
+   "source": "redesign-2-review"
+  },
+  {
+   "base": "number: 1883",
+   "method": "shap",
+   "sample": "ddos",
+   "text": "HTTP flood on port 1883 was less likely, so isolate port 1883.",
+   "source": "redesign-2-review"
+  },
+  {
+   "base": "number: 1883",
+   "method": "lime",
+   "sample": "ddos",
+   "text": "The model predicted ddos icmp flood; HTTP flood on port 1883 is also considered a threat on this network.",
+   "source": "redesign-2-review"
+  },
+  {
+   "base": "feature: logintervalmessages",
+   "method": "counterfactual",
+   "sample": "ddos",
+   "text": "The sender would switch to mitm impersonation by lowering log_interval-messages to 96.64.",
+   "source": "redesign-2-review"
+  },
+  {
+   "base": "feature: logintervalmessages",
+   "method": "counterfactual",
+   "sample": "ddos",
+   "text": "To get mitm impersonation, one would lower log_interval-messages to 96.64 and the model would predict mitm impersonation.",
+   "source": "redesign-2-review"
+  },
+  {
+   "base": "feature: listedsrcportspersrcip",
+   "method": "counterfactual",
+   "sample": "benign",
+   "text": "Raising listed_src_ports_per_src_ip to 28.83 would make this host switch to ddos udp frag flood.",
+   "source": "redesign-2-review"
+  },
+  {
+   "base": "attack: ddos",
+   "method": "counterfactual",
+   "sample": "benign",
+   "text": "The new class is ddos udp frag flood.",
+   "source": "redesign-2-review"
+  },
+  {
+   "base": "attack: impersonation",
+   "method": "counterfactual",
+   "sample": "ddos",
+   "text": "Operators would give mitm impersonation a higher priority.",
+   "source": "redesign-2-review"
+  },
+  {
+   "base": "number: 83%",
+   "method": "anchors",
+   "sample": "benign",
+   "text": "The model's confidence was 83%.",
+   "source": "redesign-2-review"
+  },
+  {
+   "base": "number: 0.0667",
+   "method": "anchors",
+   "sample": "benign",
+   "text": "The rule was true for 0.0667 of the reference data, and the model stayed on its answer in 0.8281 of those rows.",
+   "source": "redesign-2-review"
+  },
+  {
+   "base": "number: 6.7%",
+   "method": "anchors",
+   "sample": "benign",
+   "text": "The rule matched 6.7% of the reference data and the model stayed on its answer in 83% of them.",
+   "source": "redesign-2-review"
+  },
+  {
+   "base": "number: 0.15",
+   "method": "anchors",
+   "sample": "benign",
+   "text": "log_data-types had value 0.15 in this observation.",
+   "source": "redesign-2-review"
+  },
+  {
+   "base": "number: 0.8281",
+   "method": "anchors",
+   "sample": "benign",
+   "text": "log_data-types had value 0.8281 in this observation.",
+   "source": "redesign-2-review"
+  },
+  {
+   "base": "number: 0.0234",
+   "method": "anchors",
+   "sample": "ddos",
+   "text": "The model's confidence was 0.0234.",
+   "source": "redesign-2-review"
+  },
+  {
+   "base": "number: 0.997",
+   "method": "lime",
+   "sample": "benign",
+   "text": "The model's confidence was 0.997.",
+   "source": "redesign-2-review"
+  },
+  {
+   "base": "number: 0.997",
+   "method": "lime",
+   "sample": "benign",
+   "text": "Other grouped features had value 0.997 here.",
+   "source": "redesign-2-review"
+  },
+  {
+   "base": "number: 96.64",
+   "method": "counterfactual",
+   "sample": "ddos",
+   "text": "The confidence would fall to 96.64.",
+   "source": "redesign-2-review"
+  },
+  {
+   "base": "number: 96.64",
+   "method": "counterfactual",
+   "sample": "ddos",
+   "text": "The model's confidence would sink to 96.64 after the change.",
+   "source": "redesign-2-review"
+  },
+  {
+   "base": "number: 96.64",
+   "method": "counterfactual",
+   "sample": "ddos",
+   "text": "Changing the window to 96.64 seconds would matter most.",
+   "source": "redesign-2-review"
+  },
+  {
+   "base": "feature: logmessagescount",
+   "method": "counterfactual",
+   "sample": "ddos",
+   "text": "log_messages_count was lowered in the recorded change.",
+   "source": "redesign-2-review"
+  },
+  {
+   "base": "attack: impersonation",
+   "method": "counterfactual",
+   "sample": "ddos",
+   "text": "The traffic would change to mitm impersonation.",
+   "source": "redesign-2-review"
+  },
+  {
+   "base": "attack: impersonation",
+   "method": "counterfactual",
+   "sample": "ddos",
+   "text": "This host would switch to mitm impersonation.",
+   "source": "redesign-2-review"
+  },
+  {
+   "base": "attack: impersonation",
+   "method": "counterfactual",
+   "sample": "ddos",
+   "text": "The router would switch to mitm impersonation next.",
+   "source": "redesign-2-review"
+  },
+  {
+   "base": "attack: impersonation",
+   "method": "counterfactual",
+   "sample": "ddos",
+   "text": "This traffic's new class is mitm impersonation.",
+   "source": "redesign-2-review"
+  },
+  {
+   "base": "attack: ddos",
+   "method": "counterfactual",
+   "sample": "benign",
+   "text": "This host would switch to ddos udp frag flood.",
+   "source": "redesign-2-review"
+  },
+  {
+   "base": "attack: ddos",
+   "method": "counterfactual",
+   "sample": "benign",
+   "text": "These devices would flip to ddos udp frag flood.",
+   "source": "redesign-2-review"
+  },
+  {
+   "base": "feature: logintervalmessages",
+   "method": "counterfactual",
+   "sample": "ddos",
+   "text": "A sender could lower log_interval-messages to 96.64, and then the model would predict mitm impersonation.",
+   "source": "redesign-2-review"
+  },
+  {
+   "base": "feature: logintervalmessages",
+   "method": "counterfactual",
+   "sample": "ddos",
+   "text": "We could lower log_interval-messages to 96.64 and the model would predict mitm impersonation.",
+   "source": "redesign-2-review"
+  },
+  {
+   "base": "feature: logintervalmessages",
+   "method": "counterfactual",
+   "sample": "ddos",
+   "text": "They could lower log_interval-messages to 96.64 so it would predict mitm impersonation instead of ddos icmp flood.",
+   "source": "redesign-2-review"
+  },
+  {
+   "base": "feature: logintervalmessages",
+   "method": "counterfactual",
+   "sample": "ddos",
+   "text": "Lowering log_interval-messages to 96.64 is enough so the detector would give mitm impersonation.",
+   "source": "redesign-2-review"
+  },
+  {
+   "base": "attack: slowloris",
+   "method": "shap",
+   "sample": "ddos",
+   "text": "The model predicted ddos icmp flood, and slowloris pushed it up.",
+   "source": "redesign-2-review"
+  },
+  {
+   "base": "attack: botnet",
+   "method": "counterfactual",
+   "sample": "ddos",
+   "text": "The model would predict mitm impersonation, a botnet tactic.",
+   "source": "redesign-2-review"
+  },
+  {
+   "base": "attack: impersonation",
+   "method": "counterfactual",
+   "sample": "ddos",
+   "text": "The model would predict mitm impersonation; operators should isolate this host.",
+   "source": "redesign-2-review"
+  },
+  {
+   "base": "attack: impersonation",
+   "method": "counterfactual",
+   "sample": "ddos",
+   "text": "The model would predict mitm impersonation, so isolate the host now.",
+   "source": "redesign-2-review"
+  },
+  {
+   "base": "attack: impersonation",
+   "method": "counterfactual",
+   "sample": "ddos",
+   "text": "The detector would give mitm impersonation.",
+   "source": "redesign-3"
+  },
+  {
+   "base": "attack: impersonation",
+   "method": "counterfactual",
+   "sample": "ddos",
+   "text": "It would predict mitm impersonation.",
+   "source": "redesign-3"
+  },
+  {
+   "base": "attack: impersonation",
+   "method": "counterfactual",
+   "sample": "ddos",
+   "text": "The new class is mitm impersonation.",
+   "source": "redesign-3"
+  },
+  {
+   "base": "feature: logintervalmessages",
+   "method": "counterfactual",
+   "sample": "ddos",
+   "text": "You can lower log_interval-messages to 96.64 to get mitm impersonation.",
+   "source": "redesign-3"
+  },
+  {
+   "base": "feature: logintervalmessages",
+   "method": "counterfactual",
+   "sample": "ddos",
+   "text": "The traffic could simply lower log_interval-messages to 96.64.",
+   "source": "redesign-3"
+  },
+  {
+   "base": "feature: logintervalmessages",
+   "method": "counterfactual",
+   "sample": "ddos",
+   "text": "An operator might change log_interval-messages to 96.64 so the classifier would give mitm impersonation.",
+   "source": "redesign-3"
+  },
+  {
+   "base": "feature: logintervalmessages",
+   "method": "counterfactual",
+   "sample": "ddos",
+   "text": "In order to change the answer, log_interval-messages would be lowered to 96.64.",
+   "source": "redesign-3"
+  },
+  {
+   "base": "feature: logintervalmessages",
+   "method": "counterfactual",
+   "sample": "ddos",
+   "text": "Users can reduce log_interval-messages.",
+   "source": "redesign-3"
+  },
+  {
+   "base": "attack: impersonation",
+   "method": "counterfactual",
+   "sample": "ddos",
+   "text": "The model would predict mitm impersonation by changing these values.",
+   "source": "redesign-3"
+  },
+  {
+   "base": "feature: logintervalmessages",
+   "method": "counterfactual",
+   "sample": "ddos",
+   "text": "Changing log_interval-messages lowered the confidence to 96.64.",
+   "source": "redesign-3"
+  },
+  {
+   "base": "feature: logintervalmessages",
+   "method": "counterfactual",
+   "sample": "ddos",
+   "text": "log_interval-messages changed, and the score fell to 96.64.",
+   "source": "redesign-3"
+  },
+  {
+   "base": "feature: listeddstportsperdstip",
+   "method": "counterfactual",
+   "sample": "ddos",
+   "text": "listed_dst_ports_per_dst_ip changed from 0.3333 to 96.64.",
+   "source": "redesign-3"
+  },
+  {
+   "base": "feature: listedsrcportspersrcip",
+   "method": "counterfactual",
+   "sample": "benign",
+   "text": "Someone may raise listed_src_ports_per_src_ip to 28.83 and the model would predict ddos udp frag flood.",
+   "source": "redesign-3"
+  },
+  {
+   "base": "number: fifteen",
+   "method": "anchors",
+   "sample": "benign",
+   "text": "The search used fifteen rows.",
+   "source": "redesign-3"
+  },
+  {
+   "base": "number: 0.997",
+   "method": "lime",
+   "sample": "benign",
+   "text": "The score gap was 0.997.",
+   "source": "redesign-3"
+  },
+  {
+   "base": "feature: logintervalmessages",
+   "method": "counterfactual",
+   "sample": "ddos",
+   "text": "log_interval-messages rose to 96.64.",
+   "source": "redesign-3-review"
+  },
+  {
+   "base": "feature: logintervalmessages",
+   "method": "counterfactual",
+   "sample": "ddos",
+   "text": "log_interval-messages grew from 192.5 to 96.64.",
+   "source": "redesign-3-review"
+  },
+  {
+   "base": "feature: logintervalmessages",
+   "method": "counterfactual",
+   "sample": "ddos",
+   "text": "log_interval-messages doubled to 96.64.",
+   "source": "redesign-3-review"
+  },
+  {
+   "base": "feature: logintervalmessages",
+   "method": "counterfactual",
+   "sample": "ddos",
+   "text": "log_interval-messages climbed from 192.5 to 96.64.",
+   "source": "redesign-3-review"
+  },
+  {
+   "base": "feature: listeddstportsperdstip",
+   "method": "counterfactual",
+   "sample": "ddos",
+   "text": "listed_dst_ports_per_dst_ip fell to 0.6667.",
+   "source": "redesign-3-review"
+  },
+  {
+   "base": "feature: listeddstportsperdstip",
+   "method": "counterfactual",
+   "sample": "ddos",
+   "text": "listed_dst_ports_per_dst_ip dropped from 0.3333 to 0.6667.",
+   "source": "redesign-3-review"
+  },
+  {
+   "base": "feature: listedsrcportspersrcip",
+   "method": "counterfactual",
+   "sample": "ddos",
+   "text": "listed_src_ports_per_src_ip shrank to 0.6667.",
+   "source": "redesign-3-review"
+  },
+  {
+   "base": "feature: listedsrcportspersrcip",
+   "method": "counterfactual",
+   "sample": "ddos",
+   "text": "listed_src_ports_per_src_ip was halved to 0.6667.",
+   "source": "redesign-3-review"
+  },
+  {
+   "base": "feature: logintervalmessages",
+   "method": "counterfactual",
+   "sample": "ddos",
+   "text": "The model would predict mitm impersonation if log_interval-messages rose to 96.64.",
+   "source": "redesign-3-review"
+  },
+  {
+   "base": "feature: listeddstportsperdstip",
+   "method": "counterfactual",
+   "sample": "ddos",
+   "text": "log_interval-messages and listed_dst_ports_per_dst_ip both changed to 0.6667.",
+   "source": "redesign-3-review"
+  },
+  {
+   "base": "feature: listeddstportsperdstip",
+   "method": "counterfactual",
+   "sample": "ddos",
+   "text": "log_interval-messages, listed_dst_ports_per_dst_ip and listed_src_ports_per_src_ip all changed to 0.6667.",
+   "source": "redesign-3-review"
+  },
+  {
+   "base": "feature: listeddstportsperdstip",
+   "method": "counterfactual",
+   "sample": "benign",
+   "text": "From 2.642, listed_dst_ports_per_dst_ip rose to 28.83.",
+   "source": "redesign-3-review"
+  },
+  {
+   "base": "feature: listedlowdstportshare",
+   "method": "counterfactual",
+   "sample": "benign",
+   "text": "listed_low_dst_port_share climbed to 0.01734.",
+   "source": "redesign-3-review"
+  },
+  {
+   "base": "feature: listedportoverlapjaccard",
+   "method": "counterfactual",
+   "sample": "benign",
+   "text": "listed_port_overlap_jaccard jumped to 0.",
+   "source": "redesign-3-review"
+  },
+  {
+   "base": "feature: listeddstportsperdstip",
+   "method": "counterfactual",
+   "sample": "benign",
+   "text": "listed_dst_ports_per_dst_ip fell from 0.2545 to 28.83.",
+   "source": "redesign-3-review"
+  },
+  {
+   "base": "number: 6.67%",
+   "method": "anchors",
+   "sample": "benign",
+   "text": "The model predicted Normal network activity at 6.67%.",
+   "source": "redesign-3-review"
+  },
+  {
+   "base": "number: 6.67%",
+   "method": "anchors",
+   "sample": "benign",
+   "text": "The model gave Normal network activity 6.67%.",
+   "source": "redesign-3-review"
+  },
+  {
+   "base": "number: 6.67%",
+   "method": "anchors",
+   "sample": "benign",
+   "text": "The model predicted Normal network activity with 6.67%.",
+   "source": "redesign-3-review"
+  },
+  {
+   "base": "number: 82.81%",
+   "method": "anchors",
+   "sample": "benign",
+   "text": "The rule matched, so the model was 82.81% sure.",
+   "source": "redesign-3-review"
+  },
+  {
+   "base": "number: 82.81%",
+   "method": "anchors",
+   "sample": "benign",
+   "text": "The rule applied, and the model was 82.81% sure of its answer.",
+   "source": "redesign-3-review"
+  },
+  {
+   "base": "number: 15",
+   "method": "anchors",
+   "sample": "benign",
+   "text": "The model's answer came from only 15 reference samples.",
+   "source": "redesign-3-review"
+  },
+  {
+   "base": "number: 15",
+   "method": "anchors",
+   "sample": "benign",
+   "text": "The model's confidence came from only 15 reference samples.",
+   "source": "redesign-3-review"
+  },
+  {
+   "base": "number: 0.15",
+   "method": "anchors",
+   "sample": "benign",
+   "text": "The predicted class probability was within 0.15 of the runner-up.",
+   "source": "redesign-3-review"
+  },
+  {
+   "base": "number: 0.15",
+   "method": "anchors",
+   "sample": "benign",
+   "text": "The model's answer stayed within 0.15 of the truth.",
+   "source": "redesign-3-review"
+  },
+  {
+   "base": "number: 15",
+   "method": "anchors",
+   "sample": "benign",
+   "text": "Only 15 rows of traffic were seen by the model.",
+   "source": "redesign-3-review"
+  },
+  {
+   "base": "number: 0.997",
+   "method": "lime",
+   "sample": "benign",
+   "text": "The LIME fit shows the model is 0.997 sure of its answer.",
+   "source": "redesign-3-review"
+  },
+  {
+   "base": "number: 0.997",
+   "method": "lime",
+   "sample": "benign",
+   "text": "With a fit of 0.997, this result is very likely to be Normal network activity.",
+   "source": "redesign-3-review"
+  },
+  {
+   "base": "number: 0.997",
+   "method": "lime",
+   "sample": "benign",
+   "text": "The model's fidelity to the truth was 0.997.",
+   "source": "redesign-3-review"
+  },
+  {
+   "base": "number: 0.997",
+   "method": "lime",
+   "sample": "benign",
+   "text": "LIME's fit of 0.997 means the model's answer can be relied on.",
+   "source": "redesign-3-review"
+  },
+  {
+   "base": "attack: impersonation",
+   "method": "counterfactual",
+   "sample": "ddos",
+   "text": "The model would predict mitm impersonation, meaning someone is impersonating the gateway.",
+   "source": "redesign-3-review"
+  },
+  {
+   "base": "attack: impersonation",
+   "method": "counterfactual",
+   "sample": "ddos",
+   "text": "The model would predict mitm impersonation, which steals credentials from victims.",
+   "source": "redesign-3-review"
+  },
+  {
+   "base": "attack: impersonation",
+   "method": "counterfactual",
+   "sample": "ddos",
+   "text": "The model's answer would change to mitm impersonation, so credentials are at risk.",
+   "source": "redesign-3-review"
+  },
+  {
+   "base": "feature: listeddstportsperdstip",
+   "method": "counterfactual",
+   "sample": "ddos",
+   "text": "listed_dst_ports_per_dst_ip changed from 0.3333 to 0.6667, a tenfold rise.",
+   "source": "redesign-3-review"
+  },
+  {
+   "base": "feature: listeddstportsperdstip",
+   "method": "counterfactual",
+   "sample": "benign",
+   "text": "listed_dst_ports_per_dst_ip and listed_src_ports_per_src_ip both changed from 2.642 to 28.83.",
+   "source": "redesign-3-review"
+  },
+  {
+   "base": "feature: listedportoverlapjaccard",
+   "method": "counterfactual",
+   "sample": "benign",
+   "text": "listed_port_overlap_jaccard changed from 0.07692 to 0, and listed_low_dst_port_share changed from 0.1429 to 0.",
+   "source": "redesign-3-review"
+  },
+  {
+   "base": "feature: windowdurationseconds",
+   "method": "counterfactual",
+   "sample": "unknown",
+   "text": "window_duration_seconds grew from 6 to 4.",
+   "source": "redesign-3-review"
+  },
+  {
+   "base": "feature: windowdurationseconds",
+   "method": "counterfactual",
+   "sample": "unknown",
+   "text": "window_duration_seconds was stretched from 6 to 4.",
+   "source": "redesign-3-review"
+  }
+ ],
+ "stricter_than_base": [
+  {
+   "sample": "scan",
+   "method": "counterfactual",
+   "text": "The model would predict a different class after a small change.",
+   "source": "redesign-1-review"
+  },
+  {
+   "sample": "scan",
+   "method": "counterfactual",
+   "text": "A small change would flip the model to a different answer.",
+   "source": "redesign-1-review"
+  },
+  {
+   "sample": "benign",
+   "method": "anchors",
+   "text": "The anchor found a reliable rule, so the model's answer holds for this traffic.",
+   "source": "redesign-1-review"
+  },
+  {
+   "sample": "ddos",
+   "method": "lime",
+   "text": "The model would predict a different class if log_interval-messages had been changed.",
+   "source": "redesign-1-review"
+  },
+  {
+   "sample": "ddos",
+   "method": "shap",
+   "text": "The model is correct.",
+   "source": "redesign-1-review"
+  },
+  {
+   "sample": "ddos",
+   "method": "lime",
+   "text": "LIME matched the model perfectly with a fit of 1.",
+   "source": "redesign-1-review"
+  },
+  {
+   "sample": "ddos",
+   "method": "counterfactual",
+   "text": "log_data-types decreased in the recorded change.",
+   "source": "redesign-2-review"
+  },
+  {
+   "sample": "ddos",
+   "method": "counterfactual",
+   "text": "Network measurements and indicators decreased in the recorded change.",
+   "source": "redesign-2-review"
+  },
+  {
+   "sample": "unknown",
+   "method": "counterfactual",
+   "text": "log_data-types decreased in the recorded change.",
+   "source": "redesign-2-review"
+  },
+  {
+   "sample": "benign",
+   "method": "anchors",
+   "text": "No reliable rule was found, so the model's answer is reliable.",
+   "source": "redesign-2-review"
+  },
+  {
+   "sample": "ddos",
+   "method": "counterfactual",
+   "text": "log_data-ranges rose in the recorded change.",
+   "source": "redesign-3"
+  },
+  {
+   "sample": "ddos",
+   "method": "counterfactual",
+   "text": "The Network measurements and indicators group raised the score.",
+   "source": "redesign-3"
+  },
+  {
+   "sample": "unknown",
+   "method": "counterfactual",
+   "text": "The traffic would change to Normal network activity.",
+   "source": "redesign-3"
+  },
+  {
+   "sample": "unknown",
+   "method": "counterfactual",
+   "text": "The new class is Normal network activity.",
+   "source": "redesign-3"
+  },
+  {
+   "sample": "unknown",
+   "method": "counterfactual",
+   "text": "This host would switch to Normal network activity.",
+   "source": "redesign-3"
+  },
+  {
+   "sample": "ddos",
+   "method": "shap",
+   "text": "The host sent an HTTP flood, which was less likely.",
+   "source": "redesign-3"
+  },
+  {
+   "sample": "ddos",
+   "method": "shap",
+   "text": "This device launched an HTTP flood and the model found it less likely.",
+   "source": "redesign-3"
+  },
+  {
+   "sample": "ddos",
+   "method": "shap",
+   "text": "The traffic performed an ICMP flood that the model predicted.",
+   "source": "redesign-3"
+  },
+  {
+   "sample": "ddos",
+   "method": "shap",
+   "text": "These hosts launched what the model predicted as ddos icmp flood.",
+   "source": "redesign-3"
+  },
+  {
+   "sample": "ddos",
+   "method": "shap",
+   "text": "Investigate this host.",
+   "source": "redesign-3"
+  },
+  {
+   "sample": "ddos",
+   "method": "shap",
+   "text": "The model predicted ddos icmp flood, so check the host.",
+   "source": "redesign-3"
+  },
+  {
+   "sample": "ddos",
+   "method": "shap",
+   "text": "Escalate this result to the security team.",
+   "source": "redesign-3"
+  },
+  {
+   "sample": "ddos",
+   "method": "shap",
+   "text": "A person should verify this result.",
+   "source": "redesign-3"
+  }
+ ]
+}

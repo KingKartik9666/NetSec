@@ -1,0 +1,31 @@
+{
+ "_note": "UI contract fixture. Field names follow the runtime's live77 status JSON (crates/runtime/src/live/models.rs Model::predict, live.rs score_window); the numbers are illustrative, not model output. The label and provenance note must equal artifacts/application/live_models_v1/live77_xgboost/bundle.json.",
+ "scored_recon_scan": {
+  "status": "running", "running": true, "mode": "packets", "observation": {"id": "w-0001"}, "binary_prediction": null, "model_executed": true,
+  "multiclass_prediction": {
+   "available": true, "model_executed": true, "model_id": "live77_xgboost",
+   "model_label": "Live XGBoost (77-class, 10 s windows)",
+   "provenance_note": "Trained on DataSense windows of 1-10 s; scored here on 10 s windows; not yet validated on real traffic on this PC. Validation results are from the dataset, the held-out test was not used.",
+   "label": "recon_scan", "is_attack": true, "score": 0.8125, "score_kind": "calibrated_probability_after_class_merge",
+   "top_classes": [{"label": "recon_scan", "score": 0.8125}, {"label": "benign", "score": 0.0625}, {"label": "ddos_icmp-flood", "score": 0.03125}],
+   "raw_label": "recon_ping-sweep",
+   "class_merge": {"source_class": "recon_ping-sweep", "target_class": "recon_scan", "applied_after": "temperature calibration"},
+   "class_count": 77, "window_seconds": 10, "observation_id": "w-0001", "live_validation": false, "test_evaluated": false,
+   "limitations": ["DataSense-trained model; its accuracy on real traffic from this PC has not been measured", "No binary attack probability is reported for this model"],
+   "explanation": {"method": "exact_tree_shap", "scope": "local", "target_label": "recon_scan", "units": "raw class margin", "bias": -0.5, "margin": 1.25,
+    "merge_note": "recon_ping-sweep probability was merged into recon_scan after calibration; exact TreeSHAP is shown for both classes side by side",
+    "features": [{"feature": "network_packets_src_count", "value": 40, "contribution": 0.75, "is_missing": false}, {"feature": "network_ports_dst__present_UNSEEN", "value": 1, "contribution": 0.5, "is_missing": false}, {"feature": "network_mss_avg", "value": null, "contribution": 0.25, "is_missing": true}],
+    "quality": {"all_class_max_reconstruction_error": 0.00001}, "warnings": ["TreeSHAP is not causal evidence or probability percentage points"]},
+   "merged_source_explanation": {"method": "exact_tree_shap", "scope": "local", "target_label": "recon_ping-sweep", "units": "raw class margin", "bias": -0.25, "margin": 1.5,
+    "merge_note": "recon_ping-sweep probability was merged into recon_scan after calibration; exact TreeSHAP is shown for both classes side by side",
+    "features": [{"feature": "network_protocols_icmp_count", "value": 12, "contribution": 1.0, "is_missing": false}],
+    "quality": {"all_class_max_reconstruction_error": 0.00001}, "warnings": []},
+   "merge_margins": {"units": "raw class margin, not probability", "recon_scan": 1.25, "recon_ping-sweep": 1.5}
+  }
+ },
+ "skipped": {
+  "status": "running", "running": true, "mode": "packets", "observation": {"id": "w-0002"}, "binary_prediction": null, "model_executed": false,
+  "multiclass_prediction": {"available": false, "model_executed": false, "status": "skipped", "error": "Capture loss: this window's live77 inputs are missing, so it is not scored", "observation_id": "w-0002"}
+ },
+ "stopped": {"status": "stopped", "running": false, "observation": null, "binary_prediction": null, "multiclass_prediction": null, "model_executed": false}
+}

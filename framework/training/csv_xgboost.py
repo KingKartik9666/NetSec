@@ -12,7 +12,7 @@ from .trees import _features, _labels, _macro_f1, _parameters, _require_cuda, cl
 
 
 def train_csv_xgboost(X_train, y_train, X_val, y_val, n_classes: int,
-                      config: dict, seed: int, output_dir: Path, *, benign_index: int = 0) -> dict:
+                      config: dict, seed: int, output_dir: Path, *, benign_index: int = 0, row_weight=None) -> dict:
     """Fit supplied CSV rows; optional synthetic additions follow real originals."""
     import xgboost as xgb
     from .csv_monitoring import snapshot
@@ -42,7 +42,10 @@ def train_csv_xgboost(X_train, y_train, X_val, y_val, n_classes: int,
                   float(os.environ.get('IMDAI_FIT_DEADLINE', 'inf')) - time.time() - 90)
     if runtime <= 0:
         raise TimeoutError('Insufficient remaining fit budget')
-    training = xgb.QuantileDMatrix(X, label=y, weight=weights[y], max_bin=params['max_bin'], nthread=4)
+    sample_weight = weights[y] if row_weight is None else weights[y] * np.asarray(row_weight, dtype=np.float64)
+    if len(sample_weight) != len(y) or not np.isfinite(sample_weight).all():
+        raise ValueError('row_weight must be finite with one value per training row')
+    training = xgb.QuantileDMatrix(X, label=y, weight=sample_weight, max_bin=params['max_bin'], nthread=4)
     validation = xgb.DMatrix(V, label=v, nthread=4)
     original_rows = int(config.get('original_training_rows', len(y)))
     if not 0 < original_rows <= len(y):
@@ -76,7 +79,8 @@ def train_csv_xgboost(X_train, y_train, X_val, y_val, n_classes: int,
             progress.update(training_accuracy=self.training_accuracy, training_monitor_rows=len(monitor_ids))
             history.append(progress)
             write_json(directory / 'progress.json', progress)
-            if score > self.best:
+            # checkpoint_rule "last": fixed round count, the final round is kept (no validation-picked round).
+            if score > self.best or config.get('checkpoint_rule') == 'last':
                 self.best, self.best_iteration, self.stale = score, epoch, 0
                 model.save_model(checkpoint)
             else:

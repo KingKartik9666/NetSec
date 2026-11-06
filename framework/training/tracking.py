@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import json
 import hashlib
+import time
 from pathlib import Path
 
 import numpy as np
@@ -90,4 +91,12 @@ def write_json(path: Path, value: dict | list) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     temporary = path.with_suffix(path.suffix + ".tmp")
     temporary.write_text(json.dumps(value, indent=2, allow_nan=False), encoding="utf-8")
-    temporary.replace(path)
+    # Windows: a reader (antivirus, indexer, editor watcher) can hold the target for a moment; retry briefly.
+    for attempt in range(20):
+        try:
+            temporary.replace(path)
+            return
+        except PermissionError:
+            if attempt == 19:
+                raise
+            time.sleep(0.25)

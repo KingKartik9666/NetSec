@@ -1,5 +1,6 @@
 //! Windows owns OS counters; an explicitly started Npcap handle owns passive reads.
 //! There are no send/injection APIs. Unsafe calls stay at this native boundary.
+use super::features::Live77Features;
 use super::packet::{self, LocalAddresses, Window};
 use libloading::os::windows::Library;
 use netsec_capture::Adapter;
@@ -11,8 +12,7 @@ use std::{
     ptr,
     sync::{
         atomic::{AtomicBool, Ordering},
-        mpsc::SyncSender,
-        Mutex,
+        mpsc::{Receiver, SyncSender},
     },
     thread,
     time::{Duration, Instant},
@@ -72,12 +72,57 @@ pub fn counters(alias: &str) -> Result<Counters, String> {
     })
 }
 
+/// BPF filter. Owner decision (3 Nov 2026): the live77 window counts every frame to or from the
+/// device MAC, including non-IP frames such as LLDP, so that MAC is admitted without an EtherType
+/// test. The IP/ARP frames of the selected addresses stay admitted as before. Snaplen stays 192
+/// bytes and no frame or payload byte is retained.
+fn capture_filter(ips: &[std::net::IpAddr], mac: Option<[u8; 6]>) -> Result<String, String> {
+    let hosts = ips
+        .iter()
+        .map(|ip| format!("host {ip}"))
+        .collect::<Vec<_>>()
+        .join(" or ");
+    let ether = mac.map(|mac| {
+        let text = mac.iter().map(|v| format!("{v:02x}")).collect::<Vec<_>>();
+        format!("ether host {}", text.join(":"))
+    });
+    match (hosts.is_empty(), ether) {
+        (true, None) => {
+            Err("The selected adapter has no verified own addresses for passive filtering".into())
+        }
+        (true, Some(ether)) => Ok(ether),
+        (false, None) => Ok(format!("(ip or ip6 or arp) and ({hosts})")),
+        (false, Some(ether)) => Ok(format!("({ether}) or ((ip or ip6 or arp) and ({hosts}))")),
+    }
+}
+
+/// The frames the former `(ip or ip6 or arp) and (...)` filter passed, so the
+/// npcap-network-v1 observation view reads exactly what it read before the widening.
+fn observation_frame(bytes: &[u8]) -> bool {
+    bytes.get(12..14).is_some_and(|kind| {
+        matches!(
+            u16::from_be_bytes([kind[0], kind[1]]),
+            0x0800 | 0x86dd | 0x0806
+        )
+    })
+}
+
 #[repr(C)]
 struct PacketHeader {
     seconds: i32,
     microseconds: i32,
     captured: u32,
     original: u32,
+}
+
+fn timestamp_ns(seconds: i64, microseconds: i32) -> Result<i64, String> {
+    if seconds < 0 || !(0..1_000_000).contains(&microseconds) {
+        return Err("Npcap returned an invalid microsecond timestamp".into());
+    }
+    seconds
+        .checked_mul(1_000_000_000)
+        .and_then(|v| v.checked_add(i64::from(microseconds) * 1000))
+        .ok_or_else(|| "Npcap timestamp exceeds signed nanosecond bounds".into())
 }
 #[repr(C)]
 struct Program {
@@ -237,31 +282,13 @@ impl Capture {
                 error_text(&error)
             ));
         }
-        let mut conditions = adapter
+        let ips = adapter
             .addresses
             .iter()
             .filter_map(|v| v.parse::<std::net::IpAddr>().ok())
-            .map(|ip| format!("host {ip}"))
             .collect::<Vec<_>>();
-        if let Some(mac) = counters(&adapter.name)?.mac {
-            conditions.push(format!(
-                "ether host {}",
-                mac.iter()
-                    .map(|v| format!("{v:02x}"))
-                    .collect::<Vec<_>>()
-                    .join(":")
-            ));
-        }
-        if conditions.is_empty() {
-            return Err(
-                "The selected adapter has no verified own addresses for passive filtering".into(),
-            );
-        }
-        let expression = CString::new(format!(
-            "(ip or ip6 or arp) and ({})",
-            conditions.join(" or ")
-        ))
-        .map_err(|_| "Invalid own-adapter capture filter")?;
+        let expression = CString::new(capture_filter(&ips, counters(&adapter.name)?.mac)?)
+            .map_err(|_| "Invalid own-adapter capture filter")?;
         let mut program = Program {
             length: 0,
             instructions: ptr::null_mut(),
@@ -282,12 +309,13 @@ impl Capture {
         }
         Ok(capture)
     }
-    fn next(&self, own: &LocalAddresses) -> Result<Option<packet::Header>, String> {
+    /// Reads at most one frame into `window`; `false` when none was waiting.
+    fn next(&self, own: &LocalAddresses, window: &mut Window) -> Result<bool, String> {
         let mut header = ptr::null();
         let mut bytes = ptr::null();
         let code = unsafe { (self.next)(self.handle, &mut header, &mut bytes) };
         match code {
-            0 => Ok(None),
+            0 => Ok(false),
             1 => {
                 if header.is_null() || bytes.is_null() {
                     return Err("Npcap returned an invalid frame pointer".into());
@@ -300,7 +328,20 @@ impl Capture {
                     return Err("Npcap frame length exceeds the header-only bound".into());
                 }
                 let data = unsafe { std::slice::from_raw_parts(bytes, header.captured as usize) };
-                Ok(packet::parse(data, header.original, own))
+                let timestamp = timestamp_ns(i64::from(header.seconds), header.microseconds)?;
+                // live77 admits by the device MAC itself (all frame types, IPv6 left out).
+                window.add_live77_frame(data, header.original);
+                if observation_frame(data) {
+                    if let Some(mut parsed) =
+                        packet::parse_at(data, header.original, Some(timestamp), own)
+                    {
+                        // pcap_open_live uses the default microsecond timestamp API.
+                        // Conversion changes the storage unit, not source precision.
+                        parsed.facts.timestamp_resolution_ns = Some(1_000);
+                        window.add(parsed);
+                    }
+                }
+                Ok(true)
             }
             -2 => Err("Native packet capture stopped unexpectedly".into()),
             _ => Err(format!(
@@ -318,10 +359,56 @@ impl Capture {
     }
 }
 
+pub struct CompletedWindow {
+    pub window: Window,
+    pub seconds: f64,
+    pub closed_at: Instant,
+}
+
+// The capture thread owns both packet aggregation and window closure. A monitor
+// cannot rotate a shared Window between the last statistics poll and its update.
+struct CaptureWindows {
+    current: Window,
+    previous_drops: u64,
+    began: Instant,
+    device: Option<[u8; 6]>,
+}
+impl CaptureWindows {
+    fn new(began: Instant, device: Option<[u8; 6]>) -> Self {
+        Self {
+            current: Self::window(device),
+            previous_drops: 0,
+            began,
+            device,
+        }
+    }
+    /// Every window carries the device MAC so an empty window is still a scored zero-packet live77 row.
+    fn window(device: Option<[u8; 6]>) -> Window {
+        Window {
+            live77: Live77Features::new(device),
+            ..Window::default()
+        }
+    }
+    fn finish(&mut self, total_drops: u64, closed_at: Instant) -> Result<CompletedWindow, String> {
+        let drops = total_drops
+            .checked_sub(self.previous_drops)
+            .ok_or("Npcap drop counters reset or wrapped; window quality is unknown")?;
+        self.current.capture_drops = drops;
+        let seconds = closed_at.duration_since(self.began).as_secs_f64();
+        self.previous_drops = total_drops;
+        self.began = closed_at;
+        Ok(CompletedWindow {
+            window: mem::replace(&mut self.current, Self::window(self.device)),
+            seconds,
+            closed_at,
+        })
+    }
+}
+
 pub fn capture(
     adapter: &Adapter,
     stop: &AtomicBool,
-    window: &Mutex<Window>,
+    snapshots: Receiver<SyncSender<CompletedWindow>>,
     ready: SyncSender<Result<(), String>>,
 ) -> Result<(), String> {
     let started = Capture::open(adapter);
@@ -340,23 +427,20 @@ pub fn capture(
             .collect(),
         mac: counters(&adapter.name)?.mac,
     };
-    let mut previous_drops = capture.drops()?;
-    let mut last_stats = Instant::now();
+    let mut windows = CaptureWindows::new(Instant::now(), own.mac);
     let _ = ready.send(Ok(()));
     while !stop.load(Ordering::Acquire) {
-        if let Some(header) = capture.next(&own)? {
-            window.lock().unwrap_or_else(|e| e.into_inner()).add(header);
-        } else {
-            thread::sleep(Duration::from_millis(5));
+        if let Ok(reply) = snapshots.try_recv() {
+            let closed_at = Instant::now();
+            // Query at closure, before exposing the window. Statistics failure
+            // ends the session instead of labelling the window complete.
+            let completed = windows.finish(capture.drops()?, closed_at)?;
+            reply
+                .send(completed)
+                .map_err(|_| "Window consumer stopped".to_owned())?;
         }
-        if last_stats.elapsed() >= Duration::from_millis(500) {
-            let drops = capture.drops()?;
-            window
-                .lock()
-                .unwrap_or_else(|e| e.into_inner())
-                .capture_drops += drops.saturating_sub(previous_drops);
-            previous_drops = drops;
-            last_stats = Instant::now();
+        if !capture.next(&own, &mut windows.current)? {
+            thread::sleep(Duration::from_millis(5));
         }
     }
     Ok(())
@@ -366,6 +450,13 @@ pub fn capture(
 mod tests {
     use super::*;
     #[test]
+    fn packet_timestamps_are_checked_before_forwarding() {
+        assert_eq!(timestamp_ns(2, 123_456).unwrap(), 2_123_456_000);
+        assert!(timestamp_ns(-1, 0).is_err());
+        assert!(timestamp_ns(1, 1_000_000).is_err());
+        assert!(timestamp_ns(i64::MAX, 0).is_err());
+    }
+    #[test]
     fn windows_pcap_header_abi_and_bpf_pointer_layout() {
         assert_eq!(mem::size_of::<PacketHeader>(), 16);
         assert_eq!(mem::size_of::<Program>(), 16);
@@ -374,6 +465,87 @@ mod tests {
     #[test]
     fn invalid_alias_is_rejected_without_capture() {
         assert!(counters("bad\0alias").is_err());
+    }
+    #[test]
+    fn capture_filter_admits_every_device_mac_frame_and_keeps_the_observation_set() {
+        let ips = [
+            "192.0.2.10".parse().unwrap(),
+            "2001:db8::10".parse().unwrap(),
+        ];
+        let mac = Some([0x02, 0, 0, 0, 0, 0x10]);
+        assert_eq!(
+            capture_filter(&ips, mac).unwrap(),
+            "(ether host 02:00:00:00:00:10) or ((ip or ip6 or arp) and (host 192.0.2.10 or host 2001:db8::10))"
+        );
+        assert_eq!(
+            capture_filter(&[], mac).unwrap(),
+            "ether host 02:00:00:00:00:10"
+        );
+        assert_eq!(
+            capture_filter(&ips[..1], None).unwrap(),
+            "(ip or ip6 or arp) and (host 192.0.2.10)"
+        );
+        assert!(capture_filter(&[], None).is_err());
+        // The observation view still reads exactly the frames the former (ip or ip6 or arp) filter passed.
+        let frame = |kind: u16| {
+            let mut bytes = vec![0; 60];
+            bytes[12..14].copy_from_slice(&kind.to_be_bytes());
+            bytes
+        };
+        for (kind, observed) in [
+            (0x0800, true),
+            (0x86dd, true),
+            (0x0806, true),
+            (0x88cc, false),
+            (0x8100, false),
+        ] {
+            assert_eq!(observation_frame(&frame(kind)), observed, "{kind:#06x}");
+        }
+        assert!(!observation_frame(&[0; 13]));
+    }
+    #[test]
+    fn rotated_windows_keep_the_device_mac_for_the_live77_row() {
+        let began = Instant::now();
+        let device = Some([0x02, 0, 0, 0, 0, 0x10]);
+        let mut windows = CaptureWindows::new(began, device);
+        assert_eq!(windows.current.live77.device(), device);
+        let first = windows.finish(0, began + Duration::from_secs(10)).unwrap();
+        assert_eq!(
+            (
+                first.window.live77.device(),
+                windows.current.live77.device()
+            ),
+            (device, device)
+        );
+        let names = ["quality_no_packets_observed".to_string()];
+        assert_eq!(first.window.live77_row(&names).unwrap(), [Some(1.)]);
+        assert!(CaptureWindows::new(began, None)
+            .current
+            .live77_row(&names)
+            .is_err());
+    }
+    #[test]
+    fn late_capture_loss_is_closed_with_its_own_window() {
+        let began = Instant::now();
+        let mut windows = CaptureWindows::new(began, None);
+        windows.current.packets = 2;
+        // A drop appears after a hypothetical 500 ms poll, before rotation.
+        let first = windows.finish(3, began + Duration::from_secs(10)).unwrap();
+        assert_eq!(first.window.capture_drops, 3);
+        assert!(first.window.counts(first.seconds).is_err());
+        assert!(first.window.live77_gate(first.seconds).is_err());
+        assert_eq!(first.seconds, 10.0);
+        windows.current.packets = 1;
+        let second = windows.finish(3, began + Duration::from_secs(20)).unwrap();
+        assert_eq!(second.window.capture_drops, 0);
+        assert!(second.window.counts(second.seconds).is_ok());
+        assert_eq!(second.window.live77_gate(second.seconds), Ok(()));
+        // An empty 10 s window passes the live77 gate; a delayed rotation does not.
+        let third = windows.finish(3, began + Duration::from_secs(30)).unwrap();
+        assert_eq!((third.window.packets, third.window.live77_gate(third.seconds)), (0, Ok(())));
+        let late = windows.finish(3, began + Duration::from_millis(41_500)).unwrap();
+        assert!(late.window.live77_gate(late.seconds).is_err());
+        assert!(windows.finish(1, began + Duration::from_secs(30)).is_err());
     }
     #[test]
     #[ignore = "Requires an active Windows adapter; reads OS counters and enumerates Npcap only"]

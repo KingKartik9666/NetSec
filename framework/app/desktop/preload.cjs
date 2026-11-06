@@ -1,6 +1,6 @@
 'use strict';
 const {contextBridge, ipcRenderer} = require('electron');
-// Fixed window actions only. No raw IPC, filesystem or Node access.
+// Fixed window actions, theme preference and graphics status only. No raw IPC, filesystem or Node access.
 contextBridge.exposeInMainWorld('netsecDesktop', Object.freeze({
   minimize: () => ipcRenderer.invoke('netsec:window-action', 'minimize'),
   toggleMaximize: () => ipcRenderer.invoke('netsec:window-action', 'maximize'),
@@ -9,6 +9,8 @@ contextBridge.exposeInMainWorld('netsecDesktop', Object.freeze({
   cancelClose: () => ipcRenderer.invoke('netsec:window-action', 'cancel-close'),
   retry: () => ipcRenderer.invoke('netsec:window-action', 'retry'),
   getState: () => ipcRenderer.invoke('netsec:window-state'),
+  setTheme: theme => ipcRenderer.invoke('netsec:set-theme', theme === 'dark' ? 'dark' : 'light'),
+  getGraphics: () => ipcRenderer.invoke('netsec:graphics'),
   onState: callback => {
     if (typeof callback !== 'function') return () => {};
     const listener = (_event, state) => callback(state);

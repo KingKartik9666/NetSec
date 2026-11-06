@@ -43,7 +43,7 @@ def load_checkpoint(path, device='cpu'):
     return model, prep, saved
 
 
-def train(X, y, tuning_X, tuning_y, manifest, request, output, device='cpu', preprocessor=None):
+def train(X, y, tuning_X, tuning_y, manifest, request, output, device='cpu', preprocessor=None, row_weight=None):
     """Only training and tuning labels are accepted; no calibration/assessment access."""
     output = Path(output); output.mkdir(parents=True, exist_ok=True)
     if manifest['benign_index'] != 0:
@@ -70,6 +70,12 @@ def train(X, y, tuning_X, tuning_y, manifest, request, output, device='cpu', pre
     weights = np.clip(weights, .2, 10.)
     weights /= np.mean(weights[np.asarray(y, dtype=int)])
     weights_tensor = torch.tensor(weights, dtype=torch.float32, device=device)
+    rows_tensor = None
+    if row_weight is not None:
+        row_weight = np.asarray(row_weight, dtype=np.float32)
+        if row_weight.shape != (len(y),) or not np.isfinite(row_weight).all() or (row_weight <= 0).any():
+            raise ValueError('row_weight must be positive and finite with one value per training row')
+        rows_tensor = torch.from_numpy(row_weight).to(device)
     rng = np.random.default_rng(seed)
     best_key, stale, checkpoint = (-1., -1.), 0, output/'model.pt'
     started = time.monotonic(); epochs = 0
@@ -88,7 +94,8 @@ def train(X, y, tuning_X, tuning_y, manifest, request, output, device='cpu', pre
             with torch.autocast(device_type=device, dtype=torch.bfloat16, enabled=use_amp):
                 logits = model(batch)
                 loss = member_loss(logits, target, model.hierarchical, weights_tensor,
-                                   cfg['subtype_weight'], cfg['smoothing'])
+                                   cfg['subtype_weight'], cfg['smoothing'],
+                                   None if rows_tensor is None else rows_tensor[torch.from_numpy(ids).to(device)])
             if not torch.isfinite(loss):
                 raise FloatingPointError('Nonfinite training loss')
             loss.backward(); torch.nn.utils.clip_grad_norm_(model.parameters(), 1.)

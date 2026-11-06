@@ -1,0 +1,471 @@
+/* NetSec glass & motion layer — "Graphite & Iris". Frosted glass is the primary material: aurora light and an
+   interactive dot field sit behind every surface, panels are glass, nested surfaces are translucent tints.
+   Loads after theme-light.css and theme-dark.css, so equal-specificity rules here win in both themes. */
+@property --wave-r {syntax: "<length>"; inherits: false; initial-value: 0px;}
+@property --wave-hue {syntax: "<angle>"; inherits: false; initial-value: 0deg;}
+:root {
+  /* Motion: slow, soft deceleration; nothing finishes in a blur. */
+  --ease-out: cubic-bezier(.25,.9,.3,1); --ease-soft: cubic-bezier(.2,.75,.2,1); --ease-in: cubic-bezier(.5,0,.75,.2);
+  --motion-ease: var(--ease-soft); --motion-page: 760ms;
+  /* Palette. */
+  --bg: #eceef4; --canvas: #eceef4; --ink: #14161d; --muted: #5a6072; --quiet: #5e6476; --line: rgb(20 24 40 / .09);
+  --accent: #4c54d4; --accent-strong: #4c54d4; --violet: #7a5cf0; --teal: #2a9d93; --panel: rgb(255 255 255 / .82); --soft: rgb(20 24 40 / .04);
+  --glass-fill: rgb(255 255 255 / .46); --glass-fill-strong: rgb(255 255 255 / .6); --glass-solid: rgb(249 250 253 / .92);
+  --glass-tint: rgb(255 255 255 / .36); --glass-tint-hover: rgb(255 255 255 / .58);
+  --glass-rim: rgb(255 255 255 / .9); --glass-rim-low: rgb(20 24 40 / .06); --glass-line: rgb(20 24 40 / .09); --glass-line-strong: rgb(20 24 40 / .15);
+  --glass-shadow: 0 1px 1px rgb(20 24 40 / .04), 0 18px 40px -20px rgb(30 34 70 / .3);
+  --glass-blur: blur(26px) saturate(1.6);
+  --panel-glass: linear-gradient(150deg, rgb(255 255 255 / .4), rgb(255 255 255 / 0) 42%), rgb(255 255 255 / .46); --panel-blur: blur(9px) saturate(1.8);
+  --lens-fill: rgb(255 255 255 / .2); --lens-rim: rgb(255 255 255 / .95);
+  --orb-iris: rgb(92 102 240 / .3); --orb-teal: rgb(60 190 175 / .22); --orb-violet: rgb(170 120 240 / .22);
+  --dot-rgb: 24 28 44; --dot-alpha: .17; --dot-hot-rgb: 76 84 212; --dot-hot-alpha: .8;
+  --hover-tint: rgb(20 24 40 / .05); --focus-ring: #4c54d4; --selection: rgb(92 102 240 / .22);
+  --dir: 1;
+}
+:root[data-theme="dark"] {
+  --bg: #0a0c11; --canvas: #0a0c11; --ink: #e8eaf1; --muted: #9da3b4; --quiet: #8b91a3; --line: rgb(255 255 255 / .08);
+  --accent: #9ea5ff; --accent-strong: #4c54d4; --violet: #b49bff; --teal: #5fd3c6; --panel: rgb(255 255 255 / .09); --soft: rgb(255 255 255 / .045);
+  --glass-fill: rgb(28 32 44 / .42); --glass-fill-strong: rgb(24 28 39 / .58); --glass-solid: rgb(20 23 32 / .94);
+  --glass-tint: rgb(255 255 255 / .035); --glass-tint-hover: rgb(255 255 255 / .07);
+  --glass-rim: rgb(255 255 255 / .12); --glass-rim-low: rgb(0 0 0 / .45); --glass-line: rgb(255 255 255 / .075); --glass-line-strong: rgb(255 255 255 / .13);
+  --glass-shadow: 0 1px 1px rgb(0 0 0 / .4), 0 22px 48px -20px rgb(0 0 0 / .8);
+  --panel-glass: linear-gradient(150deg, rgb(255 255 255 / .075), rgb(255 255 255 / 0) 40%), rgb(20 24 36 / .44);
+  --lens-fill: rgb(255 255 255 / .07); --lens-rim: rgb(255 255 255 / .36);
+  --orb-iris: rgb(92 102 240 / .24); --orb-teal: rgb(40 170 160 / .13); --orb-violet: rgb(150 90 230 / .16);
+  --dot-rgb: 200 206 232; --dot-alpha: .11; --dot-hot-rgb: 158 165 255; --dot-hot-alpha: .9;
+  --hover-tint: rgb(255 255 255 / .06); --focus-ring: #9ea5ff; --selection: rgb(120 130 255 / .34);
+}
+:root[data-nav-direction="backward"] {--dir: -1;}
+html {scrollbar-color: color-mix(in srgb, var(--ink) 24%, transparent) transparent; scroll-behavior: smooth;}
+body {overflow-x: clip; background: var(--bg); color: var(--ink); transition: background-color .6s var(--ease-out);}
+::selection {background: var(--selection); color: inherit;}
+.native-app :is(button,a,select,input,textarea,summary):focus-visible {outline: 2px solid var(--focus-ring); outline-offset: 3px;}
+.svg-defs {position: absolute; width: 0; height: 0; overflow: hidden;}
+
+/* Light behind the glass: three aurora pools (radial gradients, one cheap GPU layer each) and the dot field. */
+.ambient {position: fixed; inset: 0; z-index: -1; pointer-events: none; overflow: hidden; contain: strict;}
+.ambient-orb {position: absolute; width: 64vmax; height: 64vmax; border-radius: 50%; will-change: transform;}
+.orb-iris {background: radial-gradient(circle, var(--orb-iris), transparent 62%); top: -28vmax; right: -16vmax; animation: drift-a 52s ease-in-out infinite alternate;}
+.orb-teal {background: radial-gradient(circle, var(--orb-teal), transparent 64%); bottom: -34vmax; left: -20vmax; animation: drift-b 64s ease-in-out infinite alternate;}
+.orb-violet {background: radial-gradient(circle, var(--orb-violet), transparent 60%); top: 34vh; left: 36vw; width: 46vmax; height: 46vmax; animation: drift-c 70s ease-in-out infinite alternate;}
+@keyframes drift-a {to {transform: translate3d(-14vw, 18vh, 0) scale(1.12);}}
+@keyframes drift-b {to {transform: translate3d(22vw, -16vh, 0) scale(.92);}}
+@keyframes drift-c {to {transform: translate3d(-26vw, -10vh, 0) scale(1.18);}}
+.dot-field {position: fixed; inset: 0; z-index: -1; width: 100%; height: 100%; pointer-events: none;
+  mask-image: radial-gradient(ellipse 120% 100% at 50% 40%, #000 55%, rgb(0 0 0 / .35) 100%);}
+
+/* Type: quieter weights, tight display tracking, the accent carried by a soft iris gradient. */
+.native-app .page-heading h1 {font-weight: 640; text-transform: none; letter-spacing: -.055em; line-height: .96;
+  background: linear-gradient(180deg, var(--ink) 35%, color-mix(in srgb, var(--ink) 58%, transparent)); -webkit-background-clip: text; background-clip: text; color: transparent;}
+/* One ink for the whole headline (no single accented word); only the closing period carries the iris. */
+.native-app .page-heading h1 > span {display: inline; text-shadow: none; background: none; color: inherit;}
+.native-app .workspace-heading h1 > span {text-shadow: none; color: var(--accent);}
+/* Home's one orchestrated moment: the headline racks into focus, like a lens finding its subject. */
+#home-view .page-heading h1 {animation: rack-focus 1.8s var(--ease-soft) .1s both;}
+@keyframes rack-focus {from {filter: blur(16px); opacity: .15; letter-spacing: -.02em;} 60% {filter: blur(2px); opacity: .9;}}
+.native-app .workspace-heading h1 {letter-spacing: -.045em; font-weight: 640;}
+.native-app .eyebrow {letter-spacing: .16em; color: var(--muted);}
+.native-app :is(.brand-period, .window-brand span) {color: var(--accent);}
+.native-app .local-dot {background: var(--teal); box-shadow: 0 0 0 3px color-mix(in srgb, var(--teal) 22%, transparent);}
+#home-view .page-heading {grid-template-columns: minmax(0, 1fr); min-height: clamp(340px, 50vh, 560px); align-items: center; padding-bottom: 48px;}
+#home-view .page-heading h1 {font-size: clamp(60px, 8vw, 128px);}
+#home-view .page-heading .heading-copy {max-width: 1040px;}
+.native-app .hero-scroll {background: var(--glass-tint); backdrop-filter: var(--glass-blur); border-color: var(--glass-line-strong); box-shadow: inset 0 1px 0 var(--glass-rim);
+  transition: transform .6s var(--ease-out), background-color .45s var(--ease-out), color .45s;}
+.native-app .hero-scroll:hover {background: var(--accent-strong); color: #fff; transform: translateY(3px);}
+
+/* Header: sticks with its top padding tucked away, then frosts once content passes beneath. */
+.native-app .glass-header {position: sticky; top: -18px; z-index: 5; isolation: isolate;}
+body.desktop-app .glass-header {top: 18px;}
+.glass-header::before {content: ""; position: absolute; inset: 0 calc(50% - 50vw); z-index: -1; background: var(--glass-fill-strong);
+  backdrop-filter: var(--glass-blur); border-bottom: 1px solid var(--glass-line); box-shadow: 0 10px 30px -22px rgb(0 0 0 / .35);
+  opacity: 0; transition: opacity .6s var(--ease-out);}
+.glass-header.is-condensed::before {opacity: 1;}
+.native-app .window-chrome {background: var(--glass-fill-strong); backdrop-filter: var(--glass-blur); border-bottom: 1px solid var(--glass-line); z-index: 7;}
+.native-app .header-note {gap: 10px;}
+
+/* Title-bar controls: custom glyphs on rounded glass pills, each with its own hue instead of system grey/red. */
+:root {--wc-min: #2a8d84; --wc-max: #5a5fd6; --wc-close-a: #e0566f; --wc-close-b: #9d2f63;}
+:root[data-theme="dark"] {--wc-min: #6fd6ca; --wc-max: #a3a9ff; --wc-close-a: #ff7d93; --wc-close-b: #c84a8a;}
+.native-app .window-actions {gap: 2px; padding-right: 6px; align-items: center;}
+.native-app .window-actions .window-control {position: relative; isolation: isolate; width: 44px; min-height: 36px; background: transparent;
+  color: color-mix(in srgb, var(--ink) 70%, transparent); transition: color .35s var(--ease-out);}
+.native-app .window-actions .window-control.minimize {--wc: var(--wc-min);}
+.native-app .window-actions .window-control.maximize {--wc: var(--wc-max);}
+.native-app .window-actions .window-control.close {--wc: var(--wc-close-a);}
+.native-app .window-actions .window-control::before {content: ""; position: absolute; inset: 5px 4px; z-index: -1; border-radius: 9px;
+  background: color-mix(in srgb, var(--wc) 16%, transparent); box-shadow: inset 0 1px 0 rgb(255 255 255 / .35), inset 0 0 0 1px color-mix(in srgb, var(--wc) 28%, transparent);
+  opacity: 0; transform: scale(.82); transition: opacity .3s var(--ease-out), transform .5s var(--ease-out);}
+.native-app .window-actions .window-control:hover, .native-app .window-actions .window-control:focus-visible {background: transparent; color: var(--wc);}
+.native-app .window-actions .window-control:hover::before, .native-app .window-actions .window-control:focus-visible::before {opacity: 1; transform: none;}
+.native-app .window-actions .window-control.close::before {background: linear-gradient(135deg, var(--wc-close-a), var(--wc-close-b));
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / .4), 0 6px 16px -6px color-mix(in srgb, var(--wc-close-b) 80%, transparent);}
+.native-app .window-actions .window-control.close:hover, .native-app .window-actions .window-control.close:focus-visible {color: #fff;}
+.native-app .window-actions .window-control:active::before {transform: scale(.9); transition-duration: .12s;}
+.native-app .window-actions .window-control:focus-visible {outline: 2px solid var(--wc); outline-offset: -3px; border-radius: 10px;}
+.native-app .window-actions .window-glyph {width: 17px; height: 17px; fill: currentColor; stroke: none; overflow: visible; transition: transform .6s var(--ease-out);}
+.native-app .window-actions .glyph-line {fill: none; stroke: currentColor; stroke-width: 1.35; stroke-linejoin: round; stroke-linecap: round;}
+.native-app .window-actions .is-maximized svg {transform: none; filter: none;}
+.native-app .window-actions .minimize:hover .window-glyph {transform: translateY(1.5px);}
+.native-app .window-actions .maximize:hover .window-glyph {transform: scale(1.1);}
+.native-app .window-actions .close:hover .window-glyph {transform: rotate(90deg) scale(1.05);}
+
+/* Navigation tray and its liquid lens. */
+.native-app .liquid-nav {position: relative; gap: 2px; padding: 5px; background: var(--glass-fill); backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-line); box-shadow: inset 0 1px 0 var(--glass-rim), inset 0 -1px 0 var(--glass-rim-low), var(--glass-shadow); touch-action: pan-y;}
+.native-app .liquid-nav:has(.liquid-lens[data-dragging]) {cursor: grabbing;}
+.native-app .liquid-nav .nav-link {position: relative; z-index: 0; background: transparent; color: color-mix(in srgb, var(--ink) 74%, transparent);
+  font-weight: 500; transition: color .35s var(--ease-out), background-color .35s var(--ease-out); -webkit-user-drag: none; user-select: none;}
+.native-app .liquid-nav .nav-link:hover {background: var(--hover-tint); color: var(--ink);}
+.native-app .liquid-nav .nav-link.active {color: var(--ink); font-weight: 620; background: transparent; cursor: grab;}
+.liquid-lens {position: absolute; left: 0; top: 0; z-index: 1; pointer-events: none; border-radius: 999px; will-change: transform, width;}
+.liquid-lens[hidden] {display: none;}
+.liquid-lens-body {position: absolute; inset: 0; border-radius: inherit; background: var(--lens-fill);
+  backdrop-filter: url(#liquid-refraction) saturate(1.7) brightness(1.06) contrast(1.04);
+  box-shadow: inset 0 1px 1px var(--lens-rim), inset 0 -1px 1px rgb(0 0 0 / .1), inset 1px 0 2px rgb(255 255 255 / .35), inset -1px 0 2px rgb(255 255 255 / .2),
+    0 1px 2px rgb(20 24 40 / .14), 0 8px 20px -8px rgb(30 34 90 / .35);
+  transition: transform .55s var(--ease-out), box-shadow .4s var(--ease-out);}
+/* Specular sweep along the rim of the glass. */
+.liquid-lens-body::after {content: ""; position: absolute; inset: 0; border-radius: inherit; padding: 1px; pointer-events: none;
+  background: linear-gradient(115deg, rgb(255 255 255 / .9), rgb(255 255 255 / 0) 34%, rgb(255 255 255 / 0) 66%, rgb(255 255 255 / .55));
+  mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);}
+/* Pressed, the lens swells; dragged, it also stretches with pointer speed (--stretch, set by LiquidNav). */
+.liquid-lens[data-pressed] .liquid-lens-body {transform: scale(calc(1.1 + var(--stretch, 0)), calc(1.14 - var(--stretch, 0) * .7));
+  box-shadow: inset 0 1px 1px var(--lens-rim), inset 0 -1px 1px rgb(0 0 0 / .1), 0 12px 30px -8px rgb(30 34 90 / .45);}
+.liquid-lens[data-dragging] .liquid-lens-body, .liquid-lens[data-moving] .liquid-lens-body {backdrop-filter: url(#liquid-refraction) blur(.6px) saturate(2) brightness(1.1);}
+
+/* Theme toggle: sun and moon share one shape; the bite and rays move between them. */
+.theme-toggle {display: inline-grid; place-items: center; width: 38px; height: 38px; margin-left: 4px; padding: 0; border-radius: 50%; cursor: pointer;
+  color: var(--ink); background: var(--glass-fill); backdrop-filter: var(--glass-blur); border: 1px solid var(--glass-line);
+  box-shadow: inset 0 1px 0 var(--glass-rim), var(--glass-shadow); transition: transform .45s var(--ease-out), background-color .45s;}
+.theme-toggle:hover {transform: rotate(-12deg) scale(1.06);}
+.theme-toggle:active {transform: scale(.92); transition-duration: .12s;}
+.theme-toggle svg {width: 20px; height: 20px; overflow: visible;}
+.theme-toggle-core {fill: currentColor; transform-box: fill-box; transform-origin: center; transition: transform .8s var(--ease-out);}
+.theme-toggle-bite {transform: translate(9px, -9px); transition: transform .8s var(--ease-out);}
+.theme-toggle-rays {stroke: currentColor; stroke-width: 2; stroke-linecap: round; transform-box: view-box; transform-origin: 12px 12px; transition: transform .8s var(--ease-out), opacity .5s;}
+.theme-toggle[data-mode="dark"] .theme-toggle-core {transform: scale(1.55);}
+.theme-toggle[data-mode="dark"] .theme-toggle-bite {transform: translate(-1px, 1px);}
+.theme-toggle[data-mode="dark"] .theme-toggle-rays {opacity: 0; transform: rotate(-60deg) scale(.4);}
+
+/* Glass surfaces. Primary surfaces are frosted glass; surfaces nested inside them are translucent tints with
+   a hairline rim (glass on glass only muddies, and stacked backdrop blurs cost GPU time for nothing). */
+.native-app :is(.panel, .route-card, .model-strip, dialog) {background: var(--glass-fill-strong); backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-line); box-shadow: inset 0 1px 0 var(--glass-rim), inset 0 -1px 0 var(--glass-rim-low), var(--glass-shadow);}
+/* Panels use a lighter blur than the chrome, so the dots swelling under the pointer glow through the glass. */
+.native-app :is(.panel, .route-card, .model-strip) {background: var(--panel-glass); backdrop-filter: var(--panel-blur);}
+.native-app dialog {border-radius: 18px;}
+.native-app dialog::backdrop {background: rgb(10 12 20 / .32); backdrop-filter: blur(10px) saturate(1.2);}
+body.native-app :where(.input-tabs, .upload-zone, .icon-button, .mini-tag, .section-number, .model-icon, .file-type, .input-footer, .live-report-footer,
+  .report-source, .live-status-banner, .live-assessment, .live-history, .live-packet-model, .live-packet-row > span, .packet-model-summary, .feature-compatibility,
+  .margin-proof, .assessment-label, .assistant-card, .assistant-mark, .assistant-model-status, .model-parameter-grid > div, .xai-reference pre, .provenance dl,
+  .capability-badge, .model-availability, .model-schema-list, .model-json-details pre, .model-reference, .schema-names, .agreement-note, .result-alternatives li,
+  .evidence-json, .chat-wait, .chat-citations span, .chat-message.user, .feature-table th, .batch-row[aria-pressed=true], .empty-graphic::before, .shap-track, .xai-track,
+  .research-xai-track, .coverage-meter, .rag-source, .actual-ai-badge, .feature-state.measured, .feature-state.schema) {
+  background: var(--glass-tint); border-color: var(--glass-line);}
+.native-app :is(.insight-card, .result-item, .evidence-chat, .model-choice) {background: var(--glass-tint); border-color: var(--glass-line); box-shadow: inset 0 1px 0 var(--glass-rim);}
+.native-app .model-choice:has(input:checked) {background: color-mix(in srgb, var(--accent-strong) 10%, var(--glass-tint)); border-color: color-mix(in srgb, var(--accent) 55%, transparent);
+  box-shadow: inset 0 1px 0 var(--glass-rim), 0 0 0 1px color-mix(in srgb, var(--accent) 40%, transparent), 0 14px 30px -18px color-mix(in srgb, var(--accent-strong) 70%, transparent);}
+.native-app .result-item:is([data-status=failed], [data-status=incompatible]) {background: color-mix(in srgb, var(--negative) 8%, var(--glass-tint)); border-color: color-mix(in srgb, var(--negative) 30%, var(--glass-line));}
+.native-app .model-choice:focus-within {outline: none;}
+.native-app .model-choice:has(input:focus-visible) {outline: 2px solid var(--focus-ring); outline-offset: 3px;}
+.native-app .input-tabs::before {background: var(--panel); box-shadow: inset 0 1px 0 var(--glass-rim), 0 4px 14px -6px rgb(20 24 60 / .25);}
+.native-app .upload-zone {border-color: var(--glass-line-strong);}
+.native-app .upload-zone:hover, .native-app .batch-row:hover {background: var(--glass-tint-hover);}
+.native-app :is(select, textarea, input:not([type=checkbox], [type=radio], [type=file], [type=range], [type=submit], [type=button])) {background: var(--glass-tint);
+  border-color: var(--glass-line-strong); color: var(--ink); transition: border-color .4s var(--ease-out), box-shadow .5s var(--ease-out), background-color .4s;}
+.native-app :is(select, textarea, input):focus-visible {outline: none; border-color: color-mix(in srgb, var(--accent) 70%, transparent);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent) 22%, transparent);}
+.native-app :is(.panel-heading, .input-footer, .feature-table td, .feature-table th) {border-color: var(--glass-line);}
+.native-app .route-cards {grid-template-columns: repeat(2, minmax(0, 1fr));}
+.native-app .route-card {position: relative; overflow: hidden; transition: transform .8s var(--ease-out), box-shadow .8s var(--ease-out), border-color .5s;}
+.native-app .route-card::after {content: ""; position: absolute; inset: -40% -60%; pointer-events: none; opacity: 0;
+  background: linear-gradient(105deg, transparent 40%, rgb(255 255 255 / .38) 50%, transparent 60%); transform: translateX(-40%);}
+.native-app .route-card:hover {transform: translateY(-5px); border-color: color-mix(in srgb, var(--accent) 35%, transparent);
+  box-shadow: inset 0 1px 0 var(--glass-rim), 0 26px 50px -24px rgb(30 34 90 / .45);}
+.native-app .route-card:hover::after {opacity: 1; transform: translateX(40%); transition: transform 1.6s var(--ease-out), opacity .3s;}
+:root[data-theme="dark"] .native-app .route-card::after {background: linear-gradient(105deg, transparent 40%, rgb(255 255 255 / .07) 50%, transparent 60%);}
+.native-app .page-footer {border-top: 1px solid var(--glass-line);}
+
+/* Choice controls. Models are compact glass chips with an iris check; modes and input sources are segmented
+   glass pills; dropdowns open a frosted picker (customizable select, Chromium 135+; older engines keep the
+   native list with the glass field). The real inputs stay in place for keyboard, forms and automation. */
+.native-app .model-selector {display: flex; flex-wrap: wrap; gap: 10px; margin: 16px 0 4px;}
+.native-app .model-choice {display: inline-flex; align-items: center; gap: 10px; min-height: 0; padding: 9px 18px 9px 11px; border-radius: 999px;
+  font-size: 13.5px; font-weight: 560; letter-spacing: -.01em; cursor: pointer; user-select: none;}
+.native-app .model-choice:hover:not(:has(input:disabled)) {transform: translateY(-2px); border-color: color-mix(in srgb, var(--accent) 40%, transparent); background: var(--glass-tint-hover);}
+.native-app .model-choice.unavailable, .native-app .model-choice.unavailable:has(input:disabled) {opacity: .5; cursor: not-allowed;}
+.native-app .model-choice:has(input:checked):hover:not(:has(input:disabled)) {background: color-mix(in srgb, var(--accent-strong) 14%, var(--glass-tint-hover)); border-color: color-mix(in srgb, var(--accent) 60%, transparent);}
+.native-app .model-choice input {appearance: none; position: relative; display: grid; place-content: center; flex: 0 0 18px; width: 18px; height: 18px; margin: 0;
+  border-radius: 50%; border: 1.5px solid var(--glass-line-strong); background: var(--glass-tint); box-shadow: inset 0 1px 2px rgb(20 24 40 / .08);
+  opacity: 1; cursor: inherit; transition: background .45s var(--ease-out), border-color .4s var(--ease-out), box-shadow .5s var(--ease-out);}
+.native-app .model-choice input::before {content: ""; width: 10px; height: 10px; background: #fff; transform: scale(0) rotate(-20deg);
+  clip-path: polygon(14% 52%, 0 66%, 38% 100%, 100% 26%, 86% 12%, 37% 72%); transition: transform .5s cubic-bezier(.3,1.6,.5,1);}
+.native-app .model-choice input:checked {border-color: transparent; background: linear-gradient(135deg, color-mix(in srgb, var(--accent-strong) 80%, #fff), var(--accent-strong));
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent) 18%, transparent), 0 4px 12px -4px color-mix(in srgb, var(--accent-strong) 80%, transparent);}
+.native-app .model-choice input:checked::before {transform: scale(1) rotate(0deg);}
+.native-app .model-choice input:not(:checked) {border-color: color-mix(in srgb, var(--ink) 45%, transparent);}
+.native-app .model-choice input:disabled:checked {opacity: .8;}
+.native-app .model-choice .model-name {white-space: nowrap;}
+.native-app .model-choice:has(input:checked) {color: var(--ink);}
+.native-app :is(.mode-choices, .input-choices) {display: block; margin: 18px 0 12px; padding: 0; border: 0;}
+.native-app :is(.mode-choices, .input-choices) legend {margin-bottom: 8px;}
+.native-app .segmented {display: inline-flex; flex-wrap: wrap; gap: 3px; padding: 4px; border: 1px solid var(--glass-line); border-radius: 999px;
+  background: var(--glass-tint); box-shadow: inset 0 1px 0 var(--glass-rim), inset 0 1px 3px rgb(20 24 40 / .06);}
+.native-app .segmented label {position: relative; display: inline-flex; align-items: center; min-height: 34px; padding: 0 16px; border-radius: 999px;
+  font-size: 13px; font-weight: 520; color: var(--muted); transition: color .4s var(--ease-out), background-color .5s var(--ease-out), box-shadow .5s var(--ease-out);}
+.native-app .segmented input {appearance: none; position: absolute; inset: 0; z-index: 1; width: 100%; height: 100%; margin: 0; border-radius: inherit; opacity: 0; cursor: pointer;}
+.native-app .segmented label:hover {color: var(--ink);}
+.native-app .segmented label:has(input:checked) {color: var(--ink); font-weight: 600; background: color-mix(in srgb, var(--accent) 22%, var(--panel));
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent) 65%, transparent), inset 0 1px 0 var(--glass-rim), 0 6px 16px -8px rgb(30 34 90 / .35);}
+.native-app .segmented label:has(input:focus-visible) {outline: 2px solid var(--focus-ring); outline-offset: 2px;}
+.native-app .segmented label:has(input:disabled) {opacity: .5;}
+.native-app .segmented label:has(input:disabled) input {cursor: not-allowed;}
+.native-app select, .native-app :is(.input-card, .results-card, .insight-card) select {border-radius: 12px; min-height: 46px; padding: 10px 14px; font-size: 13px; cursor: pointer;}
+.native-app select:disabled {cursor: not-allowed;}
+@supports (appearance: base-select) {
+  .native-app select, .native-app select::picker(select) {appearance: base-select;}
+  .native-app select {display: flex; align-items: center; gap: 10px;}
+  .native-app select:hover:not(:disabled) {border-color: color-mix(in srgb, var(--accent) 40%, transparent); background: var(--glass-tint-hover);}
+  .native-app select::picker-icon {color: var(--muted); transition: rotate .45s var(--ease-out);}
+  .native-app select:open::picker-icon {rotate: 180deg;}
+  .native-app select::picker(select) {margin-top: 6px; padding: 6px; max-height: min(420px, 60vh); overflow-y: auto; border: 1px solid var(--glass-line);
+    border-radius: 14px; background: var(--glass-solid); backdrop-filter: blur(22px) saturate(1.6); box-shadow: var(--glass-shadow), inset 0 1px 0 var(--glass-rim);
+    scrollbar-width: thin; opacity: 0; transform: translateY(-6px) scale(.985); transform-origin: top center;
+    transition: opacity .35s var(--ease-out), transform .45s var(--ease-out), overlay .45s allow-discrete, display .45s allow-discrete;}
+  .native-app select:open::picker(select) {opacity: 1; transform: none;}
+  @starting-style {.native-app select:open::picker(select) {opacity: 0; transform: translateY(-6px) scale(.985);}}
+  .native-app select option {display: flex; align-items: center; gap: 8px; padding: 8px 12px; border-radius: 9px; font-size: 13px; color: var(--ink); cursor: pointer;
+    transition: background-color .25s var(--ease-out);}
+  .native-app select option:hover {background: var(--hover-tint);}
+  .native-app select option:focus-visible {outline: 2px solid var(--focus-ring); outline-offset: -2px;}
+  .native-app select option:checked {background: color-mix(in srgb, var(--accent) 14%, transparent); font-weight: 600;}
+  .native-app select option::checkmark {color: var(--accent); order: 1; margin-left: auto;}
+  @media (prefers-reduced-motion: reduce) {.native-app select::picker-icon, .native-app select::picker(select) {transition: none !important;} .native-app select::picker(select) {transform: none;}}
+}
+/* Windows contrast themes: hand the controls back to the system so checked state stays visible. */
+@media (forced-colors: active) {
+  .native-app .model-choice input {appearance: auto;}
+  .native-app .model-choice input::before {content: none;}
+  .native-app .segmented label:has(input:checked) {forced-color-adjust: none; background: Highlight; color: HighlightText; outline: 2px solid CanvasText;}
+  .native-app .segmented label:has(input:focus-visible) {outline: 2px dashed Highlight;}
+}
+@media (max-width: 600px) {.native-app .segmented {display: flex; border-radius: 20px;} .native-app .segmented label {flex: 1 1 auto; justify-content: center;}}
+.native-app input[type=file] {font-size: 13px; color: var(--muted);}
+.native-app input[type=file]::file-selector-button {margin-right: 12px; padding: 8px 18px; border: 1px solid var(--glass-line-strong); border-radius: 999px;
+  background: var(--glass-tint); color: var(--ink); font: inherit; font-weight: 560; box-shadow: inset 0 1px 0 var(--glass-rim); cursor: pointer;
+  transition: background-color .4s var(--ease-out), border-color .4s var(--ease-out);}
+.native-app input[type=file]::file-selector-button:hover {background: var(--glass-tint-hover); border-color: color-mix(in srgb, var(--accent) 40%, transparent);}
+
+/* Buttons. The primary action is a lit iris glass; secondary actions are clear glass. */
+.native-app .primary-button {color: #fff; border-color: transparent;
+  background: linear-gradient(135deg, color-mix(in srgb, var(--accent-strong) 84%, #fff) 0%, var(--accent-strong) 22%, color-mix(in srgb, var(--accent-strong) 78%, #180f40));
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / .3), inset 0 -1px 0 rgb(0 0 0 / .15), 0 12px 26px -14px color-mix(in srgb, var(--accent-strong) 80%, transparent);}
+.native-app .primary-button :is(svg, .button-arrow) {color: currentColor;}
+.native-app .primary-button:not(:disabled):hover {background: linear-gradient(135deg, color-mix(in srgb, var(--accent-strong) 78%, #fff) 0%, var(--accent-strong) 26%, color-mix(in srgb, var(--accent-strong) 86%, #180f40));
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / .35), 0 16px 32px -14px color-mix(in srgb, var(--accent-strong) 90%, transparent);}
+.native-app :is(.secondary-button, .chat-suggestion, .icon-button) {background: var(--glass-tint); backdrop-filter: blur(14px) saturate(1.4); border-color: var(--glass-line-strong);
+  color: var(--ink); box-shadow: inset 0 1px 0 var(--glass-rim);}
+.native-app :is(.secondary-button, .chat-suggestion, .icon-button):not(:disabled):hover {background: var(--glass-tint-hover); border-color: color-mix(in srgb, var(--accent) 40%, transparent);}
+.native-app :is(.primary-button, .secondary-button, .chat-suggestion, .icon-button) {transition: transform .45s var(--ease-out), background .45s var(--ease-out), border-color .4s, color .4s, box-shadow .5s var(--ease-out);}
+.native-app :is(.primary-button, .secondary-button, .chat-suggestion, .icon-button):not(:disabled):active {transform: scale(.975); transition-duration: .12s;}
+.native-app .model-choice {transition: transform .55s var(--ease-out), border-color .4s, background-color .4s, box-shadow .55s;}
+
+/* Lists arrive as lists, unhurried. */
+.native-app .model-choice {animation: rise-in .9s var(--ease-soft) both; animation-delay: calc(var(--n, 0) * 60ms);}
+.native-app .model-selector > :nth-child(2) {--n: 1} .native-app .model-selector > :nth-child(3) {--n: 2} .native-app .model-selector > :nth-child(4) {--n: 3}
+.native-app .model-selector > :nth-child(5) {--n: 4} .native-app .model-selector > :nth-child(6) {--n: 5} .native-app .model-selector > :nth-child(7) {--n: 6}
+.native-app .model-selector > :nth-child(8) {--n: 7} .native-app .model-selector > :nth-child(9) {--n: 8} .native-app .model-selector > :nth-child(n+10) {--n: 9}
+.native-app .result-item, .native-app .chat-message {animation: focus-in .85s var(--ease-soft) both;}
+.native-app .evidence-chat {margin-top: 22px; padding: 26px; border: 1px solid var(--glass-line); border-radius: 12px; animation: focus-in .9s var(--ease-soft) both;}
+.native-app .evidence-chat-heading {display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; flex-wrap: wrap;}
+.native-app .evidence-chat-heading h3 {margin: 0 0 4px; font-size: 22px; letter-spacing: -.6px;}
+.native-app .evidence-chat-heading .button-row {display: flex; gap: 8px; margin: 0;}
+.native-app .evidence-chat-heading .secondary-button {min-height: 40px; padding: 8px 14px;}
+.native-app .chat-empty {margin: 0; padding: 14px 0;}
+/* The chat lives inside the Plain English card (complaint 1, 3 Nov): it is part of the card, not a card nested in it.
+   The card is a flex column that fills its grid row; the chat takes the remaining height, the transcript absorbs any
+   spare height (or scrolls past its cap), and the suggestions and composer sit at the bottom of the card. */
+.native-app .assistant-card {display: flex; flex-direction: column; min-width: 0;}
+.native-app .assistant-card > .insight-intro {min-height: 0; margin-bottom: 6px;}
+.native-app .insight-card .evidence-chat {--chat-cap: min(560px, 64vh); display: flex; flex-direction: column; flex: 1 1 auto; min-width: 0; min-height: 0;
+  margin-top: 24px; padding: 22px 0 0; border: 0; border-top: 1px solid var(--glass-line); border-radius: 0; background: none; box-shadow: none; overflow-wrap: anywhere;}
+.native-app .insight-card .evidence-chat-heading {align-items: center; gap: 10px 16px;}
+.native-app .insight-card .evidence-chat-heading > div:first-child {flex: 1 1 220px; min-width: 0;}
+.native-app .insight-card .evidence-chat-heading .button-row {flex: none; margin-left: auto;}
+.native-app .insight-card .evidence-chat-heading h3 {margin: 0 0 2px; font-size: 17px; font-weight: 600; letter-spacing: -.3px;}
+.native-app .insight-card .evidence-chat-heading .field-help {margin: 0;}
+/* Transcript: at least its content up to the cap (calc-size), growing into any height the row leaves; it scrolls past the cap.
+   Messages stack from the bottom, next to the composer, so a short conversation leaves no gap above the chips. */
+.native-app .insight-card .chat-messages {display: flex; flex-direction: column; gap: 14px; flex: 1 1 auto; min-height: 96px; max-height: var(--chat-cap);
+  margin: 16px -6px 0 -4px; padding: 4px 6px 8px 4px; overflow-y: auto; overflow-x: hidden; overscroll-behavior: contain; scrollbar-gutter: auto;}
+@supports (min-height: calc-size(max-content, size)) {
+  .native-app .insight-card .chat-messages {flex-basis: 0; max-height: none; min-height: calc-size(max-content, clamp(96px, size, var(--chat-cap)));}
+}
+.native-app .insight-card .chat-messages > :first-child {margin-top: auto;}
+/* Before the first message the spare height is the conversation's place: its hint (or the wait notice) sits centred in it. */
+.native-app .insight-card .chat-messages:not(:has(.chat-message)) > :first-child {margin: auto; text-align: center;}
+.native-app .insight-card .chat-messages:not(:has(.chat-message)) .chat-empty {max-width: 34ch; padding: 0;}
+.native-app .insight-card .chat-messages:focus-visible {outline: 2px solid var(--focus-ring); outline-offset: -2px; border-radius: 10px;}
+/* Once the transcript is scrolled, its top edge fades so clipped earlier messages read as "more above" (scroll-driven,
+   static at any scroll position; an unscrollable transcript keeps no fade). */
+@property --chat-fade {syntax: "<length>"; inherits: false; initial-value: 0px;}
+@supports (animation-timeline: scroll()) {
+  .native-app .insight-card .chat-messages {mask-image: linear-gradient(to bottom, transparent 0, #000 var(--chat-fade));
+    animation: chat-fade linear both; animation-timeline: scroll(self); animation-range: 0 48px;}
+  @keyframes chat-fade {from {--chat-fade: 0px;} to {--chat-fade: 28px;}}
+}
+.native-app .insight-card .chat-message {flex: none; min-width: 0; margin: 0; overflow-wrap: anywhere;}
+.native-app .insight-card .chat-message.assistant {padding: 4px 0 0; border: 0; background: none;}
+.native-app .insight-card .chat-message.user {align-self: flex-end; max-width: 88%; padding: 12px 16px; border-radius: 16px 16px 4px 16px;}
+.native-app .insight-card .chat-message.user p {margin: 6px 0 0;}
+.native-app .insight-card .chat-message p {margin: 8px 0;}
+.native-app .insight-card .chat-message .chat-reply-meta {margin: 4px 0; font-size: 12px; line-height: 1.6; color: var(--muted);}
+.native-app .insight-card .chat-message .chat-citations {margin: 8px 0;}
+.native-app .insight-card .chat-message details {margin-top: 2px;}
+.native-app .insight-card .chat-wait {flex: none; align-self: flex-start; margin: 0;}
+.native-app .insight-card .chat-empty {padding: 8px 0;}
+.native-app .insight-card .chat-suggestions {flex: none; margin: 14px 0 0; gap: 8px;}
+.native-app .insight-card .chat-composer {flex: none; margin-top: 14px; padding-top: 0; border-top: 0;}
+.native-app .insight-card .chat-composer .field-label {margin: 0 0 8px;}
+.native-app .insight-card .chat-composer textarea {display: block; min-height: 76px; padding: 12px 14px; border: 1px solid var(--glass-line-strong); border-radius: 12px;
+  font: inherit; font-size: 14px; line-height: 1.6; resize: vertical;}
+.native-app .insight-card .chat-composer textarea::placeholder {color: var(--quiet); opacity: 1;}
+.native-app .insight-card .chat-composer-actions {margin-top: 10px;}
+.native-app .insight-card .chat-composer-actions .field-help {margin: 0;}
+.native-app .insight-card .chat-composer-actions .primary-button {margin: 0; min-height: 42px; justify-content: center;}
+.native-app .insight-card .evidence-chat > details {flex: none; margin-top: 8px;}
+.native-app .insight-card .evidence-chat > .insight-error:not([hidden]) {margin-top: 10px;}
+.native-app .insight-card .chat-boundary {flex: none; margin: 6px 0 0;}
+@media (max-width: 600px) {
+  .native-app .insight-card .evidence-chat {--chat-cap: min(460px, 62vh); margin-top: 20px; padding-top: 18px;}
+  .native-app .insight-card .chat-message.user {max-width: 94%;}
+  .native-app .insight-card .evidence-chat-heading .button-row {width: 100%;}
+  .native-app .insight-card .evidence-chat-heading .button-row .secondary-button {flex: 1 1 0;}
+}
+@keyframes rise-in {from {opacity: 0; transform: translateY(14px) scale(.98);}}
+@keyframes focus-in {from {opacity: 0; transform: translateY(8px) scale(.985); filter: blur(6px);}}
+/* Entrance and section motion from the base stylesheets, slowed to match. */
+.native-app .page-heading {animation-duration: 1.1s;}
+.native-app .heading-copy h1 {animation-duration: 1.25s;}
+.native-app :is(.heading-copy p, .model-strip, .workspace-grid) {animation-duration: 1.1s;}
+.native-app :is(.input-content, .report-section, .xai-method-panel, .assistant-content) {animation-duration: .55s;}
+.native-app .motion-reveal {animation-duration: .9s;}
+
+/* Language output (RevealText.tsx): the buffered reply is released letter by letter; each letter condenses out
+   of a soft iris blur. Citations follow once the sentence has had time to land. */
+.reveal-char {animation: char-in .6s var(--ease-soft) both;}
+@keyframes char-in {from {opacity: 0; filter: blur(4px); color: var(--accent);}}
+.native-app .chat-message.assistant .chat-citations {animation: rise-in .9s var(--ease-soft) .6s both;}
+.native-app .chat-wait {display: inline-flex; align-items: center; gap: 10px; border-radius: 999px; padding: 8px 14px;}
+.chat-wait-dots {display: inline-flex; gap: 4px;}
+.chat-wait-dots i {width: 5px; height: 5px; border-radius: 50%; background: var(--accent); animation: wait-dot 1.4s var(--ease-soft) infinite;}
+.chat-wait-dots i:nth-child(2) {animation-delay: .18s;} .chat-wait-dots i:nth-child(3) {animation-delay: .36s;}
+@keyframes wait-dot {0%, 100% {opacity: .25; transform: translateY(0) scale(.8);} 40% {opacity: 1; transform: translateY(-3px) scale(1);}}
+
+/* Template sentences (NetSec wording used when a model sentence fails the evidence check) read in a quieter tone;
+   their source is in the tooltip and in the reply's meta line, not as a tag inside the text. */
+.native-app .chat-sentence[data-source="template"] {color: color-mix(in srgb, var(--ink) 74%, transparent);}
+
+/* Scroll-linked depth: page headings drift up, soften and dim as the page scrolls away from them, driven by the
+   scroll position itself (compositor-run, so it stays smooth while the wheel glides). */
+@supports (animation-timeline: scroll()) {
+  .native-app :is(.page-heading .heading-copy, .workspace-heading) {animation: heading-drift linear both; animation-timeline: scroll(root); animation-range: 0 70vh;}
+  @keyframes heading-drift {to {transform: translate3d(0, -64px, 0) scale(.985); opacity: .3; filter: blur(3px);}}
+}
+
+/* Scroll reveal (reveal.ts): surfaces below the fold rise slowly into place as they scroll into view. */
+body.native-app [data-reveal="pending"] {opacity: 0; transform: translate3d(0, 44px, 0) scale(.982); transition: none;}
+body.native-app [data-reveal="shown"] {transition: opacity 1.1s var(--ease-soft) var(--reveal-delay, 0ms), transform 1.35s var(--ease-soft) var(--reveal-delay, 0ms);}
+
+/* Page transition: the outgoing page dissolves into haze while drifting against the direction of travel;
+   the incoming page condenses out of a directional blur. Header and window chrome stay put above both. */
+html[data-vt="page"]::view-transition {pointer-events: none;}
+/* The captured header has no backdrop to blur during the transition, so its glass is briefly denser. */
+html[data-vt="page"] .native-app .liquid-nav {background: color-mix(in srgb, var(--glass-solid) 70%, var(--glass-fill));}
+html[data-vt="page"] .page-stage {view-transition-name: page-in;}
+html[data-vt="page"] .page-stage[data-leaving] {view-transition-name: page-out;}
+html[data-vt="page"] .glass-header {view-transition-name: site-header;}
+html[data-vt="page"] .window-chrome {view-transition-name: window-chrome;}
+::view-transition-group(site-header), ::view-transition-group(window-chrome) {animation: none; z-index: 10;}
+::view-transition-old(site-header), ::view-transition-old(window-chrome) {display: none;}
+::view-transition-new(site-header), ::view-transition-new(window-chrome) {animation: none;}
+::view-transition-group(page-out), ::view-transition-group(page-in) {animation: none;}
+::view-transition-old(page-out) {animation: haze-out .55s var(--ease-in) both;}
+::view-transition-new(page-in) {animation: haze-in .95s var(--ease-soft) .08s both;}
+::view-transition-old(traffic-input), ::view-transition-old(traffic-report) {animation-duration: .48s;}
+@keyframes haze-out {
+  45% {filter: blur(6px) saturate(1.1); transform: translateX(calc(var(--dir) * -16px)) scaleX(1.012);}
+  to {opacity: 0; filter: blur(18px) saturate(1.25); transform: translateX(calc(var(--dir) * -52px)) scale(.985, .992);}
+}
+@keyframes haze-in {
+  from {opacity: 0; filter: blur(22px) saturate(1.3); transform: translateX(calc(var(--dir) * 72px)) scale(1.02, 1.01);}
+  50% {opacity: .85; filter: blur(5px) saturate(1.1);}
+  to {opacity: 1; filter: none; transform: none;}
+}
+
+/* Theme transition: the new theme is revealed through a circle growing from the toggle. A glass ring
+   rides its edge: it blurs what lies under it and its hue travels as it spreads. The radius animates on the
+   transition pseudo-elements themselves (non-inherited), so each toggle restarts it and nothing else restyles. */
+html[data-vt="theme"]::view-transition-old(root) {animation: none;}
+html[data-vt="theme"]::view-transition-new(root), html[data-vt="theme"]::view-transition-new(theme-wave) {animation: wave-grow 1.6s cubic-bezier(.55,0,.2,1) both;}
+html[data-vt="theme"]::view-transition-new(root) {clip-path: circle(var(--wave-r) at var(--wave-x) var(--wave-y));}
+@keyframes wave-grow {from {--wave-r: 0px;} to {--wave-r: var(--wave-max, 150vmax);}}
+.theme-wave {display: none; position: fixed; inset: 0; z-index: 50; pointer-events: none;}
+html[data-wave] .theme-wave {display: block; view-transition-name: theme-wave; opacity: .9;
+  background: conic-gradient(from var(--wave-hue) at var(--wave-x) var(--wave-y), #5c66f0, #9a6cf2, #d17ad6, #5fb6ef, #4fd1bf, #5c66f0);
+  animation: wave-hue 1.6s linear both;}
+@keyframes wave-hue {to {--wave-hue: 320deg;}}
+html[data-vt="theme"]::view-transition-group(theme-wave) {animation: none; z-index: 20;}
+html[data-vt="theme"]::view-transition-new(theme-wave) {backdrop-filter: blur(10px) saturate(1.9) brightness(1.08);
+  mask: radial-gradient(circle at var(--wave-x) var(--wave-y), transparent calc(var(--wave-r) - 110px), rgb(0 0 0 / .3) calc(var(--wave-r) - 64px), #000 calc(var(--wave-r) - 10px), rgb(0 0 0 / .65) calc(var(--wave-r) - 3px), transparent calc(var(--wave-r) + 6px));}
+
+/* Compute policy. The interface paints on the GPU, but continuous motion is spent only where it is seen:
+   aurora drift runs on Home only, pauses whenever the window is hidden or unfocused, and stops on battery.
+   The dot field draws on the CPU only while the pointer moves or the page scrolls (DotField.tsx).
+   Without GPU compositing (blocklisted driver or acceleration turned off) surfaces drop blur and go solid. */
+.ambient-orb {animation-play-state: paused;}
+:root[data-route="home"] .ambient-orb {animation-play-state: running;}
+:root[data-idle] .ambient-orb {animation-play-state: paused;}
+:root:is([data-power="saver"], [data-graphics="software"]) .ambient-orb {animation: none;}
+:root[data-power="saver"] .liquid-lens-body, :root[data-power="saver"] .liquid-lens[data-moving] .liquid-lens-body {backdrop-filter: saturate(1.6) brightness(1.05);}
+:root[data-graphics="software"] :is(.native-app .panel, .native-app .route-card, .native-app .model-strip, .native-app .liquid-nav, .native-app .window-chrome, .theme-toggle, .liquid-lens-body, .native-app .secondary-button, .native-app .chat-suggestion, .native-app .icon-button, .native-app .hero-scroll, .native-app dialog) {backdrop-filter: none;}
+:root[data-graphics="software"] .glass-header::before {backdrop-filter: none; background: var(--glass-solid);}
+:root[data-graphics="software"] :is(.native-app .panel, .native-app .route-card, .native-app .model-strip, .native-app .liquid-nav, .native-app .window-chrome, .native-app dialog) {background: var(--glass-solid);}
+@media (prefers-reduced-transparency: reduce) {
+  .native-app :is(.panel, .route-card, .model-strip, .liquid-nav, .window-chrome, dialog), .glass-header::before {background: var(--glass-solid); backdrop-filter: none;}
+  .theme-toggle, .native-app .hero-scroll {background: var(--glass-solid); backdrop-filter: none;}
+  .liquid-lens-body, .liquid-lens[data-dragging] .liquid-lens-body, .liquid-lens[data-moving] .liquid-lens-body {backdrop-filter: none; background: var(--glass-tint-hover);}
+  .native-app :is(.secondary-button, .chat-suggestion, .icon-button) {backdrop-filter: none;}
+  .native-app dialog::backdrop {backdrop-filter: none; background: rgb(10 12 20 / .55);}
+}
+@media (prefers-contrast: more) {
+  :root {--glass-line: rgb(20 24 40 / .35); --glass-line-strong: rgb(20 24 40 / .5);}
+  :root[data-theme="dark"] {--glass-line: rgb(255 255 255 / .35); --glass-line-strong: rgb(255 255 255 / .5);}
+}
+/* The stuck header must not cover what keyboard focus scrolls to (--header-h is measured by the app). */
+@media (min-width: 1201px) {
+  html {scroll-padding-top: calc(var(--header-h, 100px) - 6px);}
+  html:has(body.desktop-app) {scroll-padding-top: calc(var(--header-h, 100px) + 30px);}
+}
+@media (max-width: 1200px) {.native-app .glass-header, body.desktop-app .glass-header {position: relative; top: auto;} .glass-header::before {display: none;}}
+@media (max-width: 900px) {.native-app .route-cards {grid-template-columns: 1fr;} #home-view .page-heading {min-height: 0;}}
+
+@media (prefers-reduced-motion: reduce) {
+  html {scroll-behavior: auto;}
+  .ambient-orb {animation: none !important;}
+  .native-app .route-card:hover {transform: none;}
+  body.native-app [data-reveal] {opacity: 1 !important; transform: none !important;}
+  .native-app :is(.page-heading .heading-copy, .workspace-heading) {animation: none !important;}
+  .reveal-char, .chat-wait-dots i {animation: none !important;}
+  .native-app :is(.evidence-chat, .chat-message, .chat-message.assistant .chat-citations) {animation: none !important;}
+  .native-app .model-choice input::before {transition: none !important;}
+  .native-app .model-choice:hover:not(:has(input:disabled)) {transform: none;}
+  ::view-transition-old(page-out) {animation: fade-out .16s linear both !important;}
+  ::view-transition-new(page-in) {animation: fade-in .2s linear both !important;}
+  html[data-vt="theme"]::view-transition-new(root) {clip-path: none; animation: fade-in .25s linear both !important;}
+  html[data-vt="theme"]::view-transition-new(theme-wave) {animation: none !important;}
+  html[data-wave] .theme-wave {display: none;}
+}
+@keyframes fade-in {from {opacity: 0;}}
+@keyframes fade-out {to {opacity: 0;}}

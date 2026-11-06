@@ -30,7 +30,11 @@ import psutil
 
 ROOT = Path(__file__).resolve().parents[1]
 RELEASE = ROOT / "rust/netsec/target/release/netsec-runtime.exe"
-PHASES = ("http", "models", "xai", "english", "browser", "partial", "lifecycle")
+PHASES = ("http", "models", "xai", "english", "browser", "partial", "lifecycle", "live77")
+# Owner decision 3 Nov 2026: the SHA-pinned live77 bundle (bundle.json + model.ubj); live/models.rs loads it lazily on the
+# first scored packet window, so the verifier checks it offline against the Rust pins and never starts a capture.
+LIVE77 = Path("artifacts/application/live_models_v1/live77_xgboost")
+LIVE77_DECISIONS = Path("artifacts/app_v0_6_20261102/live77_decisions.json")  # owner decisions: label, note, model id
 
 
 def digest(path):
@@ -64,17 +68,37 @@ class Evidence:
         return str(path)
 
 
+def llama_servers():
+    """Every llama-server.exe on the machine (the one-server rule and the orphan check read this)."""
+    found = []
+    for process in psutil.process_iter(["pid", "name", "ppid", "create_time"]):
+        if (process.info["name"] or "").lower() == "llama-server.exe":
+            found.append(dict(process.info))
+    return found
+
+
+def runtime_env(token, extra):
+    """The runtime's environment: the session token and this runtime's own settings. An inherited NETSEC_LLM_CACHE_RAM is dropped,
+    so every row measures the shipped --cache-ram cap unless the row sets it (the cache-miss row sets 0; Task 7 ruling 1)."""
+    env = dict(os.environ, IMDAI_SESSION_TOKEN=token, **extra)
+    env.pop("NETSEC_DESKTOP", None)
+    if "NETSEC_LLM_CACHE_RAM" not in extra:
+        env.pop("NETSEC_LLM_CACHE_RAM", None)
+    return env
+
+
 class NativeRuntime:
-    def __init__(self, root, binary, evidence, name="runtime"):
+    def __init__(self, root, binary, evidence, name="runtime", env=None):
         self.root, self.binary, self.evidence, self.name = Path(root), Path(binary), evidence, name
         self.token = secrets.token_hex(32)
         self.process = None
         self.descendants = {}
         self.monitor_stop = threading.Event()
+        self.extra_env = dict(env or {})
 
     def start(self, timeout=60):
-        env = dict(os.environ, IMDAI_SESSION_TOKEN=self.token)
-        env.pop("NETSEC_DESKTOP", None)
+        env = runtime_env(self.token, self.extra_env)
+        self.preexisting_llama = {p["pid"] for p in llama_servers()}
         self.stderr = (self.evidence.folder / f"{self.name}.stderr.log").open("w", encoding="utf-8")
         self.process = subprocess.Popen([str(self.binary), "--root", str(self.root), "--port", "0", "--parent-stdin"],
             cwd=ROOT, env=env, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=self.stderr,
@@ -188,7 +212,14 @@ class NativeRuntime:
             if not survivors or time.monotonic() >= grace:
                 break
             time.sleep(0.05)
-        for info in survivors:
+        # The language server is the one child that holds VRAM and a loopback port: it must die with the runtime (Review Focus 5).
+        llama = [info for info in self.descendants.values() if info["name"].lower() == "llama-server.exe"]
+        leftover = [p for p in llama_servers() if p["pid"] not in getattr(self, "preexisting_llama", set()) and p["ppid"] == self.process.pid]
+        llama_orphans = [info for info in survivors if info["name"].lower() == "llama-server.exe"]
+        llama_orphans += [p for p in leftover if p["pid"] not in {info["pid"] for info in llama_orphans}]
+        self.evidence.check(f"{self.name}: no llama-server.exe outlives the runtime", not llama_orphans,
+            llama_children=llama, orphaned_llama_servers=llama_orphans)
+        for info in survivors + [p for p in leftover if p["pid"] not in {s["pid"] for s in survivors}]:
             try:
                 psutil.Process(info["pid"]).kill()  # Only an exact child identity created by this test.
             except psutil.NoSuchProcess:
@@ -233,6 +264,9 @@ def verify_http(runtime, evidence):
         status=status, content_type=headers.get("content-type"), cache_control=headers.get("cache-control"))
     script = re.search(r'<script[^>]+src="([^"]+)"', html)
     evidence.check("built React entrypoint is served", bool(script) and script.group(1).startswith('/static/'))
+    _, _, bundle = runtime.request(script.group(1)) if script else (0, {}, "")
+    labels = bundle_labels(bundle if isinstance(bundle, str) else "")
+    evidence.check("served UI labels the footer as NetSec text and requires a selected XAI", labels["passed"], **labels)
     for path, expected in [(script.group(1) if script else '/missing-entry.js',200),("/static/native.css",200),("/static/fonts/InterVariable.woff2",200),
                            ("/missing-page",404),("/static/missing.js",404),("/static/%2e%2e/%2e%2e/Cargo.toml",404)]:
         status, _, _ = runtime.request(path)
@@ -344,7 +378,202 @@ def verify_xai(runtime,evidence,job):
     return explanations
 
 
-def verify_english(runtime,evidence,job,explanations):
+FIRST_TOKEN_LIMIT=15.0  # seconds from the request to the first token (owner, 31 Oct 2026)
+GPU_FREE_MIB=3600  # shared GPU rule: the language server goes on GPU only with this much free VRAM
+QUESTIONS=[("initial",{"initial":True}),("simpler",{"message":"Explain it simpler"}),("summary",{"message":"Summarize the scores"}),("detail",{"message":"More detail please"})]
+PAIRS=[("benign","ddos"),("ddos","scan"),("scan","unknown"),("unknown","benign")]
+FOLLOW_UP={"message":"Which features influenced this result?"}
+# Owner redesign 3 Nov 2026: the fixed NetSec footer closes every non-refusal answer, and each XAI method has its own explainer preset.
+FOOTER="XAI shows how the model reached its answer, not whether it is correct."
+# The served UI must label the footer as NetSec text and refuse to start without a selected XAI (redesign round 1 review, finding 7:
+# a bundle built before the redesign labels every non-template sentence, the footer included, as Model text).
+NETSEC_LABEL="NetSec text"
+CHOOSE_XAI="Choose an XAI method and generate its explanation first; the plain-English explainer only explains a selected XAI result."
+def bundle_labels(js):
+    found={"netsec_label":NETSEC_LABEL in js,"choose_xai":CHOOSE_XAI in js}
+    return {"passed":all(found.values()),**found}
+METHODS=["shap","lime","anchors","counterfactual","permutation","ale"]
+SHIPPED_CACHE_RAM_MIB=1024  # server.rs CACHE_RAM_MIB: llama-server --cache-ram as shipped (Task 7 ruling 3)
+CACHE_MISS_ENV={"NETSEC_LLM_DEVICE":"cpu","NETSEC_LLM_CACHE_RAM":"0"}  # host prompt cache off, so a miss is measured (Task 7 ruling 1)
+
+
+def percentile(values,q):
+    """Nearest-rank percentile of the known values; None when there are none."""
+    values=sorted(v for v in values if v is not None)
+    return values[max(0,math.ceil(q*len(values))-1)] if values else None
+
+
+def turn_ok(turn):
+    """A model reply whose sentences are all labelled and whose first token arrived within the limit."""
+    first=turn.get("first_token_seconds")
+    return bool(turn.get("llm_executed") and turn.get("labelled") and first is not None and first<=FIRST_TOKEN_LIMIT)
+
+
+def latency_summary(turns):
+    firsts=[t.get("first_token_seconds") for t in turns if t.get("first_token_seconds") is not None]
+    sentences=[t.get("first_sentence_seconds") for t in turns if t.get("first_sentence_seconds") is not None]
+    ok=[turn_ok(t) for t in turns];p95=percentile(firsts,.95)
+    return {"turns":len(turns),"first_token_p50":percentile(firsts,.5),"first_token_p95":p95,
+            "first_sentence_p50":percentile(sentences,.5),"first_sentence_p95":percentile(sentences,.95),"first_sentence_missing":len(turns)-len(sentences),
+            "total_p50":percentile([t.get("seconds") for t in turns],.5),"total_p95":percentile([t.get("seconds") for t in turns],.95),
+            "first_token_missing":len(turns)-len(firsts),
+            "verifier_pass_rate":sum(bool(t.get("passed")) for t in turns)/len(turns) if turns else None,
+            "turn_pass_rate":sum(ok)/len(turns) if turns else None,
+            "passed":bool(turns) and all(ok) and p95 is not None and p95<=FIRST_TOKEN_LIMIT}
+
+
+def cache_miss_row(turns,shared):
+    """CPU cache-miss row (plan Task 7): flags partial hits (cached > the pair's shared prefix S) and unknown cache counts,
+    reports first-token p95 over the kept turns, and the labelled different-class_count estimate (whole prompt re-evaluated)."""
+    rows=[]
+    for t in turns:
+        s,cached=shared.get(t["pair"]),t.get("cached")
+        rows.append(dict(t,partial_hit=cached is not None and s is not None and cached>s,cache_unknown=cached is None))
+    kept=[r for r in rows if not r["partial_hit"]];unknown=sum(r["cache_unknown"] for r in rows)
+    if not rows:status="failed: no turns"
+    elif not kept:status="failed: every turn is a partial hit"
+    elif unknown*4>len(rows):status="failed: unmeasured (cache count unknown for more than a quarter of turns)"
+    else:status="measured"
+    p95=percentile([r.get("first_token_seconds") for r in kept],.95)
+    # The partial-hit exclusion applies to the p95 only; the rate and the full-miss estimate use every turn of the row.
+    timed=[r for r in rows if r.get("evaluated") and r.get("first_token_seconds")]
+    # First-token seconds include the HTTP and verifier overhead, so the rate is a slight underestimate and the estimate conservative.
+    rate=sum(r["evaluated"] for r in timed)/sum(r["first_token_seconds"] for r in timed) if timed else None
+    estimates=[r["total"]/rate for r in rows if rate and r.get("total") is not None]
+    estimate_p95=percentile(estimates,.95)
+    passed=status=="measured" and p95 is not None and p95<=FIRST_TOKEN_LIMIT and all(r.get("first_token_seconds") is not None for r in kept)
+    estimate={"label":"estimate, not measured","method":"total prompt tokens of every row turn with a known total / measured prompt rate (a full cache miss, such as a live77 packet-window turn that shares no cached prefix, re-evaluates the whole prompt)",
+              "turns":len(estimates),"turns_without_total":len(rows)-len(estimates),
+              "seconds":estimates,"p95_seconds":estimate_p95,"passed":estimate_p95 is not None and estimate_p95<=FIRST_TOKEN_LIMIT}
+    return {"status":status,"turns":rows,"kept_turns":len(kept),"excluded_partial_hits":len(rows)-len(kept),"cache_unknown_turns":unknown,
+            "shared_prefix_tokens":shared,"first_token_p50":percentile([r.get("first_token_seconds") for r in kept],.5),"first_token_p95":p95,
+            "prompt_tokens_per_second":rate,"different_class_count_estimate":estimate,"passed":passed,"passed_with_estimate":passed and estimate["passed"]}
+
+
+def gpu_state():
+    """Free VRAM and load before a language server starts; another GPU job makes the measurement "contended"."""
+    try:
+        out=subprocess.run(["nvidia-smi","--query-gpu=memory.used,memory.total,utilization.gpu","--format=csv,noheader,nounits"],
+                           capture_output=True,text=True,timeout=15,check=True).stdout
+        used,total,util=(float(v) for v in out.strip().splitlines()[0].split(","))
+    except (OSError,ValueError,IndexError,subprocess.SubprocessError) as error:
+        return {"available":False,"error":str(error)}
+    # Desktop baseline is about 1341-1430 MiB with no compute job (ledger); more than 1900 MiB or a busy GPU means another job runs.
+    return {"available":True,"memory_used_mib":used,"memory_total_mib":total,"memory_free_mib":total-used,"utilization_percent":util,
+            "contended":used>1900 or util>20,"contention_rule":"memory.used > 1900 MiB or utilization > 20% before the server starts"}
+
+
+def labelled_ok(sentences):
+    """Every sentence is Model or NetSec template text, except the one fixed NetSec footer, which is labelled NetSec text and is last."""
+    netsec=[i for i,s in enumerate(sentences) if s.get("source")=="netsec"]
+    return bool(sentences) and all(s.get("source") in ("model","template") for i,s in enumerate(sentences) if i not in netsec) and (
+        not netsec or (netsec==[len(sentences)-1] and sentences[-1].get("text")==FOOTER)) and not any(
+        s.get("text")==FOOTER and s.get("source")!="netsec" for s in sentences)
+
+
+def chat_turn(runtime,context_id,body,timeout=150):
+    """One streamed chat turn, polled to completion; returns the audit fields the matrix needs."""
+    revision=runtime.json("/api/v1/chat/contexts/"+context_id)["revision"];started=time.monotonic()
+    runtime.json("/api/v1/chat",dict(body,context_id=context_id,revision=revision))
+    deadline=started+timeout
+    while True:
+        view=runtime.json("/api/v1/chat/contexts/"+context_id)
+        if not view["busy"]:break
+        if time.monotonic()>deadline:raise TimeoutError("chat turn did not finish within %s s"%timeout)
+        time.sleep(.1)
+    reply=view["messages"][-1]["reply"];grounding=reply.get("grounding",{});tokens=grounding.get("prompt_tokens") or {}
+    sentences=reply.get("sentences") or []
+    return {"status":reply.get("status"),"kind":grounding.get("kind"),"device":reply.get("device"),"llm_executed":reply.get("llm_executed"),
+            "labelled":labelled_ok(sentences),"passed":grounding.get("passed"),"method":grounding.get("method"),
+            "first_violation":grounding.get("first_violation"),"first_token_seconds":grounding.get("first_token_seconds"),
+            "first_sentence_seconds":grounding.get("first_sentence_seconds"),"seconds":grounding.get("seconds"),"wall_seconds":time.monotonic()-started,
+            "model_sentences":grounding.get("model_sentences"),"template_sentences":grounding.get("template_sentences"),
+            "prompt_chars":grounding.get("prompt_chars"),"prior_answers":grounding.get("prior_answers"),
+            "evaluated":tokens.get("evaluated"),"total":tokens.get("total"),"cached":tokens.get("cached"),"violation":grounding.get("violation"),
+            "text":reply.get("text"),"sentences":[{"text":s.get("text"),"source":s.get("source"),"part":s.get("part")} for s in sentences]}
+
+
+def matrix_samples(runtime,samples):
+    """benign, ddos and scan by validation label; the 77-class catalog has no "unknown" class, so "unknown" is the
+    validation row the detector is least sure about (lowest top score), never a held-out test row."""
+    chosen={"benign":next(s for s in samples if s["label"]=="benign"),
+            "ddos":next((s for s in samples if s["label"]=="ddos_icmp-flood"),None) or next(s for s in samples if s["label"].startswith("ddos")),
+            "scan":next(s for s in samples if s["label"]=="recon_scan")}
+    job=runtime.json("/api/v1/jobs",{"model_ids":["xgboost"],"rows":[s["row"] for s in samples]})
+    job,_,_=runtime.wait_job(job["id"])
+    scores=[p["score"] for p in job["models"][0]["predictions"]]
+    taken={s["source_row_id"] for s in chosen.values()}
+    chosen["unknown"]=next(samples[i] for i in sorted(range(len(samples)),key=lambda i:scores[i]) if samples[i]["source_row_id"] not in taken)
+    return chosen
+
+
+def open_contexts(runtime,rows):
+    """A fresh xgboost job over `rows` (a new binding, so no earlier chat history), TreeSHAP for each row and its chat context."""
+    job=runtime.json("/api/v1/jobs",{"model_ids":["xgboost"],"rows":[s["row"] for s in rows]})
+    job,_,_=runtime.wait_job(job["id"])
+    contexts=[]
+    for index in range(len(rows)):
+        binding={"job_id":job["id"],"model_id":"xgboost","row_index":index}
+        xai=runtime.json("/api/v1/explain",dict(binding,method="shap"),timeout=180)
+        contexts.append(runtime.json("/api/v1/chat/context",dict(binding,explanation_id=xai["explanation_id"])))
+    return contexts
+
+
+def english_matrix(runtime,chosen):
+    """The four kinds (initial, simpler, summary, detail) on each of the four samples, in order on one context per sample."""
+    rows=[]
+    for (name,sample),context in zip(chosen.items(),open_contexts(runtime,list(chosen.values()))):
+        for kind,body in QUESTIONS:
+            rows.append(dict(chat_turn(runtime,context["id"],body),sample=name,sample_label=sample["label"],source_row_id=sample["source_row_id"],requested_kind=kind))
+    return rows
+
+
+def method_matrix(runtime,chosen,methods=METHODS):
+    """Owner redesign 3 Nov 2026 (per-method row): for each sample, one initial explanation per XAI method whose explanation can be
+    generated offline, each on its own context pinned to that method's stored explanation. A method that cannot be generated is
+    recorded with its error and no chat turn."""
+    rows=[]
+    job=runtime.json("/api/v1/jobs",{"model_ids":["xgboost"],"rows":[s["row"] for s in chosen.values()]})
+    job,_,_=runtime.wait_job(job["id"])
+    for index,(name,sample) in enumerate(chosen.items()):
+        binding={"job_id":job["id"],"model_id":"xgboost","row_index":index}
+        for method in methods:
+            row=dict(sample=name,sample_label=sample["label"],source_row_id=sample["source_row_id"],method=method,requested_kind="initial")
+            try:xai=runtime.json("/api/v1/explain",dict(binding,method=method),timeout=300)
+            except Exception as error:rows.append(dict(row,xai_error=str(error)));continue
+            context=runtime.json("/api/v1/chat/context",dict(binding,explanation_id=xai["explanation_id"]))
+            rows.append(dict(chat_turn(runtime,context["id"],{"initial":True}),**dict(row,method=method,xai_method=context.get("xai_method"),
+                xai_state=(xai.get("details") or {}).get("state"))))
+    return rows
+
+
+def cache_miss_turns(runtime,chosen):
+    """Interleaves two contexts on different samples so each follow-up finds the other context's prompt in the one slot,
+    carrying two earlier Detail answers. S = cached count of B's initial sent straight after A's initial."""
+    measured,shared,log=[],{},[]
+    for a,b in PAIRS:
+        pair=f"{a}/{b}";ca,cb=open_contexts(runtime,[chosen[a],chosen[b]])
+        def step(context,side,role,body):
+            t=dict(chat_turn(runtime,context["id"],body),pair=pair,sample=side,role=role);log.append(t);return t
+        step(ca,a,"initial",{"initial":True});shared[pair]=step(cb,b,"initial",{"initial":True})["cached"]
+        for _ in range(2):
+            step(ca,a,"prior detail",QUESTIONS[3][1]);step(cb,b,"prior detail",QUESTIONS[3][1])
+        measured.append(step(ca,a,"cache-miss follow-up",FOLLOW_UP));measured.append(step(cb,b,"cache-miss follow-up",FOLLOW_UP))
+    return measured,shared,log
+
+
+def wait_language_verified(runtime,timeout=300):
+    """By design a request before the background hash pass ends gets "Template (model unavailable)"; measure only after it."""
+    deadline=time.monotonic()+timeout
+    while True:
+        language=runtime.json("/api/v1/settings")["language"]
+        if language.get("integrity")!="verifying" or time.monotonic()>deadline:return language
+        time.sleep(.25)
+
+
+def verify_english(runtime,evidence,job,explanations,device,environment):
+    language=wait_language_verified(runtime)
+    evidence.check("language model files verified by the background hash pass",language.get("integrity")=="verified",language=language)
     explanation=explanations.get("shap")
     if explanation:
         forged=dict(explanation,explanation_id="0"*64)
@@ -355,9 +584,66 @@ def verify_english(runtime,evidence,job,explanations):
     if explanation:body["explanation"]=explanation
     status,_,result=runtime.request("/api/v1/english",body,timeout=150)
     evidence.artifact("english.json",result)
-    evidence.check("actual local Qwen generation and grounding",status==200 and result.get("llm_executed") is True
-        and result.get("grounding",{}).get("passed") is True and bool(result.get("text")) and result.get("inference_device")=="cpu",
-        status=status,elapsed_seconds=time.monotonic()-before,provider=result.get("provider"),attempts=result.get("attempts"),error=result.get("error"))
+    if not (Path(runtime.root)/"artifacts/llm/model.json").is_file():
+        # No model installed: the request must fail honestly instead of substituting template text as LLM output.
+        evidence.check("absent local language model reported, not substituted",status==503 and result.get("llm_executed") is not True,
+            status=status,error=result.get("error"))
+        return None
+    grounding=result.get("grounding",{}) if isinstance(result,dict) else {}
+    sentences=(result.get("sentences") or []) if isinstance(result,dict) else []
+    first=grounding.get("first_token_seconds")
+    evidence.check("actual local language model generation, labelled sentences, first token within 15 s",status==200 and result.get("llm_executed") is True
+        and labelled_ok(sentences) and first is not None and first<=FIRST_TOKEN_LIMIT
+        and result.get("inference_device")==device,status=status,device=result.get("device"),expected_device=device,first_token_seconds=first,
+        total_seconds=grounding.get("seconds"),wall_seconds=time.monotonic()-before,verifier_passed=grounding.get("passed"),first_violation=grounding.get("first_violation"))
+    samples=runtime.json("/api/v1/samples")["samples"]
+    rows=english_matrix(runtime,matrix_samples(runtime,samples))
+    summary=latency_summary(rows)
+    evidence.check(f"english matrix on {device}: 4 samples x 4 kinds, llm_executed, labelled, first token p95 <= 15 s",
+        summary["passed"] and all(r["device"]==device for r in rows),devices=sorted({str(r["device"]) for r in rows}),
+        contended=environment.get("contended"),**{k:v for k,v in summary.items() if k!="passed"})
+    return {"device":device,"environment":environment,"turns":rows,"summary":summary}
+
+
+def verify_english_cpu(binary,evidence,matrix):
+    """CPU fallback rows in their own runtimes after the GPU runtime has exited (one llama-server at a time): the in-order matrix
+    with the shipped --cache-ram cap, then the cache-miss row in a second runtime with the host prompt cache off (Task 7 ruling 1)."""
+    if llama_servers():
+        evidence.check("CPU english matrix: no other llama-server is running",False,running=llama_servers());return
+    with NativeRuntime(ROOT,binary,evidence,"cpu-language",env={"NETSEC_LLM_DEVICE":"cpu"}) as runtime:
+        environment=gpu_state()
+        job=runtime.json("/api/v1/jobs",{"model_ids":["xgboost"],"sample_id":runtime.json("/api/v1/samples")["samples"][0]["id"]})
+        job,_,_=runtime.wait_job(job["id"])
+        matrix["cpu"]=verify_english(runtime,evidence,job,{},"cpu",environment)
+        # Information only: with the shipped cap the host cache restores each context's own prompt, so these turns are partial hits.
+        # An error here is recorded, never raised, so it cannot abort the required cache-miss row below (T7 fix-1 review).
+        try:
+            measured,shared,log=cache_miss_turns(runtime,matrix_samples(runtime,runtime.json("/api/v1/samples")["samples"]))
+            info=cache_miss_row(measured,shared)
+            matrix["cpu_interleaved_shipped_cap"]={"label":"information only","cache_ram_mib":SHIPPED_CACHE_RAM_MIB,"environment":environment,
+                "first_token_p50":percentile([t.get("first_token_seconds") for t in measured],.5),"first_token_p95":percentile([t.get("first_token_seconds") for t in measured],.95),
+                "partial_hits":info["excluded_partial_hits"],"first_token_p95_without_partial_hits":info["first_token_p95"],
+                **{k:info[k] for k in ("shared_prefix_tokens","turns")},"sequence":log}
+        except Exception as error:
+            matrix["cpu_interleaved_shipped_cap"]={"label":"information only","cache_ram_mib":SHIPPED_CACHE_RAM_MIB,"environment":environment,
+                "error":f"{type(error).__name__}: {error}"}
+    if llama_servers():
+        evidence.check("CPU cache-miss row: no other llama-server is running",False,running=llama_servers());evidence.artifact("english_matrix.json",matrix);return
+    with NativeRuntime(ROOT,binary,evidence,"cpu-cache-miss",env=CACHE_MISS_ENV) as runtime:
+        environment=gpu_state();wait_language_verified(runtime)
+        chosen=matrix_samples(runtime,runtime.json("/api/v1/samples")["samples"])
+        measured,shared,log=cache_miss_turns(runtime,chosen)
+        row=cache_miss_row(measured,shared);row["sequence"]=log;row["environment"]=environment;row["cache_ram_mib"]=int(CACHE_MISS_ENV["NETSEC_LLM_CACHE_RAM"])
+        row["note"]=("Different-sample interleaved pairs, never pooled with the in-order rows; same-sample follow-ups are not cache misses. "
+                     "Measured in its own runtime with NETSEC_LLM_CACHE_RAM=0 (llama-server --cache-ram 0), so no host cache restores a context's prompt.")
+        matrix["cpu_cache_miss"]=row
+        evidence.check("CPU cache-miss row: different-sample first token p95 <= 15 s (partial hits excluded)",row["passed"],status=row["status"],
+            first_token_p95=row["first_token_p95"],kept_turns=row["kept_turns"],excluded_partial_hits=row["excluded_partial_hits"],
+            cache_unknown_turns=row["cache_unknown_turns"],shared_prefix_tokens=shared)
+        estimate=row["different_class_count_estimate"]
+        evidence.check("CPU different class_count full miss <= 15 s (estimate, not measured)",estimate["passed"],p95_seconds=estimate["p95_seconds"],
+            prompt_tokens_per_second=row["prompt_tokens_per_second"],label=estimate["label"])
+    evidence.artifact("english_matrix.json",matrix)
 
 
 def failure_fixture(evidence):
@@ -393,6 +679,74 @@ def verify_partial(binary,evidence,sample_id):
         evidence.check("one missing model preserves other genuine predictions",final["status"]=="completed"
             and statuses=={"xgboost":"completed","kan":"failed","tabm_hier":"completed"},statuses=statuses,
             failure=next(m["error"] for m in final["models"] if m["model_id"]=="kan"),fixture=str(fixture),original_artifacts_changed=False)
+
+
+def rust_pins(source=ROOT):
+    """The live77 constants live/models.rs enforces, the display label live.rs model_label gives the id, and the Live
+    page caveat filter (liveView.ts); read from source so this check cannot drift from what the runtime pins."""
+    runtime=source/"rust/netsec/crates/runtime/src"
+    pins=dict(re.findall(r'^(?:pub )?const (\w+): [^=\n]+= "?([^";\n]*)"?;',(runtime/"live/models.rs").read_text(encoding="utf-8"),re.M))
+    pins["label"]=re.search(r'models::LIVE77_MODEL_ID => Ok\("([^"]+)"\)',(runtime/"live.rs").read_text(encoding="utf-8")).group(1)
+    pins["caveat"]=re.search(r'export const caveat=/(.+)/i;',(source/"rust/netsec/web/src/liveView.ts").read_text(encoding="utf-8")).group(1)
+    return pins
+
+
+def live77_bundle(root=ROOT,pins=None,source=ROOT):
+    """Plan step 9: the live77 bundle's SHA, schema, classes, merge, window, provenance and checkpoint, checked offline
+    against the guards live/models.rs load_bundle enforces. Nothing executes: no capture and no inference (the Rust
+    loader itself, its golden replay and TreeSHAP run in cargo test live::models). Only shipped bytes are read."""
+    result={"bundle":(LIVE77/"bundle.json").as_posix(),"packet_capture_started":False,"model_executed":False,"test_arrays_opened":False,
+            "caveat_filter":None,"failures":[],"error":None,"checks":{},
+            "rust_loader_coverage":"the Rust load path (load_bundle guards, Booster::load_checkpoint, golden replay, exact TreeSHAP) is covered by "
+                                   "cargo test -p netsec-runtime live::models; it is not executed by this phase (live77 loads lazily on a captured window)"}
+    try:
+        pins=pins or rust_pins(source);caveat=result["caveat_filter"]=re.compile(pins["caveat"],re.I)
+        path=root/LIVE77/"bundle.json";raw=path.read_bytes();b=json.loads(raw)
+        names,classes,merge=b.get("feature_names") or [],b.get("classes") or [],b.get("class_merge") or {}
+        joined=lambda values:hashlib.sha256("\n".join(values).encode()).hexdigest()
+        catalog=json.loads((source/"artifacts/application/native_models_v1/catalog.json").read_text(encoding="utf-8"))["classes"]
+        spec_path=source/"artifacts/training/class_merge_20261101/spec.json";spec=json.loads(spec_path.read_text(encoding="utf-8"))
+        temperature=(b.get("calibration") or {}).get("temperature");window=int(pins["WINDOW_SECONDS"])
+        checkpoint=(path.parent/str(b.get("checkpoint") or "")).resolve()
+        inside=checkpoint.parent==path.parent.resolve() and checkpoint.is_file()
+        label,note=str(b.get("label") or ""),str(b.get("provenance_note") or "")
+        decisions_path=source/LIVE77_DECISIONS;decided=json.loads(decisions_path.read_text(encoding="utf-8"))["defaults_chosen_by_app_chat"]
+        checks=[("bundle at most 1 MiB",len(raw)<=1024*1024),
+            ("bundle SHA256 equals the Rust pin",hashlib.sha256(raw).hexdigest()==pins["LIVE77_BUNDLE_SHA"]),
+            ("model id, kind and objective",b.get("model_id")==pins["LIVE77_MODEL_ID"] and b.get("kind")=="xgboost" and b.get("objective")=="multi:softprob"),
+            ("252 feature names in the pinned order",len(names)==252==b.get("n_features") and joined(names)==pins["LIVE77_NAMES_SHA"]),
+            ("77 classes in the pinned order, equal to the CSV catalog",len(classes)==77==b.get("n_classes") and joined(classes)==pins["LIVE77_CLASSES_SHA"] and classes==catalog),
+            ("benign index 0, recon_scan 70, recon_ping-sweep 71",b.get("benign_index")==0 and classes[:1]==["benign"] and classes[70:72]==["recon_scan","recon_ping-sweep"]),
+            ("class merge ping_sweep_into_recon_scan v1, 71 -> 70, pinned spec",merge.get("name")=="ping_sweep_into_recon_scan" and merge.get("version")==1
+                and (merge.get("source_class"),merge.get("source_index"),merge.get("target_class"),merge.get("target_index"))==("recon_ping-sweep",71,"recon_scan",70)
+                and merge.get("spec_sha256")==pins["CLASS_MERGE_SPEC_SHA"]==digest(spec_path) and (spec.get("source_index"),spec.get("target_index"))==(71,70)),
+            ("10 s window",window==10 and b.get("window_seconds")==window and (b.get("window") or {}).get("length_seconds")==window),
+            ("test_evaluated and live_validation false",b.get("test_evaluated") is False and b.get("live_validation") is False),
+            ("temperature calibration, no logit adjustment, no binary attack probability",(b.get("calibration") or {}).get("kind")=="temperature"
+                and isinstance(temperature,(int,float)) and math.isfinite(temperature) and temperature>0 and b.get("logit_adjustment") is None
+                and (b.get("output") or {}).get("binary_attack_probability") is None),
+            ("checkpoint inside the bundle folder; bytes and SHA256 match the bundle and the Rust pin",inside and checkpoint.stat().st_size==b.get("bytes")
+                and digest(checkpoint)==b.get("checkpoint_sha256")==pins["LIVE77_CHECKPOINT_SHA"]),
+            ("label equals the runtime label; label and provenance note survive the Live caveat filter",label==pins["label"] and bool(note.strip())
+                and not caveat.search(label) and not caveat.search(note)),
+            ("label and provenance note equal the owner's decisions file (defaults_chosen_by_app_chat)",(label,note)==(decided.get("label"),decided.get("provenance_note"))
+                and b.get("model_id")==decided.get("model_id")),
+            ("bundle pins the current owner decisions file (sha256)",(b.get("source") or {}).get("decisions_sha256")==digest(decisions_path))]
+        result["checks"]={name:bool(ok) for name,ok in checks};result["failures"]=[name for name,ok in checks if not ok]
+        result.update(bundle_sha256=hashlib.sha256(raw).hexdigest(),checkpoint_sha256=b.get("checkpoint_sha256"),features=len(names),classes=len(classes),
+            merge=f'{merge.get("source_class")} ({merge.get("source_index")}) -> {merge.get("target_class")} ({merge.get("target_index")})',
+            window_seconds=b.get("window_seconds"),label=label,provenance_note=note)
+    except (OSError,ValueError,KeyError,TypeError,AttributeError,IndexError) as error:
+        result["error"]=f"{type(error).__name__}: {error}"
+    result["passed"]=result["error"] is None and bool(result["checks"]) and not result["failures"]
+    return result
+
+
+def verify_live77(evidence,root=ROOT):
+    """Offline phase: no runtime, capture or inference starts; the stopped-by-default live check stays in the http phase."""
+    result=live77_bundle(root);passed=result.pop("passed")
+    result["caveat_filter"]=result["caveat_filter"].pattern if result["caveat_filter"] else None
+    return evidence.check("live77 bundle SHA, classes and merge load against the Rust pins (offline; no capture)",passed,**result)
 
 
 def verify_browser(runtime,evidence):
@@ -441,23 +795,37 @@ def main():
     if phases-set(PHASES):parser.error("Unknown verification phase")
     folder=args.output or ROOT/"artifacts/app_migration_20261024/native_verification"/datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
     evidence=Evidence(folder)
-    private=evidence.folder/"bin/netsec-runtime.exe";private.parent.mkdir(exist_ok=True)
-    shutil.copy2(args.binary,private)
-    evidence.check("private test executable matches actual release",digest(args.binary)==digest(private),source=str(args.binary),sha256=digest(private))
-    catalog=samples=job=None;explanations={}
+    private=evidence.folder/"bin/netsec-runtime.exe"
+    if phases-{"live77"}:  # the offline live77 phase never runs the executable, so it needs no private copy
+        private.parent.mkdir(exist_ok=True);shutil.copy2(args.binary,private)
+        evidence.check("private test executable matches actual release",digest(args.binary)==digest(private),source=str(args.binary),sha256=digest(private))
+    catalog=samples=job=None;explanations={};matrix={};env={};device="gpu";environment={}
+    if "english" in phases:
+        # Shared GPU rules: at most one llama-server machine-wide, and GPU only with enough free VRAM (otherwise CPU, recorded).
+        if llama_servers():
+            evidence.check("english: no other llama-server is running (one-server rule)",False,running=llama_servers());phases-={"english"}
+        else:
+            environment=gpu_state()
+            if not (environment.get("available") and environment["memory_free_mib"]>=GPU_FREE_MIB):
+                device="cpu";env={"NETSEC_LLM_DEVICE":"cpu"}
+                evidence.check("GPU english matrix measured (needs >= %d MiB free VRAM)"%GPU_FREE_MIB,False,environment=environment)
     try:
-        with NativeRuntime(ROOT,private,evidence) as runtime:
-            catalog=runtime.json("/api/v1/catalog");samples=runtime.json("/api/v1/samples")["samples"]
-            if "http" in phases:verify_http(runtime,evidence)
-            if phases & {"models","xai","english"}:
-                if "models" in phases:job=verify_models(runtime,evidence,catalog,samples)
-                else:
-                    created=runtime.json("/api/v1/jobs",{"mode":"extensive","sample_id":samples[0]["id"]})
-                    job,_,_=runtime.wait_job(created["id"])
-                if "xai" in phases:explanations=verify_xai(runtime,evidence,job)
-                if "english" in phases:verify_english(runtime,evidence,job,explanations)
-            if "browser" in phases:verify_browser(runtime,evidence)
-        if "partial" in phases:verify_partial(private,evidence,samples[0]["id"])
+        if "live77" in phases:verify_live77(evidence)
+        if phases-{"live77"}:
+            with NativeRuntime(ROOT,private,evidence,env=env) as runtime:
+                catalog=runtime.json("/api/v1/catalog");samples=runtime.json("/api/v1/samples")["samples"]
+                if "http" in phases:verify_http(runtime,evidence)
+                if phases & {"models","xai","english"}:
+                    if "models" in phases:job=verify_models(runtime,evidence,catalog,samples)
+                    else:
+                        created=runtime.json("/api/v1/jobs",{"mode":"extensive","sample_id":samples[0]["id"]})
+                        job,_,_=runtime.wait_job(created["id"])
+                    if "xai" in phases:explanations=verify_xai(runtime,evidence,job)
+                    if "english" in phases:matrix[device]=verify_english(runtime,evidence,job,explanations,device,environment)
+                if "browser" in phases:verify_browser(runtime,evidence)
+            if "partial" in phases:verify_partial(private,evidence,samples[0]["id"])
+            if "english" in phases and device=="gpu":verify_english_cpu(private,evidence,matrix)
+            elif matrix:evidence.artifact("english_matrix.json",matrix)
     except Exception as error:
         evidence.check("verification driver completed",False,error=str(error),traceback=traceback.format_exc())
     evidence.data["finished_utc"]=datetime.now(timezone.utc).isoformat()

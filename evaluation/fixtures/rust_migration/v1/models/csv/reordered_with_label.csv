@@ -1,0 +1,2 @@
+label4,network_protocols_dst__present_UNSEEN,network_protocols_dst__present_tcp,network_protocols_src__present_UNSEEN,network_protocols_src__present_tcp,network_protocols_all__present_UNSEEN,network_protocols_all__present_udp,network_protocols_all__present_tcp,log_sensor,network_signal,network_tcp-flags-urg_count,network_tcp-flags-syn_count,network_tcp-flags-rst_count,network_tcp-flags-psh_count,network_tcp-flags-fin_count,network_tcp-flags-ack_count,network_packets_all_count
+ignored,0.0,1.0,0.0,1.0,0.0,0.0,1.0,0.25,0.0,0.0,10.0,1.0,2.0,1.0,30.0,100.0

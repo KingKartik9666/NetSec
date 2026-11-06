@@ -59,6 +59,8 @@ def main():
                     time.sleep(.2)
             check("actual Electron Chromium debugging connection", browser is not None)
             page = browser.contexts[0].pages[0]
+            # Reduced motion settles scroll reveals and text reveals immediately, so evidence screenshots show final layouts.
+            page.emulate_media(reduced_motion='reduce')
             page.wait_for_url("http://127.0.0.1:*/", timeout=45000)
             page.wait_for_selector("body.desktop-app", timeout=20000)
             check("authenticated native home rendered", "NetSec" in page.title() and "session=" not in page.url, url=page.url)
@@ -101,6 +103,21 @@ def main():
             expect(page.locator('#xai-content')).to_contain_text('SHAP', timeout=180000)
             page.screenshot(path=str(args.output / 'electron_explanation.png'), full_page=True)
             check('React renders actual native explanation', page.locator('.xai-feature-list li').count() > 0)
+            # "Explain in plain English" opens the chat and streams the initial answer as badged sentences (Task 6 UI).
+            page.locator('#explain-english').click()
+            expect(page.locator('.chat-message.assistant .chat-reply-meta')).to_have_count(1, timeout=180000)
+            check('desktop English streams labelled sentences into the chat', page.locator('.chat-message.assistant .chat-sentence').count() > 0
+                  and page.locator('.chat-message.assistant .chat-badge').count() > 0, badges=page.locator('.chat-message.assistant .chat-badge').all_inner_texts())
+            expect(page.locator('#chat-question')).to_be_visible(timeout=15000)
+            check('desktop chat opens inline on the selected stored explanation', 'SHAP' in page.locator('#chat-view').inner_text())
+            page.locator('#chat-question').fill('What should I check?')
+            page.locator('#chat-send').click()
+            expect(page.locator('.chat-message.assistant .chat-reply-meta')).to_have_count(2, timeout=180000)
+            check('desktop chat displays a labelled local answer', page.locator('.chat-message.assistant').nth(1).locator('.chat-badge').count() > 0)
+            page.screenshot(path=str(args.output / 'electron_xai_chat.png'), full_page=True)
+            page.locator('#chat-reset').click()
+            expect(page.locator('.chat-message')).to_have_count(0)
+            check('desktop chat clear removes the conversation', page.locator('.chat-message').count() == 0)
             check('renderer has no Node or raw IPC', page.evaluate("typeof require === 'undefined' && typeof process === 'undefined' && typeof window.netsecDesktop === 'object'"))
             descendants = psutil.Process(process.pid).children(recursive=True)
             names = [p.name().lower() for p in descendants if p.is_running()]

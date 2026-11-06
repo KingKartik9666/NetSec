@@ -1,0 +1,211 @@
+{
+  "benign_index": 0,
+  "checkpoint": "ties.ubj",
+  "checkpoint_sha256": "dd864e77f84024ed90e0dfa191363c4fc911a87de0a2fa60a8fef666643eb965",
+  "classes": [
+    "benign",
+    "synthetic_probe",
+    "synthetic_flood"
+  ],
+  "feature_names": [
+    "network_packets_all_count",
+    "network_tcp-flags-ack_count",
+    "network_tcp-flags-fin_count",
+    "network_tcp-flags-psh_count",
+    "network_tcp-flags-rst_count",
+    "network_tcp-flags-syn_count",
+    "network_tcp-flags-urg_count",
+    "network_signal",
+    "log_sensor",
+    "network_protocols_all__present_tcp",
+    "network_protocols_all__present_udp",
+    "network_protocols_all__present_UNSEEN",
+    "network_protocols_src__present_tcp",
+    "network_protocols_src__present_UNSEEN",
+    "network_protocols_dst__present_tcp",
+    "network_protocols_dst__present_UNSEEN"
+  ],
+  "model": {
+    "classes": 3,
+    "features": 16,
+    "macro_f1": null,
+    "name": "Synthetic migration XGBoost fixture",
+    "run_id": "migration_synthetic_s42",
+    "seed": 42,
+    "selection_basis": "Synthetic compatibility fixture; no research metrics",
+    "training_rows": 120,
+    "validation_accuracy": null
+  },
+  "numeric_features": [
+    "network_packets_all_count",
+    "network_tcp-flags-ack_count",
+    "network_tcp-flags-fin_count",
+    "network_tcp-flags-psh_count",
+    "network_tcp-flags-rst_count",
+    "network_tcp-flags-syn_count",
+    "network_tcp-flags-urg_count",
+    "network_signal",
+    "log_sensor"
+  ],
+  "partial_input_supported": true,
+  "protocol_vocabulary": {
+    "network_protocols_all": [
+      "tcp",
+      "udp"
+    ],
+    "network_protocols_dst": [
+      "tcp"
+    ],
+    "network_protocols_src": [
+      "tcp"
+    ]
+  },
+  "samples": [
+    {
+      "features": [
+        100.0,
+        30.0,
+        1.0,
+        2.0,
+        1.0,
+        10.0,
+        0.0,
+        0.0,
+        0.25,
+        1.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        1.0,
+        0.0
+      ],
+      "id": 0,
+      "label": "benign",
+      "source_row": 0,
+      "synthetic": true
+    },
+    {
+      "features": [
+        100.0,
+        30.0,
+        1.0,
+        2.0,
+        1.0,
+        10.0,
+        0.0,
+        null,
+        0.25,
+        1.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        1.0,
+        0.0
+      ],
+      "id": 1,
+      "label": "synthetic_probe",
+      "source_row": 1,
+      "synthetic": true
+    },
+    {
+      "features": [
+        100.0,
+        30.0,
+        1.0,
+        2.0,
+        1.0,
+        10.0,
+        0.0,
+        0.0,
+        0.25,
+        1.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        1.0,
+        0.0
+      ],
+      "id": 2,
+      "label": "synthetic_flood",
+      "source_row": 2,
+      "synthetic": true
+    },
+    {
+      "features": [
+        100.0,
+        30.0,
+        1.0,
+        2.0,
+        1.0,
+        10.0,
+        0.0,
+        0.0,
+        0.25,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      "id": 3,
+      "label": "benign",
+      "source_row": 3,
+      "synthetic": true
+    },
+    {
+      "features": [
+        100.0,
+        30.0,
+        1.0,
+        2.0,
+        1.0,
+        10.0,
+        0.0,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      "id": 4,
+      "label": "synthetic_probe",
+      "source_row": 4,
+      "synthetic": true
+    },
+    {
+      "features": [
+        0.0,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      "id": 5,
+      "label": "synthetic_flood",
+      "source_row": 5,
+      "synthetic": true
+    }
+  ],
+  "schema_version": 2,
+  "synthetic": true
+}

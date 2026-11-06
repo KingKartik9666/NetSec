@@ -1,0 +1,295 @@
+{
+ "_note": "Real validation-row packets of the explainer pass-rate matrix (xgboost + TreeSHAP, top 8 features by |contribution|), fetched 3 Nov 2026 by artifacts/explainer_20261103/passrate-1/fetch_packets.py; no held-out test data.",
+ "benign": {
+  "source_row_id": "285252",
+  "origin": "validation",
+  "prediction": {
+   "label": "benign",
+   "display_label": "Normal network activity",
+   "score": 0.9995252119590244,
+   "score_kind": "class_probability",
+   "top_classes": [
+    {
+     "display_label": "Normal network activity",
+     "label": "benign",
+     "score": 0.9995252119590244
+    },
+    {
+     "display_label": "malware mirai udp flood",
+     "label": "malware_mirai-udp-flood",
+     "score": 8.698496290764418e-05
+    },
+    {
+     "display_label": "ddos ack frag flood port 80",
+     "label": "ddos_ack-frag-flood-port-80",
+     "score": 6.774834917563849e-05
+    }
+   ]
+  },
+  "explanation": {
+   "method": "shap",
+   "units": "raw_class_margin",
+   "features": [
+    {
+     "feature": "network_packet-size_min",
+     "value": 50.0,
+     "contribution": 3.8985884189605713
+    },
+    {
+     "feature": "network_ports_dst__present_57688",
+     "value": 1.0,
+     "contribution": 2.6438393592834473
+    },
+    {
+     "feature": "listed_src_ports_per_src_ip",
+     "value": 2.641509532928467,
+     "contribution": -1.5122443437576294
+    },
+    {
+     "feature": "network_time-delta_min",
+     "value": 0.0,
+     "contribution": 1.1309133768081665
+    },
+    {
+     "feature": "network_macs_all_count",
+     "value": 47.0,
+     "contribution": -0.42653757333755493
+    },
+    {
+     "feature": "network_ports_src__present_9200",
+     "value": 1.0,
+     "contribution": -0.3054679334163666
+    },
+    {
+     "feature": "network_ports_all__listed_distinct",
+     "value": 143.0,
+     "contribution": -0.2587957978248596
+    },
+    {
+     "feature": "network_ports_all_count",
+     "value": 143.0,
+     "contribution": -0.25258588790893555
+    }
+   ]
+  }
+ },
+ "ddos": {
+  "source_row_id": "2064",
+  "origin": "validation",
+  "prediction": {
+   "label": "ddos_icmp-flood",
+   "display_label": "ddos icmp flood",
+   "score": 0.998824088929642,
+   "score_kind": "class_probability",
+   "top_classes": [
+    {
+     "display_label": "ddos icmp flood",
+     "label": "ddos_icmp-flood",
+     "score": 0.998824088929642
+    },
+    {
+     "display_label": "ddos http flood port 1883",
+     "label": "ddos_http-flood-port-1883",
+     "score": 0.00028440176635608654
+    },
+    {
+     "display_label": "mitm ip spoofing",
+     "label": "mitm_ip-spoofing",
+     "score": 0.0002787966594858731
+    }
+   ]
+  },
+  "explanation": {
+   "method": "shap",
+   "units": "raw_class_margin",
+   "features": [
+    {
+     "feature": "network_protocols_dst__present_icmp",
+     "value": 1.0,
+     "contribution": 2.236504554748535
+    },
+    {
+     "feature": "network_packets_dst_count__per_second",
+     "value": 86852.8984375,
+     "contribution": 1.2796880006790161
+    },
+    {
+     "feature": "network_protocols_all__present_icmp",
+     "value": 1.0,
+     "contribution": 0.6823951005935669
+    },
+    {
+     "feature": "network_ip-length_avg",
+     "value": 28.00125503540039,
+     "contribution": 0.5040456652641296
+    },
+    {
+     "feature": "network_src_packet_fraction",
+     "value": 0.005885510705411434,
+     "contribution": 0.4345979690551758
+    },
+    {
+     "feature": "network_protocols_src__present_icmp",
+     "value": 1.0,
+     "contribution": 0.4043581783771515
+    },
+    {
+     "feature": "network_dst_packet_fraction",
+     "value": 0.9941145181655884,
+     "contribution": 0.3995629549026489
+    },
+    {
+     "feature": "network_ip-length_min",
+     "value": 28.0,
+     "contribution": 0.38721418380737305
+    }
+   ]
+  }
+ },
+ "scan": {
+  "source_row_id": "12417",
+  "origin": "validation",
+  "prediction": {
+   "label": "recon_scan",
+   "display_label": "recon scan",
+   "score": 0.9995025265704855,
+   "score_kind": "class_probability",
+   "top_classes": [
+    {
+     "display_label": "recon scan",
+     "label": "recon_scan",
+     "score": 0.9995025265704855
+    },
+    {
+     "display_label": "dos syn flood port 443",
+     "label": "dos_syn-flood-port-443",
+     "score": 3.7999073537121135e-05
+    },
+    {
+     "display_label": "ddos syn flood port 80",
+     "label": "ddos_syn-flood-port-80",
+     "score": 2.1412980957849812e-05
+    }
+   ]
+  },
+  "explanation": {
+   "method": "shap",
+   "units": "raw_class_margin",
+   "features": [
+    {
+     "feature": "network_tcp-flags_std_deviation",
+     "value": 8.99989128112793,
+     "contribution": 2.1236281394958496
+    },
+    {
+     "feature": "network_ports_dst__present_52822",
+     "value": 1.0,
+     "contribution": 1.1704518795013428
+    },
+    {
+     "feature": "network_tcp-flags-syn__fraction_of_packets",
+     "value": 0.49702689051628113,
+     "contribution": 0.9751336574554443
+    },
+    {
+     "feature": "network_tcp-flags-rst__fraction_of_packets",
+     "value": 0.5019389986991882,
+     "contribution": 0.6613894104957581
+    },
+    {
+     "feature": "network_ports_src__present_23",
+     "value": 1.0,
+     "contribution": -0.35754287242889404
+    },
+    {
+     "feature": "network_ttl_min",
+     "value": 37.0,
+     "contribution": 0.34986385703086853
+    },
+    {
+     "feature": "network_packets_all_count__per_second",
+     "value": 1547.199951171875,
+     "contribution": -0.21458064019680023
+    },
+    {
+     "feature": "network_ports_dst__present_80",
+     "value": 1.0,
+     "contribution": 0.1725236177444458
+    }
+   ]
+  }
+ },
+ "unknown": {
+  "source_row_id": "221892",
+  "origin": "validation",
+  "prediction": {
+   "label": "mitm_arp-spoofing",
+   "display_label": "mitm arp spoofing",
+   "score": 0.15227610003999803,
+   "score_kind": "class_probability",
+   "top_classes": [
+    {
+     "display_label": "mitm arp spoofing",
+     "label": "mitm_arp-spoofing",
+     "score": 0.15227610003999803
+    },
+    {
+     "display_label": "malware mirai syn flood",
+     "label": "malware_mirai-syn-flood",
+     "score": 0.150813208329512
+    },
+    {
+     "display_label": "ddos synonymousip flood port 1883",
+     "label": "ddos_synonymousip-flood-port-1883",
+     "score": 0.1009284713618349
+    }
+   ]
+  },
+  "explanation": {
+   "method": "shap",
+   "units": "raw_class_margin",
+   "features": [
+    {
+     "feature": "network_window-size_min",
+     "value": 5610.0,
+     "contribution": -0.6589924693107605
+    },
+    {
+     "feature": "network_ports_dst__present_UNSEEN",
+     "value": 1.0,
+     "contribution": -0.6409863233566284
+    },
+    {
+     "feature": "network_window-size_std_deviation",
+     "value": 27556.89453125,
+     "contribution": -0.495121031999588
+    },
+    {
+     "feature": "network_src_packet_fraction",
+     "value": 0.3333333432674408,
+     "contribution": 0.3800005614757538
+    },
+    {
+     "feature": "network_packets_src_count__per_second",
+     "value": 0.3333333432674408,
+     "contribution": 0.3218802511692047
+    },
+    {
+     "feature": "network_interval-packets",
+     "value": 826.7999877929688,
+     "contribution": 0.283080518245697
+    },
+    {
+     "feature": "network_dst_packet_fraction",
+     "value": 0.6666666865348816,
+     "contribution": 0.22874784469604492
+    },
+    {
+     "feature": "network_ports_dst__present_54008",
+     "value": 0.0,
+     "contribution": -0.2026541382074356
+    }
+   ]
+  }
+ }
+}

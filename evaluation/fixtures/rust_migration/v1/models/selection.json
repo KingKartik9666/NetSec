@@ -1,0 +1,87 @@
+{
+  "cases": [
+    {
+      "id": "original",
+      "input_bundles": {},
+      "output": {
+        "selected": "framework/models/xgboost_app/bundle.json"
+      }
+    },
+    {
+      "id": "unpromoted",
+      "input_bundles": {
+        "xgboost_partial": {
+          "promoted": false
+        }
+      },
+      "output": {
+        "selected": "framework/models/xgboost_app/bundle.json"
+      }
+    },
+    {
+      "id": "partial",
+      "input_bundles": {
+        "xgboost_partial": {
+          "promoted": true,
+          "promotion": {
+            "improved": true
+          }
+        }
+      },
+      "output": {
+        "selected": "framework/models/xgboost_partial/bundle.json"
+      }
+    },
+    {
+      "id": "enhanced",
+      "input_bundles": {
+        "xgboost_partial": {
+          "promoted": true,
+          "promotion": {
+            "improved": true
+          }
+        },
+        "xgboost_partial_enhanced": {
+          "promoted": true,
+          "promotion": {
+            "improved": true
+          }
+        }
+      },
+      "output": {
+        "selected": "framework/models/xgboost_partial_enhanced/bundle.json"
+      }
+    },
+    {
+      "id": "enhanced_not_improved",
+      "input_bundles": {
+        "xgboost_partial": {
+          "promoted": true,
+          "promotion": {
+            "improved": true
+          }
+        },
+        "xgboost_partial_enhanced": {
+          "promoted": true,
+          "promotion": {
+            "improved": false
+          }
+        }
+      },
+      "output": {
+        "selected": "framework/models/xgboost_partial/bundle.json"
+      }
+    },
+    {
+      "id": "corrupt_selected_json",
+      "input_bundles": {
+        "xgboost_partial_enhanced": "{invalid"
+      },
+      "output": {
+        "error": "Expecting property name enclosed in double quotes: line 1 column 2 (char 1)",
+        "error_type": "JSONDecodeError"
+      }
+    }
+  ],
+  "synthetic": true
+}

@@ -23,11 +23,41 @@ TabPack + XGBoost. TabPack's auxiliary branch is internal, not an eleventh choic
 Separate partial-input/binary live models do not make full-schema models live
 compatible. HEM-derived remains explicitly distinct from real HEM.
 
+### Model bundle: 77 classes (since 31 October 2026)
+
+`artifacts/application/native_models_v1` now holds the cascade v3 models
+(`artifacts/training/cascade_v3_20261030_v1`, exported by
+`tools/native_export/export_v3.py`). They use 445 CSV v3 features and 77 classes,
+and the eight nmap recon subtypes form one class, `recon_scan`. CSV input must use
+the 445 v3 columns. An old 655-column file is rejected with an error that names
+the first missing v3 column, and extra columns are ignored. The default selection is TabM + XGBoost + KAN, the tuning-role pick at
+94.82% assessment-role accuracy. That is validation evidence only; the held-out
+test was never scored.
+
+Calibration was fitted on the calibration role and adopted only if tuning-role
+Brier dropped:
+- class probabilities use temperature, vector or identity calibration with
+  smoothing α;
+- the binary attack score uses a new Platt map. TabPack and TabPack + XGBoost
+  keep the raw `1 − p(benign)`;
+- HEM has a new vote-correctness map.
+
+Native parity matched the Python oracle on 128 validation rows: 0 changed
+decisions, maximum difference 3.1e-6. The former 84-class bundle is archived
+under `artifacts/application/archive/native_models_v1_84class_wrapup_20261023/`.
+
 All six explanation methods retain their specific output units and limitations.
 Native TreeSHAP is exact for supported trees; neural/hybrid SHAP is approximate,
 and the native LIME-style grouped surrogate is not the Python LIME package.
-Local Qwen uses llama.cpp on CPU and returns verified execution/grounding evidence
-or an explicit failure. No template or synthetic detector replaces real inference.
+The local language model (Qwen3-4B-Instruct-2507 Q4_K_M, pinned by
+`artifacts/llm/model.json`) writes plain English through one loopback llama.cpp
+b11564 `llama-server` child, GPU first with the CPU build as fallback; detectors
+stay on the CPU. Every sentence is verified against the server-owned evidence
+before it is shown and labelled **Model**; failed or missing output is replaced by
+labelled NetSec template sentences. No template or synthetic detector replaces
+real inference. See [XAI chat](XAI_CHAT.md). Analysis and live discussions pin
+immutable evidence; the assistant has no general-purpose tools or authority to
+change results.
 
 ## Build and run
 
@@ -56,12 +86,12 @@ Build the local Windows installer after verification:
 .\.venv\Scripts\python.exe tools/build_native_desktop.py --installer
 ```
 
-Output: `artifacts/desktop/releases/NetSec-Setup-0.4.0-x64.exe`.
+Output: `artifacts/desktop/releases/NetSec-Setup-0.4.1-x64.exe`.
 The installed application does not require Node, Python, Rust or credentials.
 `experiment.build_desktop` is the legacy Python freeze path, not this release's
 build command. The installer retains `edu.imdai.security` and per-user upgrade
 identity. No Npcap redistributable is bundled; packet capture remains an optional
-explicit driver-dependent capability. The ordinary app starts offline on CPU.
+explicit driver-dependent capability. The ordinary app starts offline; detectors run on the CPU and only the language server uses a free GPU.
 
 ## Verification
 
@@ -70,6 +100,8 @@ npm.cmd --prefix rust/netsec/web test
 npm.cmd --prefix rust/netsec/web run build
 node --test framework/app/desktop/tests/native-runtime.test.cjs
 .\.venv\Scripts\python.exe -m tools.verify_native_app
+.\.venv\Scripts\python.exe -m tools.verify_native_chat --browser --output artifacts/locked_explainer_20261031/verification/chat
+.\.venv\Scripts\python.exe tools/eval_explainer.py
 .\.venv\Scripts\python.exe tools/verify_native_desktop.py
 .\.venv\Scripts\python.exe -m tools.verify_native_ownership --output artifacts/native-ownership-check
 .\.venv\Scripts\python.exe run_demo.py
@@ -92,10 +124,17 @@ Requests, navigation and new windows are constrained to the owned workspace.
 Windows job ownership retires native descendants even on forced runtime exit;
 parent-stdin EOF and explicit shutdown handle normal shell termination.
 
-Staging seals compiled React assets, approved native model exports, CPU llama.cpp,
-Qwen, license notices and the native executable. Its VC runtime DLLs are copied
-beside both native executables. Build validation rejects changed or unsealed files.
-The runtime verifies shared assets at startup and model bytes on model loading.
+Staging seals compiled React assets, approved native model exports, the language
+model and its license, license notices and the native executable. For both llama
+folders (`native-b11564` CPU and `native-b11564-cuda`) it stages exactly the files
+the runtime pins: `llama-server.exe`, every DLL except the other llama.cpp tools'
+entry DLLs, and the folder's license files (`tools/stage_native_app.py`
+`closure_names`, mirrored from `language/server.rs` `closure()`). The VC runtime
+DLLs are copied beside the native executable and both llama servers. Build
+validation rejects changed or unsealed files. The runtime verifies shared assets
+at startup and model bytes on model loading; the 2.5 GB GGUF and the CUDA files are
+size-checked at startup and hashed by a background pass before the language
+server first starts.
 
 Migration evidence and recoverable source snapshot:
 `artifacts/app_electron_react_20261024/`. The retired Tauri tree is retained there

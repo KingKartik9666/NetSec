@@ -1,6 +1,6 @@
 {
   "name": "imdai-security",
-  "version": "0.4.0",
+  "version": "0.6.2",
   "private": true,
   "description": "NetSec: Electron desktop, React and TypeScript interface, native Rust model inference",
   "author": "IMDAI Research Project",
@@ -38,7 +38,11 @@
     "extraResources": [
       {
         "from": "../../../artifacts/application/package_root",
-        "to": "runtime"
+        "to": "runtime",
+        "filter": [
+          "**/*",
+          "!artifacts/llm/*.gguf"
+        ]
       },
       {
         "from": "installer",

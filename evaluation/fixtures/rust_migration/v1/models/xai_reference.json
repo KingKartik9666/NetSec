@@ -1,0 +1,32 @@
+{
+  "categorical_indices": [
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15
+  ],
+  "feature_names": [
+    "network_packets_all_count",
+    "network_tcp-flags-ack_count",
+    "network_tcp-flags-fin_count",
+    "network_tcp-flags-psh_count",
+    "network_tcp-flags-rst_count",
+    "network_tcp-flags-syn_count",
+    "network_tcp-flags-urg_count",
+    "network_signal",
+    "log_sensor",
+    "network_protocols_all__present_tcp",
+    "network_protocols_all__present_udp",
+    "network_protocols_all__present_UNSEEN",
+    "network_protocols_src__present_tcp",
+    "network_protocols_src__present_UNSEEN",
+    "network_protocols_dst__present_tcp",
+    "network_protocols_dst__present_UNSEEN"
+  ],
+  "kind": "Synthetic migration training fixture; not research observations",
+  "rows": 120,
+  "sha256": "b2cd29ac006146676b0d0d2174684d66448dac4ceca85de02888fef16e9b57d9"
+}

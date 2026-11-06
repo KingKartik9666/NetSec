@@ -18,7 +18,7 @@ def member_probabilities(logits, hierarchical=False):
     return torch.cat((1-attack, attack*subtype), dim=-1)
 
 
-def member_loss(logits, labels, hierarchical=False, weights=None, subtype_weight=1., smoothing=0.):
+def member_loss(logits, labels, hierarchical=False, weights=None, subtype_weight=1., smoothing=0., row_weights=None):
     batch, members, classes = logits.shape
     targets = labels[:, None].expand(-1, members)
     if hierarchical:
@@ -32,6 +32,8 @@ def member_loss(logits, labels, hierarchical=False, weights=None, subtype_weight
                                 reduction='none', label_smoothing=smoothing).reshape(batch, members)
     if weights is not None:
         losses = losses*weights[labels, None]
+    if row_weights is not None:          # per-row multipliers (e.g. scenario-balanced); None keeps the old loss exactly
+        losses = losses*row_weights[:, None]
     return losses.mean()
 
 

@@ -1,12 +1,13 @@
 {
   "name": "netsec-renderer",
-  "version": "0.4.0",
+  "version": "0.6.2",
   "private": true,
   "type": "module",
   "scripts": {
     "dev": "vite --host 127.0.0.1",
     "typecheck": "tsc --noEmit",
-    "build": "npm run typecheck && vite build",
+    "theme": "node scripts/build-dark-theme.mjs",
+    "build": "npm run theme && npm run typecheck && vite build",
     "test": "node --test tests/*.test.mjs"
   },
   "dependencies": {

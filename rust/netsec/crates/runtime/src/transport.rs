@@ -1,6 +1,6 @@
 //! Authenticated loopback HTTP adapter. Domain and inference do not depend on axum.
 use crate::{application::Application,analysis};
-use axum::{Router,Json,body::Body,extract::{State,Path,Query,DefaultBodyLimit,rejection::JsonRejection},http::{StatusCode,Request,HeaderMap,header},response::{IntoResponse,Response},routing::{get,post},middleware::{self,Next}};
+use axum::{Router,Json,body::Body,extract::{State,Path,Query,DefaultBodyLimit,rejection::JsonRejection},http::{StatusCode,Request,HeaderMap,header},response::{IntoResponse,Response,sse::{Event,KeepAlive,Sse}},routing::{get,post},middleware::{self,Next}};
 use netsec_core::input;
 use netsec_explain::{Method,Settings,Evaluation};
 use serde::Deserialize;
@@ -36,6 +36,16 @@ async fn protect(State(state):State<Server>,request:Request<Body>,next:Next)->Re
             return ApiError(status,"Requests must contain bounded application/json data".into()).into_response();
         }
     }
+    // Buffer every accepted POST body before the handler runs. Handlers without a body extractor
+    // (job cancel, live stop, window actions) otherwise leave the client's `{}` unread, and Windows
+    // resets such a connection before the client reads the response (intermittent WSAECONNABORTED).
+    let request=if request.method()==axum::http::Method::POST {
+        let (parts,body)=request.into_parts();
+        match axum::body::to_bytes(body,12*1024*1024).await{
+            Ok(bytes)=>Request::from_parts(parts,Body::from(bytes)),
+            Err(_)=>return ApiError(StatusCode::PAYLOAD_TOO_LARGE,"Requests must contain bounded application/json data".into()).into_response(),
+        }
+    }else{request};
     let mut response=next.run(request).await;
     let headers=response.headers_mut();
     headers.insert("x-content-type-options","nosniff".parse().unwrap());headers.insert(header::CACHE_CONTROL,"no-store".parse().unwrap());
@@ -131,9 +141,10 @@ async fn live_english(State(state):State<Server>,body:Result<Json<LiveEnglish>,J
     let permit=state.app.language_slots.clone().try_acquire_owned().map_err(|_|ApiError(StatusCode::TOO_MANY_REQUESTS,"Local language model is busy".into()))?;
     let app=state.app.clone();
     let output=tokio::task::spawn_blocking(move||->Result<Value,String>{
-        let _permit=permit;let label=if request.model_id=="live_partial_xgboost"{"Partial-input XGBoost"}else{"Experimental packet-only XGBoost"};
+        let _permit=permit;let label=crate::live::model_label(&request.model_id)?;
+        let (class_count,classes,features)=crate::language::live_schema(&prediction);
         let output=crate::language::generate_evidence(&app,&prediction,label,prediction.get("explanation"),app.live.cancellation(),
-            json!({"observation_id":request.observation_id,"model_id":request.model_id}))?;
+            json!({"observation_id":request.observation_id,"model_id":request.model_id}),class_count,&classes,&features)?;
         app.live.evidence(&request.observation_id,&request.model_id).map_err(|_|"The live observation changed during generation; request English for the current window".to_owned())?;Ok(output)
     }).await.map_err(|e|e.to_string())?.map_err(|e|ApiError(StatusCode::SERVICE_UNAVAILABLE,e))?;Ok(Json(output))
 }
@@ -145,6 +156,24 @@ async fn window_action(Path(action):Path<String>)->Result<Json<Value>,ApiError>{
 }
 async fn not_found()->impl IntoResponse{ApiError(StatusCode::NOT_FOUND,"Route not found".into())}
 
+async fn chat_context(State(state):State<Server>,body:Result<Json<crate::chat::ContextRequest>,JsonRejection>)->Result<Json<Value>,ApiError>{Ok(Json(state.app.chat.create(&state.app,payload(body)?)?))}
+#[derive(Deserialize)]#[serde(deny_unknown_fields)]struct ChatMessage{context_id:String,#[serde(default)]message:Option<String>,revision:u64,#[serde(default)]initial:bool}
+/// Returns the context view at once (`busy`, `pending`); the turn's worker holds the `language_slots` permit until it ends.
+async fn chat_send(State(state):State<Server>,body:Result<Json<ChatMessage>,JsonRejection>)->Result<Json<Value>,ApiError>{
+    let request=payload(body)?;let context=state.app.chat.get(&request.context_id)?;
+    let permit=state.app.language_slots.clone().try_acquire_owned().map_err(|_|ApiError(StatusCode::TOO_MANY_REQUESTS,"Local language model is busy; wait for the current answer or clear its chat".into()))?;
+    Ok(Json(context.start(&state.app,request.message.as_deref(),request.initial,request.revision,Some(permit)).map_err(|e|ApiError(StatusCode::SERVICE_UNAVAILABLE,e))?))
+}
+/// Server-sent `view` events for one context while a turn runs (see `chat::events`); `GET /api/v1/chat/contexts/{id}` stays the polling fallback.
+async fn chat_events(State(state):State<Server>,Path(id):Path<String>)->Result<Response,ApiError>{
+    use futures_util::StreamExt;
+    let context=state.app.chat.get(&id).map_err(|e|ApiError(StatusCode::NOT_FOUND,e))?;let app=state.app.clone();
+    let stream=crate::chat::events(context,move||app.stopping.load(Ordering::Acquire)).map(|view|Ok::<_,std::convert::Infallible>(Event::default().event("view").data(view.to_string())));
+    Ok(Sse::new(stream).keep_alive(KeepAlive::default()).into_response())
+}
+#[derive(Deserialize)]#[serde(deny_unknown_fields)]struct ChatReset{context_id:String}
+async fn chat_reset(State(state):State<Server>,body:Result<Json<ChatReset>,JsonRejection>)->Result<Json<Value>,ApiError>{let request=payload(body)?;Ok(Json(state.app.chat.get(&request.context_id)?.reset()))}
+
 pub async fn serve(root:PathBuf,port:u16,parent_stdin:bool,browser:bool)->Result<(),String>{
     let app=Application::load(root)?;let listener=tokio::net::TcpListener::bind((std::net::Ipv4Addr::LOCALHOST,port)).await.map_err(|e|e.to_string())?;
     let port=listener.local_addr().map_err(|e|e.to_string())?.port();
@@ -152,28 +181,14 @@ pub async fn serve(root:PathBuf,port:u16,parent_stdin:bool,browser:bool)->Result
         if token.len()!=64||!token.bytes().all(|v|v.is_ascii_hexdigit()){return Err("Desktop session token must be 64 hexadecimal characters".into());}token
     }else{let mut bytes=[0u8;32];getrandom::fill(&mut bytes).map_err(|e|e.to_string())?;bytes.iter().map(|v|format!("{v:02x}")).collect()};
     let browser_url=browser.then(||format!("http://127.0.0.1:{port}/bootstrap?session={token}"));
-    let state=Server{app:app.clone(),token,port};
-    let mut router=Router::new().route("/bootstrap",get(bootstrap)).route("/static/{*path}",get(asset))
-        .route("/api/v1/catalog",get(|State(s):State<Server>|async move{Json(s.app.catalog_view())}))
-        .route("/api/v1/samples",get(|State(s):State<Server>|async move{Json(s.app.samples_view())}))
-        .route("/api/v1/jobs",post(create_job)).route("/api/v1/jobs/{id}",get(get_job)).route("/api/v1/jobs/{id}/cancel",post(cancel_job))
-        .route("/api/v1/explain",post(explain)).route("/api/v1/english",post(english))
-        .route("/api/v1/live/status",get(|State(s):State<Server>|async move{Json(s.app.live.status())}))
-        .route("/api/v1/live/adapters",get(|State(s):State<Server>|async move{match s.app.live.adapters(){Ok(v)=>Json(v).into_response(),Err(e)=>ApiError(StatusCode::SERVICE_UNAVAILABLE,e).into_response()}}))
-        .route("/api/v1/live/start",post(live_start)).route("/api/v1/live/stop",post(|State(s):State<Server>|async move{Json(s.app.live.stop())}))
-        .route("/api/v1/live/english",post(live_english))
-        .route("/api/v1/window",get(|State(s):State<Server>|async move{Json(s.app.window.lock().unwrap_or_else(|e|e.into_inner()).clone())}))
-        .route("/api/v1/window/{action}",post(window_action))
-        .route("/api/v1/settings",get(|State(s):State<Server>|async move{Json(json!({"application":"NetSec","version":"0.4.0","backend":"Rust","python_inference":false,"offline":true,"cpu_only":true,"retained_jobs":16,"max_rows":500,"max_csv_bytes":10485760,"language":crate::language::status(&s.app.root),"models":s.app.catalog.summaries().len(),"data_retention":"Session memory only; export is explicit","test_loaded":false}))}));
-    for route in ["/","/models","/samples","/csv","/live","/settings","/help"]{router=router.route(route,get(page));}
-    let router=router.fallback(not_found).layer(DefaultBodyLimit::max(12*1024*1024)).layer(middleware::from_fn_with_state(state.clone(),protect)).with_state(state);
+    let router=router(Server{app:app.clone(),token,port});
     if parent_stdin{let app=app.clone();std::thread::spawn(move||{
         for line in std::io::stdin().lock().lines(){let Ok(line)=line else{break;};if line=="shutdown"{break;}
             if line.len()<4096{if let Ok(v)=serde_json::from_str::<Value>(&line){if v["type"]=="window_state"{*app.window.lock().unwrap_or_else(|e|e.into_inner())=v["state"].clone();}}}
         }
-        app.stopping.store(true,Ordering::Release);app.jobs.cancel_all();app.live.stop();app.shutdown.notify_waiters();
+        app.stopping.store(true,Ordering::Release);app.jobs.cancel_all();app.chat.cancel_all();app.live.stop();app.llm.shutdown();app.shutdown.notify_waiters();
     });}
-    let closing=app.clone();tokio::spawn(async move{let _=tokio::signal::ctrl_c().await;closing.stopping.store(true,Ordering::Release);closing.jobs.cancel_all();closing.live.stop();closing.shutdown.notify_waiters();});
+    let closing=app.clone();tokio::spawn(async move{let _=tokio::signal::ctrl_c().await;closing.stopping.store(true,Ordering::Release);closing.jobs.cancel_all();closing.chat.cancel_all();closing.live.stop();closing.llm.shutdown();closing.shutdown.notify_waiters();});
     println!("{}",json!({"type":"ready","port":port,"pid":std::process::id(),"backend":"rust"}));let _=std::io::stdout().flush();
     if let Some(url)=browser_url{open_browser(&url)?;}
     let shutdown = app.clone();
@@ -185,7 +200,28 @@ pub async fn serve(root:PathBuf,port:u16,parent_stdin:bool,browser:bool)->Result
         // notification concurrent with checking the retained stopping state.
         if !shutdown.stopping.load(Ordering::Acquire) { signal.await; }
     }).await.map_err(|e|e.to_string())?;
-    app.stopping.store(true,Ordering::Release);app.jobs.cancel_all();app.live.stop();Ok(())
+    app.stopping.store(true,Ordering::Release);app.jobs.cancel_all();app.live.stop();app.llm.shutdown();Ok(())
+}
+/// Every route behind `protect` (loopback host, origin, session token on all but `/bootstrap`).
+fn router(state:Server)->Router{
+    let mut router=Router::new().route("/bootstrap",get(bootstrap)).route("/static/{*path}",get(asset))
+        .route("/api/v1/catalog",get(|State(s):State<Server>|async move{Json(s.app.catalog_view())}))
+        .route("/api/v1/samples",get(|State(s):State<Server>|async move{Json(s.app.samples_view())}))
+        .route("/api/v1/jobs",post(create_job)).route("/api/v1/jobs/{id}",get(get_job)).route("/api/v1/jobs/{id}/cancel",post(cancel_job))
+        .route("/api/v1/explain",post(explain)).route("/api/v1/english",post(english))
+        .route("/api/v1/chat/contexts",get(|State(s):State<Server>|async move{Json(s.app.chat.list())}))
+        .route("/api/v1/chat/contexts/{id}",get(|State(s):State<Server>,Path(id):Path<String>|async move{match s.app.chat.get(&id){Ok(c)=>Json(c.view()).into_response(),Err(e)=>ApiError(StatusCode::NOT_FOUND,e).into_response()}}))
+        .route("/api/v1/chat/contexts/{id}/events",get(chat_events))
+        .route("/api/v1/chat/context",post(chat_context)).route("/api/v1/chat",post(chat_send)).route("/api/v1/chat/reset",post(chat_reset))
+        .route("/api/v1/live/status",get(|State(s):State<Server>|async move{Json(s.app.live.status())}))
+        .route("/api/v1/live/adapters",get(|State(s):State<Server>|async move{match s.app.live.adapters(){Ok(v)=>Json(v).into_response(),Err(e)=>ApiError(StatusCode::SERVICE_UNAVAILABLE,e).into_response()}}))
+        .route("/api/v1/live/start",post(live_start)).route("/api/v1/live/stop",post(|State(s):State<Server>|async move{Json(s.app.live.stop())}))
+        .route("/api/v1/live/english",post(live_english))
+        .route("/api/v1/window",get(|State(s):State<Server>|async move{Json(s.app.window.lock().unwrap_or_else(|e|e.into_inner()).clone())}))
+        .route("/api/v1/window/{action}",post(window_action))
+        .route("/api/v1/settings",get(|State(s):State<Server>|async move{Json(json!({"application":"NetSec","version":env!("CARGO_PKG_VERSION"),"backend":"Rust","python_inference":false,"offline":true,"cpu_only":true,"retained_jobs":16,"max_rows":500,"max_csv_bytes":10485760,"language":s.app.llm.status(&s.app.root),"models":s.app.catalog.summaries().len(),"data_retention":"Session memory only; export is explicit","test_loaded":false}))}));
+    for route in ["/","/models","/samples","/csv","/live","/chat","/settings","/help"]{router=router.route(route,get(page));}
+    router.fallback(not_found).layer(DefaultBodyLimit::max(12*1024*1024)).layer(middleware::from_fn_with_state(state.clone(),protect)).with_state(state)
 }
 
 #[cfg(windows)]
@@ -199,3 +235,29 @@ fn open_browser(url:&str)->Result<(),String>{
 }
 #[cfg(not(windows))]
 fn open_browser(_url:&str)->Result<(),String>{Err("Automatic browser opening is currently supported on Windows".into())}
+
+#[cfg(test)]mod tests{
+    use super::*;
+    use std::{io::Read,net::TcpStream,time::Duration};
+    /// Task 5 Ruling 1: the SSE route sits behind `protect`, returns 404 for an unknown context and streams `event: view` as text/event-stream.
+    #[test]fn events_route_is_protected_and_streams(){
+        let root=PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("../../../..").canonicalize().unwrap();
+        let app=Application::open(root,crate::language::server::LlamaServer::unverified()).unwrap();let id=app.chat.insert_test();
+        let runtime=tokio::runtime::Builder::new_multi_thread().worker_threads(1).enable_all().build().unwrap();
+        let listener=runtime.block_on(tokio::net::TcpListener::bind((std::net::Ipv4Addr::LOCALHOST,0))).unwrap();let port=listener.local_addr().unwrap().port();
+        let token="t".repeat(64);let state=Server{app,token:token.clone(),port};runtime.spawn(async move{axum::serve(listener,router(state)).await});
+        let get=|path:&str,session:Option<&str>|{
+            let mut socket=TcpStream::connect(("127.0.0.1",port)).unwrap();socket.set_read_timeout(Some(Duration::from_secs(10))).unwrap();
+            let cookie=session.map_or(String::new(),|t|format!("Cookie: netsec_session={t}\r\n"));
+            write!(socket,"GET {path} HTTP/1.1\r\nHost: 127.0.0.1:{port}\r\n{cookie}Connection: close\r\n\r\n").unwrap();
+            let mut out=String::new();socket.read_to_string(&mut out).unwrap();out
+        };
+        let events=format!("/api/v1/chat/contexts/{id}/events");
+        for session in [None,Some("wrong")]{let r=get(&events,session);assert!(r.starts_with("HTTP/1.1 403"),"{r}");}
+        let r=get("/api/v1/chat/contexts/unknown/events",Some(&token));assert!(r.starts_with("HTTP/1.1 404"),"{r}");
+        let r=get(&events,Some(&token));let (head,body)=r.split_once("\r\n\r\n").unwrap();
+        assert!(head.starts_with("HTTP/1.1 200")&&head.to_ascii_lowercase().contains("content-type: text/event-stream"),"{head}");
+        assert!(body.contains("event: view")&&body.contains(&format!("\"id\":\"{id}\""))&&body.contains("\"busy\":false"),"{body}");
+        runtime.shutdown_background();
+    }
+}

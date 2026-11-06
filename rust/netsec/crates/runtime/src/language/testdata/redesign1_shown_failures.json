@@ -1,0 +1,325 @@
+{
+ "_note": "Redesign round 1 review (3 Nov 2026), findings 5 and 6: model sentences that were SHOWN with the Model label in artifacts/explainer_20261103/redesign-1/replies.json (real Qwen3-4B, matrix validation rows) and are unfaithful translations of the selected XAI. Each must now fail with the named rule. 'row' is the replies.json row index.",
+ "failures": [
+  {
+   "row": 8,
+   "sample": "benign",
+   "method": "permutation",
+   "violation": "direction",
+   "text": "The model predicted Normal network activity, and the features with the highest impact on the model's error are the grouped features like log_data-ranges and log_data-types, which each show a small increase in Brier loss when permuted."
+  },
+  {
+   "row": 8,
+   "sample": "benign",
+   "method": "permutation",
+   "violation": "direction",
+   "text": "Shuffling the grouped features like log_data-ranges and log_data-types caused a small increase in Brier loss, indicating these features contributed to the model's decision."
+  },
+  {
+   "row": 8,
+   "sample": "benign",
+   "method": "permutation",
+   "violation": "cause",
+   "text": "The model predicted Normal network activity, and the low importance values for these features suggest they had limited influence on the overall prediction."
+  },
+  {
+   "row": 8,
+   "sample": "benign",
+   "method": "permutation",
+   "violation": "cause",
+   "text": "The model predicted Normal network activity, and the absence of significant changes in error when shuffling other features implies the prediction was not strongly driven by any single feature."
+  },
+  {
+   "row": 9,
+   "sample": "benign",
+   "method": "permutation",
+   "violation": "direction",
+   "text": "Shuffling the grouped features like log_data-ranges and log_data-types caused a small increase in Brier loss, showing these features had some influence on the model's overall decision."
+  },
+  {
+   "row": 32,
+   "sample": "ddos",
+   "method": "permutation",
+   "violation": "importance",
+   "text": "The model predicted ddos icmp flood, and the most influential features in this prediction are those related to log_data-ranges, log_data-types, and log_interval-messages, with specific values and groupings that contribute to the overall decision."
+  },
+  {
+   "row": 32,
+   "sample": "ddos",
+   "method": "permutation",
+   "violation": "pairing",
+   "text": "When log_interval-messages was shuffled, the model's error increased by 0.00000002, indicating this feature has some influence."
+  },
+  {
+   "row": 32,
+   "sample": "ddos",
+   "method": "permutation",
+   "violation": "cause",
+   "text": "The model predicted ddos icmp flood, and the log_interval-messages value of 192.5 contributed to the overall decision."
+  },
+  {
+   "row": 33,
+   "sample": "ddos",
+   "method": "permutation",
+   "violation": "pairing",
+   "text": "Permutation importance shows which features the model relies on most overall, and the highest impact was seen when log_interval-messages was shuffled, causing a Brier loss increase of 0.00000002."
+  },
+  {
+   "row": 33,
+   "sample": "ddos",
+   "method": "permutation",
+   "violation": "cause",
+   "text": "The model predicted ddos icmp flood, and the value of log_interval-messages was 192.5, which contributed to the decision."
+  },
+  {
+   "row": 34,
+   "sample": "ddos",
+   "method": "permutation",
+   "violation": "pairing",
+   "text": "The model predicted ddos icmp flood, and the highest Brier loss increase was observed when log_interval-messages was shuffled, with a change of 0.00000002."
+  },
+  {
+   "row": 34,
+   "sample": "ddos",
+   "method": "permutation",
+   "violation": "importance",
+   "text": "This indicates that log_interval-messages is one of the most influential features in the model's general decision-making."
+  },
+  {
+   "row": 50,
+   "sample": "scan",
+   "method": "permutation",
+   "violation": "direction",
+   "text": "The model predicted recon scan, and the largest increases in Brier loss occurred when groups of features like \"other grouped features (joint player)\" and \"log_data-ranges\" were shuffled, indicating these feature groups are most influential in the model's overall decision."
+  },
+  {
+   "row": 50,
+   "sample": "scan",
+   "method": "permutation",
+   "violation": "importance",
+   "text": "The model predicted recon scan, and this result was influenced by the high importance of the \"other grouped features (joint player)\" group, which showed a Brier loss increase of -0.00000094 when shuffled."
+  },
+  {
+   "row": 50,
+   "sample": "scan",
+   "method": "permutation",
+   "violation": "importance",
+   "text": "The model also relied on \"log_data-ranges\" and \"log_data-types\", both of which had a Brier loss increase of 0 when shuffled."
+  },
+  {
+   "row": 50,
+   "sample": "scan",
+   "method": "permutation",
+   "violation": "cause",
+   "text": "These feature groups contributed significantly to the model's overall behavior, suggesting that the prediction was shaped by their presence and values."
+  },
+  {
+   "row": 50,
+   "sample": "scan",
+   "method": "permutation",
+   "violation": "cause",
+   "text": "The model predicted recon scan based on the pattern of dependency observed in these feature groups."
+  },
+  {
+   "row": 51,
+   "sample": "scan",
+   "method": "permutation",
+   "violation": "direction",
+   "text": "When the features in the \"other grouped features (joint player)\" group were shuffled, the model's error increased by -0.00000094, showing this group had a strong influence."
+  },
+  {
+   "row": 51,
+   "sample": "scan",
+   "method": "permutation",
+   "violation": "importance",
+   "text": "The model also relied on \"log_data-ranges\" and \"log_data-types\", both of which showed a Brier loss increase of 0 when shuffled, meaning they were less influential overall."
+  },
+  {
+   "row": 12,
+   "round": 2,
+   "sample": "benign",
+   "method": "permutation",
+   "violation": "cause",
+   "text": "Thus, the model's prediction of Normal network activity relies slightly on the \"Other grouped features (joint player)\" group."
+  },
+  {
+   "row": 4,
+   "sample": "benign",
+   "method": "anchors",
+   "violation": "anchor",
+   "text": "The model predicted Normal network activity under conditions where log_data-types stayed within a normalized tolerance of 0.15 of the observation's values, but this rule does not strongly support the prediction due to low precision."
+  },
+  {
+   "row": 4,
+   "sample": "benign",
+   "method": "anchors",
+   "violation": "anchor",
+   "text": "The model predicted Normal network activity when log_data-types stayed within a normalized tolerance of 0.15 of the observation's values."
+  },
+  {
+   "row": 5,
+   "sample": "benign",
+   "method": "anchors",
+   "violation": "anchor",
+   "text": "The model predicted Normal network activity under a condition where log_data-types stayed within a normalized tolerance of 0.15 of the observation's values."
+  },
+  {
+   "row": 22,
+   "sample": "ddos",
+   "method": "anchors",
+   "violation": "anchor",
+   "text": "The model predicted ddos icmp flood based on the condition that log_data-types stayed within a normalized tolerance of 0.15 of the observation's values."
+  },
+  {
+   "row": 58,
+   "sample": "unknown",
+   "method": "anchors",
+   "violation": "anchor",
+   "text": "The model predicted mitm arp spoofing under conditions where log_data-ranges stayed within a normalized tolerance of 0.15 of the observed values."
+  },
+  {
+   "row": 59,
+   "sample": "unknown",
+   "method": "anchors",
+   "violation": "anchor",
+   "text": "No supported rule was found: in the 9 matching reference rows tested, the model did not keep the predicted class in 0 of them, and the rule covered 0.07031 of the reference data."
+  },
+  {
+   "row": 10,
+   "sample": "benign",
+   "method": "ale",
+   "violation": "change",
+   "text": "The model predicted Normal network activity because a change in window_duration_seconds from its baseline to 10 seconds lowered the model's output for Normal network activity by 0.006374."
+  },
+  {
+   "row": 10,
+   "sample": "benign",
+   "method": "ale",
+   "violation": "cause",
+   "text": "The model predicted Normal network activity because log_interval-messages at value 0 had a very small positive effect of 0.00000006."
+  },
+  {
+   "row": 10,
+   "sample": "benign",
+   "method": "ale",
+   "violation": "cause",
+   "text": "The model predicted Normal network activity because quality_no_packets_observed at value 0 had no effect."
+  },
+  {
+   "row": 37,
+   "sample": "ddos",
+   "method": "ale",
+   "violation": "change",
+   "text": "The model predicted ddos icmp flood because a small increase in log_interval-messages from 192.5 raised the predicted class probability slightly."
+  },
+  {
+   "row": 37,
+   "sample": "ddos",
+   "method": "ale",
+   "violation": "change",
+   "text": "A decrease in window_duration_seconds from 10 lowered the predicted class probability slightly."
+  },
+  {
+   "row": 37,
+   "sample": "ddos",
+   "method": "ale",
+   "violation": "cause",
+   "text": "The model predicted ddos icmp flood with a high confidence due to the combined influence of these feature values."
+  },
+  {
+   "row": 38,
+   "sample": "ddos",
+   "method": "ale",
+   "violation": "direction",
+   "text": "The model predicted ddos icmp flood because a small increase in log_interval-messages from 192.5 slightly raised the predicted class probability, while a decrease in window_duration_seconds from 10 slightly lowered it."
+  },
+  {
+   "row": 52,
+   "sample": "scan",
+   "method": "ale",
+   "violation": "change",
+   "text": "The model predicted recon scan because a decrease in window_duration_seconds from 10 to a lower value had a negative ALE effect of -0.005594, which lowered the model's output for recon scan."
+  },
+  {
+   "row": 53,
+   "sample": "scan",
+   "method": "ale",
+   "violation": "change",
+   "text": "The model predicted recon scan because when window_duration_seconds was 10, a decrease in that value had a negative ALE effect of -0.005594, which lowered the model's output for recon scan."
+  },
+  {
+   "sample": "ddos",
+   "method": "permutation",
+   "text": "No other features showed a significant increase in Brier loss.",
+   "violation": "generalization",
+   "note": "pass-rate round 1: moved from faithful; the packet lists only the top features by absolute importance, so 'no other features' claims more than the evidence"
+  }
+ ],
+ "faithful": [
+  {
+   "sample": "benign",
+   "method": "anchors",
+   "text": "This rule applied to 82.81% of the reference rows, but the model only kept the predicted class in 6.67% of those cases."
+  },
+  {
+   "sample": "benign",
+   "method": "anchors",
+   "text": "The anchor result shows that no reliable rule was found to explain why the model predicted Normal network activity."
+  },
+  {
+   "sample": "scan",
+   "method": "anchors",
+   "text": "The rule covers 82.81% of the reference data, with 15 rows tested."
+  },
+  {
+   "sample": "scan",
+   "method": "anchors",
+   "text": "The model predicted recon scan in 0% of the matching reference rows where the rule held."
+  },
+  {
+   "sample": "scan",
+   "method": "anchors",
+   "text": "The rule condition involves log_data-types staying within a normalized tolerance of 0.15 of the observation's values."
+  },
+  {
+   "sample": "unknown",
+   "method": "permutation",
+   "text": "The recorded importance for other grouped features (joint player), log_data-ranges, log_data-types, log_interval-messages, and log_messages_count is 0 for all of them."
+  },
+  {
+   "sample": "unknown",
+   "method": "permutation",
+   "text": "Permutation importance shows that shuffling any of the listed features did not raise the model's Brier loss, so the model does not strongly rely on those feature groups."
+  },
+  {
+   "sample": "benign",
+   "method": "ale",
+   "text": "window_duration_seconds at value 10 lowered the model's output for the predicted class by 0.006374."
+  },
+  {
+   "sample": "benign",
+   "method": "ale",
+   "text": "log_interval-messages at value 0 had a very small positive effect of 0.00000006."
+  },
+  {
+   "sample": "ddos",
+   "method": "ale",
+   "text": "The values of quality_no_packets_observed and quality_no_logs_observed had no effect on the predicted class."
+  },
+  {
+   "sample": "ddos",
+   "method": "counterfactual",
+   "text": "log_data-ranges (a group of 4 linked features) changed together, log_data-types (a group of 4 linked features) changed together, log_interval-messages changed from 192.5 to 96.64, log_messages_count (a group of 2 linked features) changed together, Network measurements and indicators (a group of 426 linked features) changed together, listed_dst_ports_per_dst_ip changed from 0.3333 to 0.6667, and listed_src_ports_per_src_ip changed from 0.2857 to 0.6667."
+  },
+  {
+   "sample": "unknown",
+   "method": "counterfactual",
+   "text": "To change that prediction, the model would predict Normal network activity if log_data-types, log_messages_count, and Network measurements and indicators were changed together, and window_duration_seconds was reduced from 6 to 4."
+  },
+  {
+   "sample": "benign",
+   "method": "counterfactual",
+   "text": "With the changes, the model would predict ddos udp frag flood."
+  }
+ ]
+}

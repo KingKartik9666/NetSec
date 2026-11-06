@@ -1,0 +1,43 @@
+{
+  "input": [
+    100.0,
+    30.0,
+    1.0,
+    2.0,
+    1.0,
+    10.0,
+    0.0,
+    0.0,
+    0.25,
+    1.0,
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    1.0,
+    0.0
+  ],
+  "prediction": {
+    "is_attack": false,
+    "label": "benign",
+    "novelty": "not evaluated",
+    "score": 0.3333333432674408,
+    "tentative": false,
+    "top_classes": [
+      {
+        "label": "benign",
+        "score": 0.3333333432674408
+      },
+      {
+        "label": "synthetic_probe",
+        "score": 0.3333333432674408
+      },
+      {
+        "label": "synthetic_flood",
+        "score": 0.3333333432674408
+      }
+    ]
+  },
+  "purpose": "Equal scores select the first maximum and stable class-index top-three order",
+  "synthetic": true
+}

@@ -1,5 +1,6 @@
 //! Native application composition. Feature policies stay outside HTTP handlers.
 pub mod analysis;
+pub mod chat;
 mod assets;
 pub mod application;
 pub mod language;

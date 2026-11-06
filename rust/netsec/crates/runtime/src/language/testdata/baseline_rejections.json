@@ -1,0 +1,629 @@
+{
+ "_note": "Every model sentence the verifier rejected in the 3 Nov 2026 baseline matrix (artifacts/explainer_20261103/baseline/sentences.json), text and violation unchanged. verify::tests::baseline_rejections_stay_rejected requires each to fail exactly as recorded, except the overrides listed in that test.",
+ "rejections": [
+  {
+   "device": "gpu",
+   "rep": 1,
+   "sample": "benign",
+   "kind": "initial",
+   "violation": "attack: ddos",
+   "text": "The model considered other attack types like Mirai UDP floods and DDoS attacks, but they were extremely unlikely."
+  },
+  {
+   "device": "gpu",
+   "rep": 1,
+   "sample": "ddos",
+   "kind": "detail",
+   "violation": "number: 1883",
+   "text": "Other attack types, such as HTTP flood on port 1883 or IP spoofing, were much less likely and had minimal influence."
+  },
+  {
+   "device": "gpu",
+   "rep": 1,
+   "sample": "ddos",
+   "kind": "free_top_feature",
+   "violation": "attack: ddos",
+   "text": "The top feature, presence of ICMP in destination traffic, indicates that the model saw ICMP packets being sent to the destination, which supported the prediction of a DDoS ICMP flood."
+  },
+  {
+   "device": "gpu",
+   "rep": 1,
+   "sample": "scan",
+   "kind": "initial",
+   "violation": "attack: recon",
+   "text": "A connection to port 23 slightly reduced the likelihood of this being a recon scan."
+  },
+  {
+   "device": "gpu",
+   "rep": 1,
+   "sample": "scan",
+   "kind": "simpler",
+   "violation": "attack: recon",
+   "text": "The model is most likely detecting a recon scan, with very high confidence."
+  },
+  {
+   "device": "gpu",
+   "rep": 1,
+   "sample": "scan",
+   "kind": "detail",
+   "violation": "attack: recon",
+   "text": "Connections to port 52822 were also seen as part of the activity that pointed toward recon scan."
+  },
+  {
+   "device": "gpu",
+   "rep": 1,
+   "sample": "scan",
+   "kind": "free_top_feature",
+   "violation": "attack: recon",
+   "text": "The top feature, network_tcp-flags_std_deviation, indicates that the variation in TCP flag patterns was unusually high, which contributed to the model's prediction of a recon scan."
+  },
+  {
+   "device": "gpu",
+   "rep": 1,
+   "sample": "unknown",
+   "kind": "initial",
+   "violation": "banned: certain",
+   "text": "Features like high packet counts from source and certain port presence slightly supported this prediction."
+  },
+  {
+   "device": "gpu",
+   "rep": 1,
+   "sample": "unknown",
+   "kind": "simpler",
+   "violation": "banned: certain",
+   "text": "The model suggested a possible mitm arp spoofing event with some confidence, though it wasn't very certain."
+  },
+  {
+   "device": "gpu",
+   "rep": 1,
+   "sample": "unknown",
+   "kind": "summary",
+   "violation": "direction: both increase and decrease wording",
+   "text": "Features like network_src_packet_fraction and network_packets_src_count__per_second supported this prediction, while network_window-size_min, network_ports_dst__present_UNSEEN, and network_window-size_std_deviation pulled it away."
+  },
+  {
+   "device": "gpu",
+   "rep": 1,
+   "sample": "unknown",
+   "kind": "detail",
+   "violation": "attack: arp spoofing",
+   "text": "However, network_src_packet_fraction and network_packets_src_count__per_second had positive contributions, pushing the model toward mitm arp spoofing."
+  },
+  {
+   "device": "gpu",
+   "rep": 1,
+   "sample": "unknown",
+   "kind": "free_top_feature",
+   "violation": "attack: arp spoofing",
+   "text": "The top feature, network_src_packet_fraction, had a positive contribution meaning it pushed the model's prediction toward mitm arp spoofing."
+  },
+  {
+   "device": "gpu",
+   "rep": 2,
+   "sample": "benign",
+   "kind": "initial",
+   "violation": "attack: ddos",
+   "text": "The model considered other attack types like Mirai UDP floods and DDoS floods as very unlikely."
+  },
+  {
+   "device": "gpu",
+   "rep": 2,
+   "sample": "benign",
+   "kind": "detail",
+   "violation": "attack: ack frag flood",
+   "text": "The model considered other attack types like malware mirai udp flood and ddos ack frag flood as very unlikely."
+  },
+  {
+   "device": "gpu",
+   "rep": 2,
+   "sample": "ddos",
+   "kind": "initial",
+   "violation": "attack: ddos",
+   "text": "The model identified a possible DDoS ICMP flood attack with high confidence."
+  },
+  {
+   "device": "gpu",
+   "rep": 2,
+   "sample": "ddos",
+   "kind": "detail",
+   "violation": "attack: flood",
+   "text": "The presence of ICMP traffic and high packet rates strongly supports the idea of a flood attack."
+  },
+  {
+   "device": "gpu",
+   "rep": 2,
+   "sample": "ddos",
+   "kind": "free_top_feature",
+   "violation": "attack: ddos",
+   "text": "The top feature, network_protocols_dst__present_icmp, means the model saw ICMP traffic specifically at the destination, which pushed the prediction toward a DDoS ICMP flood."
+  },
+  {
+   "device": "gpu",
+   "rep": 2,
+   "sample": "scan",
+   "kind": "initial",
+   "violation": "attack: recon",
+   "text": "A connection to port 23 slightly reduced the likelihood of this being a recon scan."
+  },
+  {
+   "device": "gpu",
+   "rep": 2,
+   "sample": "scan",
+   "kind": "simpler",
+   "violation": "attack: recon",
+   "text": "The model is most likely detecting a recon scan, with very high confidence."
+  },
+  {
+   "device": "gpu",
+   "rep": 2,
+   "sample": "scan",
+   "kind": "detail",
+   "violation": "attack: recon",
+   "text": "Activity involving port 52822 was noted as a key factor pointing toward recon scan."
+  },
+  {
+   "device": "gpu",
+   "rep": 2,
+   "sample": "scan",
+   "kind": "free_top_feature",
+   "violation": "attack: recon",
+   "text": "The top feature, network_tcp-flags_std_deviation, indicates that the variation in TCP flags across packets was unusually high, which contributed to the model's prediction of a recon scan."
+  },
+  {
+   "device": "gpu",
+   "rep": 2,
+   "sample": "unknown",
+   "kind": "initial",
+   "violation": "banned: certain",
+   "text": "Features like high packet counts from source and certain port presence slightly supported this prediction."
+  },
+  {
+   "device": "gpu",
+   "rep": 2,
+   "sample": "unknown",
+   "kind": "simpler",
+   "violation": "banned: certain",
+   "text": "The model suggests a possible mitm arp spoofing event with some confidence, though it's not certain."
+  },
+  {
+   "device": "gpu",
+   "rep": 2,
+   "sample": "unknown",
+   "kind": "summary",
+   "violation": "direction: both increase and decrease wording",
+   "text": "Features like network_src_packet_fraction and network_packets_src_count__per_second pushed the prediction toward this class, while network_window-size_min, network_ports_dst__present_UNSEEN, and network_window-size_std_deviation pulled it away."
+  },
+  {
+   "device": "gpu",
+   "rep": 2,
+   "sample": "unknown",
+   "kind": "detail",
+   "violation": "attack: arp spoofing",
+   "text": "These features help explain why the model leaned toward mitm arp spoofing, though they don't prove the activity is an actual attack."
+  },
+  {
+   "device": "gpu",
+   "rep": 2,
+   "sample": "unknown",
+   "kind": "free_top_feature",
+   "violation": "attack: arp spoofing",
+   "text": "The top feature, network_src_packet_fraction, slightly supported the prediction of mitm arp spoofing by increasing the model's score."
+  },
+  {
+   "device": "gpu",
+   "rep": 3,
+   "sample": "benign",
+   "kind": "initial",
+   "violation": "attack: ddos",
+   "text": "The model considered other attack types like Mirai UDP floods and DDoS attacks, but they were extremely unlikely."
+  },
+  {
+   "device": "gpu",
+   "rep": 3,
+   "sample": "ddos",
+   "kind": "simpler",
+   "violation": "attack: flood",
+   "text": "The model found strong signs of an ICMP flood attack, mostly because there were many ICMP packets sent per second and a high number of destination ICMP packets."
+  },
+  {
+   "device": "gpu",
+   "rep": 3,
+   "sample": "ddos",
+   "kind": "detail",
+   "violation": "number: 1883",
+   "text": "The model considered other attacks, such as HTTP flood on port 1883 and IP spoofing, but they were much less likely."
+  },
+  {
+   "device": "gpu",
+   "rep": 3,
+   "sample": "ddos",
+   "kind": "free_top_feature",
+   "violation": "attack: ddos",
+   "text": "The top feature, network_protocols_dst__present_icmp, means the model saw ICMP traffic directed to the destination, which pushed the prediction toward a DDoS ICMP flood attack."
+  },
+  {
+   "device": "gpu",
+   "rep": 3,
+   "sample": "scan",
+   "kind": "initial",
+   "violation": "attack: recon",
+   "text": "A connection to port 23 slightly reduced the likelihood of this being a recon scan."
+  },
+  {
+   "device": "gpu",
+   "rep": 3,
+   "sample": "scan",
+   "kind": "detail",
+   "violation": "attack: recon",
+   "text": "A connection to port 23 slightly lowered the likelihood of this being a recon scan."
+  },
+  {
+   "device": "gpu",
+   "rep": 3,
+   "sample": "scan",
+   "kind": "free_top_feature",
+   "violation": "attack: recon",
+   "text": "The top feature, network_tcp-flags_std_deviation, indicates how much the variation in TCP flags contributed to the model's decision to predict a recon scan."
+  },
+  {
+   "device": "gpu",
+   "rep": 3,
+   "sample": "unknown",
+   "kind": "initial",
+   "violation": "banned: certain",
+   "text": "Features like high packet count from source and certain port presence slightly supported this prediction."
+  },
+  {
+   "device": "gpu",
+   "rep": 3,
+   "sample": "unknown",
+   "kind": "simpler",
+   "violation": "banned: certain",
+   "text": "The model suggests a possible mitm arp spoofing event with some confidence, though it's not certain."
+  },
+  {
+   "device": "gpu",
+   "rep": 3,
+   "sample": "unknown",
+   "kind": "summary",
+   "violation": "direction: both increase and decrease wording",
+   "text": "Features like network_src_packet_fraction and network_packets_src_count__per_second supported this prediction, while network_window-size_min, network_ports_dst__present_UNSEEN, and network_window-size_std_deviation pulled it away."
+  },
+  {
+   "device": "gpu",
+   "rep": 3,
+   "sample": "unknown",
+   "kind": "detail",
+   "violation": "banned: confirmed",
+   "text": "These findings are based on the model's internal reasoning, not confirmed facts about the network activity."
+  },
+  {
+   "device": "gpu",
+   "rep": 3,
+   "sample": "unknown",
+   "kind": "free_top_feature",
+   "violation": "attack: arp spoofing",
+   "text": "The top feature, network_src_packet_fraction, contributed positively to the prediction of mitm arp spoofing, meaning it helped push the model's result toward that class."
+  },
+  {
+   "device": "cpu",
+   "rep": 1,
+   "sample": "benign",
+   "kind": "initial",
+   "violation": "attack: ddos",
+   "text": "The model considered other attack types like Mirai UDP floods and DDoS attacks, but they were extremely unlikely."
+  },
+  {
+   "device": "cpu",
+   "rep": 1,
+   "sample": "ddos",
+   "kind": "initial",
+   "violation": "attack: ddos",
+   "text": "The model identified a possible ddos icmp flood attack with high confidence."
+  },
+  {
+   "device": "cpu",
+   "rep": 1,
+   "sample": "ddos",
+   "kind": "simpler",
+   "violation": "attack: flood",
+   "text": "The model is most likely detecting a type of traffic flood using ICMP packets."
+  },
+  {
+   "device": "cpu",
+   "rep": 1,
+   "sample": "ddos",
+   "kind": "detail",
+   "violation": "attack: flood",
+   "text": "The model found other attacks like http flood and ip spoofing to be extremely unlikely."
+  },
+  {
+   "device": "cpu",
+   "rep": 1,
+   "sample": "ddos",
+   "kind": "free_why",
+   "violation": "banned: confirmed",
+   "text": "The model picked ddos icmp flood because it saw a high volume of packets per second and confirmed ICMP traffic at both the destination and overall network level."
+  },
+  {
+   "device": "cpu",
+   "rep": 1,
+   "sample": "ddos",
+   "kind": "free_top_feature",
+   "violation": "attack: ddos",
+   "text": "The top feature, network_protocols_dst__present_icmp, means that ICMP traffic was detected at the destination, which supports the model's prediction of a DDoS ICMP flood."
+  },
+  {
+   "device": "cpu",
+   "rep": 1,
+   "sample": "scan",
+   "kind": "initial",
+   "violation": "banned: certain",
+   "text": "The presence of certain TCP flags and destination ports pushed the model toward this class."
+  },
+  {
+   "device": "cpu",
+   "rep": 1,
+   "sample": "scan",
+   "kind": "simpler",
+   "violation": "attack: recon",
+   "text": "The model is most likely detecting a recon scan, with very high confidence."
+  },
+  {
+   "device": "cpu",
+   "rep": 1,
+   "sample": "scan",
+   "kind": "summary",
+   "violation": "attack: recon",
+   "text": "The model is very confident it identified a recon scan, with a 0.9995 probability."
+  },
+  {
+   "device": "cpu",
+   "rep": 1,
+   "sample": "scan",
+   "kind": "detail",
+   "violation": "number: 443",
+   "text": "Other attack types, like DOS SYN floods on ports 443 and 80, were considered much less likely."
+  },
+  {
+   "device": "cpu",
+   "rep": 1,
+   "sample": "scan",
+   "kind": "free_top_feature",
+   "violation": "attack: reconnaissance",
+   "text": "High variation in these flags is associated with reconnaissance scans, which supports the prediction."
+  },
+  {
+   "device": "cpu",
+   "rep": 1,
+   "sample": "unknown",
+   "kind": "initial",
+   "violation": "banned: certain",
+   "text": "Features like high packet counts from the source and certain network window sizes pushed the model toward this prediction."
+  },
+  {
+   "device": "cpu",
+   "rep": 1,
+   "sample": "unknown",
+   "kind": "simpler",
+   "violation": "banned: certain",
+   "text": "The model suggests a possible mitm arp spoofing event with some confidence, though it's not certain."
+  },
+  {
+   "device": "cpu",
+   "rep": 1,
+   "sample": "unknown",
+   "kind": "free_top_feature",
+   "violation": "attack: arp spoofing",
+   "text": "The top feature, network_src_packet_fraction, means the model saw a high rate of packets coming from the source, which slightly supported the prediction of mitm arp spoofing."
+  },
+  {
+   "device": "cpu",
+   "rep": 2,
+   "sample": "benign",
+   "kind": "initial",
+   "violation": "attack: flood",
+   "text": "Other attack types, like Mirai UDP floods, were considered very unlikely."
+  },
+  {
+   "device": "cpu",
+   "rep": 2,
+   "sample": "ddos",
+   "kind": "initial",
+   "violation": "banned: proven",
+   "text": "This analysis reflects model behavior, not proven facts about the traffic."
+  },
+  {
+   "device": "cpu",
+   "rep": 2,
+   "sample": "ddos",
+   "kind": "detail",
+   "violation": "number: 1883",
+   "text": "The model considered other attacks like HTTP flood on port 1883 and IP spoofing, but those were extremely unlikely."
+  },
+  {
+   "device": "cpu",
+   "rep": 2,
+   "sample": "ddos",
+   "kind": "free_why",
+   "violation": "attack: ddos",
+   "text": "The model picked ddos icmp flood because it saw a high volume of ICMP packets per second and detected ICMP traffic present in both destination and overall protocol activity."
+  },
+  {
+   "device": "cpu",
+   "rep": 2,
+   "sample": "ddos",
+   "kind": "free_top_feature",
+   "violation": "attack: ddos",
+   "text": "The top feature, network_protocols_dst__present_icmp, means that ICMP traffic was detected at the destination, which pushed the model toward identifying the activity as a ddos icmp flood."
+  },
+  {
+   "device": "cpu",
+   "rep": 2,
+   "sample": "scan",
+   "kind": "simpler",
+   "violation": "attack: recon",
+   "text": "The model found the traffic most likely to be a recon scan, with very high confidence."
+  },
+  {
+   "device": "cpu",
+   "rep": 2,
+   "sample": "scan",
+   "kind": "summary",
+   "violation": "attack: recon",
+   "text": "The model is very confident it detected a recon scan, with a 0.9995 probability."
+  },
+  {
+   "device": "cpu",
+   "rep": 2,
+   "sample": "scan",
+   "kind": "free_top_feature",
+   "violation": "attack: recon",
+   "text": "The top feature, network_tcp-flags_std_deviation, shows how much the traffic varied in TCP flag patterns, and this variation supported the prediction of a recon scan."
+  },
+  {
+   "device": "cpu",
+   "rep": 2,
+   "sample": "unknown",
+   "kind": "initial",
+   "violation": "banned: certain",
+   "text": "Features like high packet counts from the source and certain network window sizes slightly reduced the likelihood of this class."
+  },
+  {
+   "device": "cpu",
+   "rep": 2,
+   "sample": "unknown",
+   "kind": "simpler",
+   "violation": "banned: certain",
+   "text": "The model suggests a possible mitm arp spoofing event with some confidence, though it's not certain."
+  },
+  {
+   "device": "cpu",
+   "rep": 2,
+   "sample": "unknown",
+   "kind": "detail",
+   "violation": "attack: arp spoofing",
+   "text": "The evidence points to some alignment with mitm arp spoofing, but the model's confidence is low."
+  },
+  {
+   "device": "cpu",
+   "rep": 2,
+   "sample": "unknown",
+   "kind": "free_top_feature",
+   "violation": "attack: arp spoofing",
+   "text": "The top feature, packet rate from the source, supported the prediction of mitm arp spoofing by showing a high frequency of packets from the source."
+  },
+  {
+   "device": "cpu",
+   "rep": 3,
+   "sample": "benign",
+   "kind": "initial",
+   "violation": "attack: ddos",
+   "text": "The model considered other types of attacks, like Mirai UDP floods and DDoS floods, but they were extremely unlikely."
+  },
+  {
+   "device": "cpu",
+   "rep": 3,
+   "sample": "benign",
+   "kind": "free_why",
+   "violation": "banned: certain",
+   "text": "The model picked normal network activity because certain packet characteristics, like average packet size and common destination ports, supported this classification."
+  },
+  {
+   "device": "cpu",
+   "rep": 3,
+   "sample": "ddos",
+   "kind": "simpler",
+   "violation": "attack: flood",
+   "text": "The model found strong signs of an ICMP flood attack, mostly because many packets were sent using ICMP and at a very high rate."
+  },
+  {
+   "device": "cpu",
+   "rep": 3,
+   "sample": "ddos",
+   "kind": "summary",
+   "violation": "attack: ddos",
+   "text": "The model strongly predicted a ddos icmp flood, with high confidence, based on features showing increased activity related to ICMP traffic."
+  },
+  {
+   "device": "cpu",
+   "rep": 3,
+   "sample": "ddos",
+   "kind": "detail",
+   "violation": "number: 1883",
+   "text": "Other attack types like HTTP flood on port 1883 and IP spoofing were considered much less likely."
+  },
+  {
+   "device": "cpu",
+   "rep": 3,
+   "sample": "ddos",
+   "kind": "free_why",
+   "violation": "number: 1883",
+   "text": "Other classes like DDoS HTTP flood on port 1883 and MITM IP spoofing were much less likely."
+  },
+  {
+   "device": "cpu",
+   "rep": 3,
+   "sample": "ddos",
+   "kind": "free_top_feature",
+   "violation": "attack: ddos",
+   "text": "The top feature, ICMP traffic being present at the destination, means the model saw that ICMP packets were arriving at the target, which supported the prediction of a DDoS ICMP flood."
+  },
+  {
+   "device": "cpu",
+   "rep": 3,
+   "sample": "scan",
+   "kind": "initial",
+   "violation": "attack: recon",
+   "text": "A connection to port 23 slightly reduced the likelihood of this being a recon scan."
+  },
+  {
+   "device": "cpu",
+   "rep": 3,
+   "sample": "scan",
+   "kind": "summary",
+   "violation": "attack: recon",
+   "text": "The model is very confident the traffic matches a recon scan."
+  },
+  {
+   "device": "cpu",
+   "rep": 3,
+   "sample": "scan",
+   "kind": "detail",
+   "violation": "banned: proves",
+   "text": "No single feature proves the attack occurred."
+  },
+  {
+   "device": "cpu",
+   "rep": 3,
+   "sample": "scan",
+   "kind": "free_top_feature",
+   "violation": "attack: recon",
+   "text": "Higher variation pushed the model toward the recon scan class."
+  },
+  {
+   "device": "cpu",
+   "rep": 3,
+   "sample": "unknown",
+   "kind": "initial",
+   "violation": "banned: certain",
+   "text": "Features like high packet counts from the source and certain network window sizes slightly pushed the prediction toward this class."
+  },
+  {
+   "device": "cpu",
+   "rep": 3,
+   "sample": "unknown",
+   "kind": "simpler",
+   "violation": "banned: certain",
+   "text": "The model suggests a possible mitm arp spoofing event with some confidence, though it's not certain."
+  },
+  {
+   "device": "cpu",
+   "rep": 3,
+   "sample": "unknown",
+   "kind": "free_top_feature",
+   "violation": "attack: arp spoofing",
+   "text": "The top feature, network_src_packet_fraction, means the model saw a high fraction of packets coming from the source, which slightly supported the prediction of mitm arp spoofing."
+  }
+ ]
+}

@@ -80,9 +80,9 @@ async function loadCatalog() {
     $('retry-connection').disabled = false;
     const eligible = eligibleModels(catalog.models, catalog.schema);
     state.selected = new Set([...state.selected].filter(id => eligible.some(model => model.id === id)));
-    if (!state.selected.size && eligible.length) state.selected.add(eligible.find(model => model.id === 'xgboost')?.id || eligible[0].id);
+    if (!state.selected.size && eligible.length) state.selected.add(eligible.find(model => model.id === 'tabm_xgboost_kan')?.id || eligible.find(model => model.id === 'xgboost')?.id || eligible[0].id);
     drawCatalog();
-    $('language-status').textContent = `${catalog.language?.model || 'Local Qwen'} · ${catalog.language?.status || 'unavailable'}${catalog.language?.reason ? ` · ${catalog.language.reason}` : ''}. Evidence stays on this PC.`;
+    $('language-status').textContent = `${catalog.language?.model || 'Local language model'} · ${catalog.language?.status || 'unavailable'}${catalog.language?.reason ? ` · ${catalog.language.reason}` : ''}. Evidence stays on this PC.`;
     $('connection-error').hidden = true;
   } catch (error) {
     errorAt('catalog-error', error); $('connection-message').textContent = `The local runtime could not provide its model catalog: ${error.message}`;
